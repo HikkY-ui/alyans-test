@@ -968,7 +968,7 @@
 
   // ==================== SKLAD MODULE ====================
   const Sklad = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxyCUYYc6XiR5M5nsoqeJn0IjmKWlJVRqZGAREsVHckGy1WPiGxwg41_qRcNipOZaaUTg/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
     const TABLES = [
       { id: "пачки", label: "пачки" },
       { id: "2000", label: "2000" },
@@ -1215,7 +1215,7 @@
 
   // ==================== TSEKH MODULE ====================
   const Tsekh = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbwaJVr6TgQEEUeYsMdgyxc3KxLMK7g2JsXgI_XCrYaYdEdC_JpQRV0YJtUkFcja_74lSA/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
     const MARKS_MIN = 7;
     const MARKS_MAX = 40;
     const MATERIALS = ["201", "301", "401", "Микс", "БД", "Рез"];
@@ -1425,7 +1425,7 @@
 
   // ==================== SYRE (СЫРЬЁ) MODULE ====================
   const Syre = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
     const MATERIALS = ["201", "301", "401", "МИКС"];
 
     let values = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
@@ -1674,7 +1674,7 @@
 
   // ==================== ADMIN · SYRE (edit — shares the same data source as the Сырьё role) ====================
   const AdminSyre = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
     const MATERIALS = ["201", "301", "401", "МИКС"];
 
     let values = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
@@ -1893,14 +1893,14 @@
 
   // ==================== ADMIN · TSEKH (report + edit, sharing one data source) ====================
   const AdminTsekh = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbwaJVr6TgQEEUeYsMdgyxc3KxLMK7g2JsXgI_XCrYaYdEdC_JpQRV0YJtUkFcja_74lSA/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
     const MARKS_MIN = 7, MARKS_MAX = 40;
     const MATERIALS = ["201", "301", "401", "Микс", "БД", "Рез"];
     const MATERIAL_LABELS = { "201": "201", "301": "301", "401": "401", "БД": "Б/Д", "Микс": "Микс", "Рез": "Рез" };
 
     // Сырьё (raw-material stock) is shown as a small label row above the matching report
     // columns — only 201/301/401/Микс have a raw-material counterpart; Б/Д and Рез don't.
-    const SYRE_API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
+    const SYRE_API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
     const SYRE_KEY_FOR = { "201": "201", "301": "301", "401": "401", "Микс": "МИКС" };
     let syreValues = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
 
@@ -2062,7 +2062,7 @@
 
   // ==================== ADMIN · SKLAD (report + edit, sharing one data source) ====================
   const AdminSklad = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxyCUYYc6XiR5M5nsoqeJn0IjmKWlJVRqZGAREsVHckGy1WPiGxwg41_qRcNipOZaaUTg/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
     const TABLES = [
       { id: "пачки", label: "пачки" }, { id: "2000", label: "2000" },
       { id: "3000", label: "3000" }, { id: "4000", label: "4000" }
