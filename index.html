@@ -78,16 +78,15 @@
     display: flex; align-items: center; justify-content: space-between; width: 100%;
   }
   .admin-header-tsekh { display: none; width: 100%; align-items: center; justify-content: space-between; }
-  .admin-header-tsekh-stats { display: flex; align-items: center; gap: 6px; }
-  .admin-last-updated { flex-shrink: 0; }
+  .admin-header-tsekh-stats { display: flex; align-items: center; gap: 4px; }
   .admin-header-tsekh-pill {
-    display: flex; align-items: baseline; gap: 4px;
-    border: 2px solid var(--red); border-radius: 20px; padding: 2px 8px;
+    display: flex; align-items: baseline; gap: 3px;
+    border: 2px solid var(--red); border-radius: 20px; padding: 2px 5px;
   }
   .admin-header-tsekh-pill .stat-label {
-    font-size: 8px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.2px;
+    font-size: 6.5px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.2px; white-space: nowrap;
   }
-  .admin-header-tsekh-pill .stat-value { font-size: 13px; font-weight: 800; color: var(--black); }
+  .admin-header-tsekh-pill .stat-value { font-size: 11px; font-weight: 800; color: var(--black); white-space: nowrap; }
 
 
   /* ===== Screen: Login (role select) ===== */
@@ -166,6 +165,7 @@
     grid-auto-rows: min-content;
     gap: 8px;
     width: 100%;
+    flex-shrink: 0; /* keypad keeps its own size always — the table above it shrinks/scrolls instead */
   }
   .key {
     border: 2px solid var(--gray-border);
@@ -284,7 +284,15 @@
   .field-display.filled.active { color: var(--red); }
 
   .skl-add-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 6px 10px 8px; gap: 5px; }
-  .skl-grid-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  /* skl-grid-wrap holds the grid table. It gets first claim on the flex-shared
+     vertical space (flex:1) while the value display, keypad, and button row below
+     it are flex-shrink:0 (fixed-height controls, see further down) — that way, on a
+     short screen it's the TABLE that compresses/scrolls, never the controls, and the
+     table never grows or shifts position from typing (typing only updates the value
+     display text, not this wrap). overflow-y:auto is the safety net: if the table's
+     natural row height still doesn't fit, it scrolls internally instead of pushing
+     the keypad off-screen or underneath it. */
+  .skl-grid-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
   .skl-table {
     width: 100%; height: 100%;
     border-collapse: collapse;
@@ -316,7 +324,7 @@
   .key.add-key { background: var(--green); color: var(--white); border-color: var(--green); font-size: 22px; }
   .key.add-key:disabled { background: var(--gray-border); color: var(--gray-text); border-color: var(--gray-border); }
 
-  .skl-btn-row { display: flex; gap: 8px; flex-shrink: 0; }
+  .skl-btn-row { display: flex; gap: 8px; flex-shrink: 0; min-height: 0; }
   .skl-action-btn {
     flex: 1; padding: 10px; border-radius: 12px; background: var(--white);
     color: var(--red); border: 2px solid var(--red); font-size: 12px; font-weight: 800; letter-spacing: 0.3px;
@@ -325,13 +333,17 @@
 
   /* ===== SKLAD: report screen ===== */
   .skl-report-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 4px; overflow: hidden; padding: 6px 10px 6px; }
-  .skl-report-block { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .skl-report-block { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
   .skl-report-table { width: 100%; flex: 1; min-height: 0; border-collapse: collapse; border: 1.5px solid var(--red); border-radius: 4px; overflow: hidden; font-size: 13px; table-layout: fixed; }
   .skl-report-table th {
     background: var(--black); color: var(--white); padding: 1px; font-size: 10px; font-weight: 700; text-align: center;
     border-right: 1px solid rgba(255,255,255,0.2);
   }
   .skl-report-table th:last-child { border-right: none; }
+  /* Corner cell of each report table now carries the table's own name (Пачки/2000/3000/4000)
+     instead of a separate label line above the table — saves vertical space. Same black
+     background as the rest of the header row, just a bit smaller to fit the word. */
+  .skl-report-table th.skl-report-corner { font-size: 8px; letter-spacing: -0.2px; padding: 1px 0; }
   .skl-report-table tbody th {
     background: var(--gray-bg); color: var(--black); text-align: left; padding: 1px 2px;
     border-right: 1px solid var(--gray-border); border-bottom: 1px solid var(--gray-border);
@@ -464,7 +476,9 @@
   .tsk-table-wrap {
     flex: 1;
     min-height: 0;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
     padding: 0 8px 8px;
     display: flex;
     flex-direction: column;
@@ -500,6 +514,15 @@
     border-bottom: 1px solid var(--gray-border);
   }
   .tsk-table thead tr.tsk-syre-row th:last-child { border-right: none; }
+  .tsk-table thead tr.tsk-syre-row th.tsk-syre-updated { padding: 0; }
+  .tsk-syre-updated-pill {
+    display: inline-flex; align-items: baseline; gap: 4px; justify-content: center;
+    border: 2px solid var(--red); border-radius: 20px; padding: 2px 8px; margin: 0 auto;
+  }
+  .tsk-syre-updated-pill .stat-label {
+    font-size: 8px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.2px;
+  }
+  .tsk-syre-updated-pill .stat-value { font-size: 13px; font-weight: 800; color: var(--black); }
   .tsk-table tbody td {
     padding: 0px 1px;
     text-align: center;
@@ -532,39 +555,26 @@
     max-width: 85%;
     text-align: center;
   }
-  .pull-refresh-indicator {
-    position: absolute;
-    top: 0; left: 50%;
-    width: 30px; height: 30px;
-    margin-top: -34px;
-    transform: translateX(-50%);
-    border: 2px solid var(--gray-border);
-    border-top-color: var(--black);
-    border-radius: 50%;
-    background: var(--white);
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 8;
-    transition: transform 0.12s ease, opacity 0.12s ease;
-  }
-  .pull-refresh-indicator.refreshing {
-    animation: pullRefreshSpin 0.8s linear infinite;
-  }
-  @keyframes pullRefreshSpin { to { transform: translateX(-50%) rotate(360deg); } }
-
-  /* Warehouse edit: preserve exact proportions, but scale the whole editor down
-     on short screens so the grid never overlaps the on-screen keypad/action row. */
-  .skl-auto-scale {
-    --skl-edit-scale: 1;
-    flex: 0 0 calc(100% / var(--skl-edit-scale));
-    width: calc(100% / var(--skl-edit-scale));
-    height: calc(100% / var(--skl-edit-scale));
-    transform: scale(var(--skl-edit-scale));
-    transform-origin: top center;
-  }
-
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ===== Pull-to-refresh indicator (manual refresh, on top of the existing auto-poll) ===== */
+  .ptr-indicator {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 0;
+    overflow: hidden;
+    color: var(--red);
+    transition: height 0.15s ease;
+  }
+  .ptr-indicator svg {
+    width: 18px; height: 18px;
+    animation: ptr-spin 0.7s linear infinite;
+    animation-play-state: paused;
+  }
+  .ptr-indicator.ptr-spinning svg { animation-play-state: running; }
+  @keyframes ptr-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
@@ -613,7 +623,8 @@
 
         <!-- Screen 0: Добавить (grid + keypad, vertical swipe cycles tables) -->
         <div class="swipe-screen">
-          <div class="skl-add-wrap skl-auto-scale" id="sklAddWrap">
+          <div class="skl-add-wrap">
+            <div class="ptr-indicator" id="sklGridPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="skl-grid-wrap" id="sklGridWrap"><div class="loading-note">Загрузка...</div></div>
             <div class="field-display" id="sklValDisplay">0</div>
             <div class="keypad" id="sklKeypad"></div>
@@ -626,6 +637,7 @@
 
         <!-- Screen 1: Отчёт (all 4 tables) -->
         <div class="swipe-screen">
+          <div class="ptr-indicator" id="sklReportPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div class="skl-report-wrap" id="sklReportWrap"><div class="loading-note">Загрузка...</div></div>
         </div>
 
@@ -690,6 +702,7 @@
                 <div class="stat-label">Свободных мест</div>
               </div>
             </div>
+            <div class="ptr-indicator" id="tsekhTablePtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="tsk-table-wrap" id="tsekhTableWrap">
               <div class="loading-note">Загрузка...</div>
             </div>
@@ -751,18 +764,22 @@
       <div class="admin-header-default" id="adminHeaderDefault">
         <div class="brand">А<span>Т</span></div>
         <div class="header-title" id="adminScreenTitle">Отчёт · Цех</div>
-        <div class="date-pill admin-last-updated" style="font-size:9px;font-weight:700;color:var(--red);border:2px solid var(--red);border-radius:20px;padding:1px 7px;white-space:nowrap;">—</div>
+        <div class="admin-header-tsekh-pill" id="admSkladUpdatedPill" style="visibility:hidden;">
+          <span class="stat-label">Обновлено</span><span class="stat-value" id="admSkladUpdated">—</span>
+        </div>
       </div>
       <div class="admin-header-tsekh" id="adminHeaderTsekh">
         <div class="brand">А<span>Т</span></div>
         <div class="admin-header-tsekh-stats">
+          <div class="admin-header-tsekh-pill">
+            <span class="stat-label">Обновлено</span><span class="stat-value" id="admTsekhUpdated">—</span>
+          </div>
           <div class="admin-header-tsekh-pill">
             <span class="stat-label">Блоков в цеху</span><span class="stat-value" id="admTsekhBlocksVal">—</span>
           </div>
           <div class="admin-header-tsekh-pill">
             <span class="stat-label">Свободных мест</span><span class="stat-value" id="admTsekhFreeVal">—</span>
           </div>
-          <div class="date-pill admin-last-updated" style="font-size:8px;font-weight:700;color:var(--red);border:2px solid var(--red);border-radius:20px;padding:1px 6px;white-space:nowrap;">—</div>
         </div>
       </div>
     </header>
@@ -772,12 +789,14 @@
         <!-- Screen 0: Отчёт · Цех (read-only) — сырьё is now labeled above its matching columns in the table itself -->
         <div class="swipe-screen">
           <div style="flex:1; min-height:0; display:flex; flex-direction:column;">
+            <div class="ptr-indicator" id="admTsekhReportPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="tsk-table-wrap" id="admTsekhReportWrap"><div class="loading-note">Загрузка...</div></div>
           </div>
         </div>
 
         <!-- Screen 1: Склад (read-only report) -->
         <div class="swipe-screen">
+          <div class="ptr-indicator" id="admSkladReportPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div class="skl-report-wrap" id="admSkladReportWrap"><div class="loading-note">Загрузка...</div></div>
         </div>
 
@@ -809,7 +828,8 @@
 
         <!-- Screen 3: Склад (edit — grid + keypad, vertical swipe cycles tables) -->
         <div class="swipe-screen">
-          <div class="skl-add-wrap skl-auto-scale" id="admSkladAddWrap">
+          <div class="skl-add-wrap">
+            <div class="ptr-indicator" id="admSkladGridPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="skl-grid-wrap" id="admSkladGridWrap"><div class="loading-note">Загрузка...</div></div>
             <div class="field-display" id="admSkladValDisplay">0</div>
             <div class="keypad" id="admSkladKeypad"></div>
@@ -968,32 +988,76 @@
     document.querySelectorAll(".top-screen").forEach(s => s.classList.toggle("active", s.id === id));
   }
 
-  // ==================== LAST UPDATED ====================
-  function formatLastEdited(value) {
-    if (!value) return "—";
-    const d = new Date(value);
-    if (Number.isNaN(d.getTime())) return "—";
-    const dd = String(d.getDate()).padStart(2, "0");
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const yyyy = d.getFullYear();
-    const hh = String(d.getHours()).padStart(2, "0");
-    const min = String(d.getMinutes()).padStart(2, "0");
-    return `${dd}.${mm}.${yyyy} ${hh}:${min}`;
-  }
+  // ==================== PULL-TO-REFRESH (manual refresh; auto-poll is untouched) ====================
+  // Generic swipe-down-to-refresh for a scrollable data container. Works alongside the
+  // existing 5s auto-poll — this only lets the user force an immediate reload, e.g. right
+  // after someone else on another device just made a change.
+  //
+  // indicatorEl: the small spinner row placed just above containerEl in the markup.
+  // containerEl: the scrollable wrap whose content gets replaced by onRefresh (e.g. sklReportWrap).
+  // onRefresh: function returning a Promise (or plain function) that reloads + re-renders data.
+  // opts.shouldStart(): optional guard — return false to let the touch pass through untouched
+  //                     (used on the Sklad grid screens so this doesn't fight the existing
+  //                     up/down swipe that cycles between Пачки/2000/3000/4000).
+  const PULL_THRESHOLD = 62; // px of downward drag needed to trigger a refresh on release
+  const PULL_MAX = 90;       // visual cap so the indicator doesn't grow forever under a long drag
 
-  function setLastUpdated(value, selector = ".date-pill") {
-    const text = formatLastEdited(value);
-    document.querySelectorAll(selector).forEach(el => {
-      el.textContent = text;
-      el.title = value ? `Последнее обновление: ${text}` : "Последнее обновление неизвестно";
-    });
+  function initPullToRefresh(indicatorEl, containerEl, onRefresh, opts = {}) {
+    let startY = 0, pulling = false, dragY = 0, refreshing = false;
+
+    function setHeight(px) {
+      indicatorEl.style.height = px + "px";
+    }
+
+    containerEl.addEventListener("touchstart", (e) => {
+      if (refreshing) return;
+      if (opts.shouldStart && !opts.shouldStart()) return;
+      // Only start a pull when the container is already scrolled to its top —
+      // otherwise this is just the user scrolling down through a long table.
+      if (containerEl.scrollTop > 0) return;
+      startY = e.touches[0].clientY;
+      pulling = true;
+      dragY = 0;
+    }, { passive: true });
+
+    containerEl.addEventListener("touchmove", (e) => {
+      if (!pulling || refreshing) return;
+      const dy = e.touches[0].clientY - startY;
+      if (dy <= 0) { // user reversed direction / is actually scrolling content — bail out cleanly
+        pulling = false;
+        setHeight(0);
+        return;
+      }
+      dragY = Math.min(dy, PULL_MAX * 1.6);
+      setHeight(Math.min(dragY * 0.55, PULL_MAX));
+    }, { passive: true });
+
+    function endPull() {
+      if (!pulling) return;
+      pulling = false;
+      const shouldRefresh = dragY * 0.55 >= PULL_THRESHOLD * 0.9;
+      if (shouldRefresh && !refreshing) {
+        refreshing = true;
+        setHeight(PULL_THRESHOLD * 0.7);
+        indicatorEl.classList.add("ptr-spinning");
+        Promise.resolve(onRefresh()).finally(() => {
+          refreshing = false;
+          indicatorEl.classList.remove("ptr-spinning");
+          setHeight(0);
+        });
+      } else {
+        setHeight(0);
+      }
+    }
+    containerEl.addEventListener("touchend", endPull, { passive: true });
+    containerEl.addEventListener("touchcancel", () => { pulling = false; setHeight(0); }, { passive: true });
   }
 
   // ==================== SKLAD MODULE ====================
   const Sklad = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbxyCUYYc6XiR5M5nsoqeJn0IjmKWlJVRqZGAREsVHckGy1WPiGxwg41_qRcNipOZaaUTg/exec";
     const TABLES = [
-      { id: "пачки", label: "пачки" },
+      { id: "пачки", label: "Пачки" },
       { id: "2000", label: "2000" },
       { id: "3000", label: "3000" },
       { id: "4000", label: "4000" }
@@ -1011,19 +1075,15 @@
       try {
         const res = await fetch(`${API_URL}?action=getAllData`);
         const data = await res.json();
-        if (!data || !data.success || !data.tables) throw new Error("invalid response");
         ROWS = data.rows; COLS = data.cols; dataByTable = data.tables;
         loaded = true;
-        setLastUpdated(data.lastEdited);
         renderGrid();
         renderReport();
-        return true;
       } catch (err) {
         if (!loaded) {
           document.getElementById("sklGridWrap").innerHTML = '<div class="loading-note">Не удалось загрузить таблицу</div>';
           document.getElementById("sklReportWrap").innerHTML = '<div class="loading-note">Не удалось загрузить таблицу</div>';
         }
-        return false;
       }
     }
 
@@ -1176,7 +1236,7 @@
       TABLES.forEach(t => {
         const values = dataByTable[t.id] || {};
         html += `<div class="skl-report-block">`;
-        html += `<table class="skl-report-table"><thead><tr><th>${t.label}</th>`;
+        html += `<table class="skl-report-table"><thead><tr><th class="skl-report-corner">${t.label}</th>`;
         COLS.forEach(c => html += `<th>${c}</th>`);
         html += '</tr></thead><tbody>';
         ROWS.forEach(r => {
@@ -1211,6 +1271,13 @@
     }
 
     let initialized = false;
+    let refreshingPull = false;
+    async function pullRefresh() {
+      if (refreshingPull) return;
+      refreshingPull = true;
+      try { await loadAllData(); } finally { refreshingPull = false; }
+    }
+
     function init() {
       if (initialized) return;
       initialized = true;
@@ -1218,6 +1285,25 @@
       document.getElementById("sklClearAllBtn").onclick = clearAllCurrentTable;
       document.getElementById("sklDeleteBtn").onclick = deleteValue;
       loadAllData();
+
+      // Report screen (Отчёт): standard pull-to-refresh, no competing gesture here.
+      initPullToRefresh(
+        document.getElementById("sklReportPtr"),
+        document.getElementById("sklReportWrap"),
+        pullRefresh,
+        { shouldStart: () => horizIndex === 1 }
+      );
+
+      // Добавить screen: vertical swipe already cycles between the 4 tables (Пачки/2000/3000/4000).
+      // Swiping down further than that when already on the first table (Пачки) used to do
+      // nothing — that's repurposed as the refresh gesture, so it never conflicts with
+      // paging between tables.
+      initPullToRefresh(
+        document.getElementById("sklGridPtr"),
+        document.getElementById("sklGridWrap"),
+        pullRefresh,
+        { shouldStart: () => horizIndex === 0 && currentTableIndex === 0 }
+      );
 
       // Vertical swipe cycles tables — only meaningful on the "Добавить" screen (index 0).
       // Runs independently of the horizontal swiper below; both simply read the same touch events.
@@ -1227,7 +1313,7 @@
         vStartX = e.touches[0].clientX; vStartY = e.touches[0].clientY;
       }, { passive: true });
       viewport.addEventListener("touchend", (e) => {
-        if (horizIndex !== 0 || viewport.dataset.pullRefreshBusy === "1") return;
+        if (horizIndex !== 0) return;
         const dx = e.changedTouches[0].clientX - vStartX;
         const dy = e.changedTouches[0].clientY - vStartY;
         if (Math.abs(dy) < 55 || Math.abs(dy) < Math.abs(dx) * 1.3) return;
@@ -1235,12 +1321,12 @@
       }, { passive: true });
     }
 
-    return { init, setHorizIndex, refresh: loadAllData };
+    return { init, setHorizIndex };
   })();
 
   // ==================== TSEKH MODULE ====================
   const Tsekh = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbwaJVr6TgQEEUeYsMdgyxc3KxLMK7g2JsXgI_XCrYaYdEdC_JpQRV0YJtUkFcja_74lSA/exec";
     const MARKS_MIN = 7;
     const MARKS_MAX = 40;
     const MATERIALS = ["201", "301", "401", "Микс", "БД", "Рез"];
@@ -1354,7 +1440,7 @@
         body: JSON.stringify({ action: "add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
       }).then(res => res.json()).then(data => {
         if (!data.success) showToast(qtySign > 0 ? "Не сохранилось на сервере — попробуйте снова" : "Не удалось удалить блок — попробуйте снова");
-        else { setLastUpdated(data.lastEdited); loadTableData(); }
+        else loadTableData();
       }).catch(() => {
         showToast(qtySign > 0 ? "Ошибка сети — запись не сохранена" : "Ошибка сети — блок не удалён");
       });
@@ -1362,16 +1448,12 @@
 
     async function loadTableData() {
       try {
-        const res = await fetch(`${API_URL}?action=tsekh.get`);
+        const res = await fetch(`${API_URL}?action=getData`);
         const data = await res.json();
-        if (!data || data.success === false) throw new Error(data?.error || "Ошибка API");
         lastData = data;
-        setLastUpdated(data.lastEdited);
         renderTable(data);
-        return true;
       } catch (err) {
         if (!lastData) document.getElementById("tsekhTableWrap").innerHTML = '<div class="loading-note">Не удалось загрузить данные</div>';
-        return false;
       }
     }
 
@@ -1408,7 +1490,6 @@
         body: JSON.stringify({ action: "clearAll" })
       }).then(res => res.json()).then(data => {
         if (data.success) {
-          setLastUpdated(data.lastEdited);
           showToast("Таблица очищена");
           lastData = null;
           loadTableData();
@@ -1446,14 +1527,26 @@
       document.getElementById("tsekhClearAllBtn").onclick = clearAllTable;
 
       loadTableData(); // warm the cache in the background so Таблица feels instant on first open
+
+      let refreshingPull = false;
+      initPullToRefresh(
+        document.getElementById("tsekhTablePtr"),
+        document.getElementById("tsekhTableWrap"),
+        async () => {
+          if (refreshingPull) return;
+          refreshingPull = true;
+          try { await loadTableData(); } finally { refreshingPull = false; }
+        },
+        { shouldStart: () => horizIndex === 1 }
+      );
     }
 
-    return { init, setHorizIndex, refresh: loadTableData };
+    return { init, setHorizIndex };
   })();
 
   // ==================== SYRE (СЫРЬЁ) MODULE ====================
   const Syre = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
     const MATERIALS = ["201", "301", "401", "МИКС"];
 
     let values = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
@@ -1487,7 +1580,7 @@
     function activeMaterial() { return MATERIALS[activeIndex]; }
 
     async function loadValues() {
-      if (pendingSaves > 0) return false; // a save is still unconfirmed — don't risk clobbering it this tick
+      if (pendingSaves > 0) return; // a save is still unconfirmed — don't risk clobbering it this tick
       const mySeq = ++reqSeq;
       try {
         const res = await fetch(`${API_URL}?action=getData`);
@@ -1502,7 +1595,6 @@
         // snapshot per material (against appliedSeqByMaterial, same as commitValue does)
         // fixes this: a material with a newer confirmed write is left untouched.
         if (data.success && pendingSaves === 0) {
-          setLastUpdated(data.lastEdited);
           MATERIALS.forEach(m => {
             if (mySeq > appliedSeqByMaterial[m]) {
               appliedSeqByMaterial[m] = mySeq;
@@ -1512,13 +1604,10 @@
           if (mySeq > appliedSeq) appliedSeq = mySeq;
           loaded = true;
           renderSummary();
-          return true;
         }
       } catch (err) {
         // Keep whatever is already on screen — data will refresh on next successful action.
-        return false;
       }
-      return false;
     }
 
     function startPolling() {
@@ -1633,7 +1722,6 @@
         body: JSON.stringify({ action: "add", material, qty })
       }).then(res => res.json()).then(data => {
         if (data.success) {
-          setLastUpdated(data.lastEdited);
           // Only touch the ONE material this request was for, and only if no newer
           // response for that same material has already landed. A concurrent add for a
           // different material may still be unconfirmed server-side, so its value in
@@ -1699,12 +1787,12 @@
       startPolling(); // keeps the table in sync with edits made from another phone
     }
 
-    return { init, stopPolling, refresh: loadValues };
+    return { init, stopPolling };
   })();
 
   // ==================== ADMIN · SYRE (edit — shares the same data source as the Сырьё role) ====================
   const AdminSyre = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
     const MATERIALS = ["201", "301", "401", "МИКС"];
 
     let values = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
@@ -1734,7 +1822,6 @@
         // the just-saved add. This was the source of the Сырьё table desyncing between
         // the "сырье" role and the admin's "Редактирование · Сырьё" screen.
         if (data.success && pendingSaves === 0) {
-          setLastUpdated(data.lastEdited);
           MATERIALS.forEach(m => {
             if (mySeq > appliedSeqByMaterial[m]) {
               appliedSeqByMaterial[m] = mySeq;
@@ -1744,13 +1831,10 @@
           if (mySeq > appliedSeq) appliedSeq = mySeq;
           loaded = true;
           renderSummary();
-          return true;
         }
       } catch (err) {
         // Keep whatever is already on screen — data will refresh on next successful action.
-        return false;
       }
-      return false;
     }
 
     function setPolling(active) {
@@ -1892,7 +1976,6 @@
         body: JSON.stringify({ action: "clearAll" })
       }).then(res => res.json()).then(data => {
         if (data.success) {
-          setLastUpdated(data.lastEdited);
           MATERIALS.forEach(m => {
             if (mySeq > appliedSeqByMaterial[m]) {
               appliedSeqByMaterial[m] = mySeq;
@@ -1920,21 +2003,22 @@
       document.getElementById("admSyreClearAllBtn").onclick = clearAll;
       document.getElementById("admSyreDeleteBtn").onclick = () => commitValue(-1);
     }
-    return { init, setPolling, refresh: loadValues };
+    return { init, setPolling };
   })();
 
   // ==================== ADMIN · TSEKH (report + edit, sharing one data source) ====================
   const AdminTsekh = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbwaJVr6TgQEEUeYsMdgyxc3KxLMK7g2JsXgI_XCrYaYdEdC_JpQRV0YJtUkFcja_74lSA/exec";
     const MARKS_MIN = 7, MARKS_MAX = 40;
     const MATERIALS = ["201", "301", "401", "Микс", "БД", "Рез"];
     const MATERIAL_LABELS = { "201": "201", "301": "301", "401": "401", "БД": "Б/Д", "Микс": "Микс", "Рез": "Рез" };
 
     // Сырьё (raw-material stock) is shown as a small label row above the matching report
     // columns — only 201/301/401/Микс have a raw-material counterpart; Б/Д and Рез don't.
-    const SYRE_API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
+    const SYRE_API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
     const SYRE_KEY_FOR = { "201": "201", "301": "301", "401": "401", "Микс": "МИКС" };
     let syreValues = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
+    let syreLastEdited = null;
 
     let markaStr = "", qtyStr = "", selectedMaterial = null, activeField = "marka";
     let lastData = null;
@@ -2010,39 +2094,48 @@
         body: JSON.stringify({ action: "add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
       }).then(res => res.json()).then(data => {
         if (!data.success) showToast("Не сохранилось на сервере — попробуйте снова");
-        else { setLastUpdated(data.lastEdited); loadData(); }
+        else loadData();
       }).catch(() => showToast("Ошибка сети — не сохранено"));
     }
     async function loadData() {
       const [tsekhResult, syreResult] = await Promise.allSettled([
-        fetch(`${API_URL}?action=tsekh.get`).then(res => res.json()),
-        fetch(`${SYRE_API_URL}?action=syre.get`).then(res => res.json())
+        fetch(`${API_URL}?action=getData`).then(res => res.json()),
+        fetch(`${SYRE_API_URL}?action=getData`).then(res => res.json())
       ]);
-      if (tsekhResult.status === "fulfilled" && tsekhResult.value && tsekhResult.value.success !== false) {
+      if (tsekhResult.status === "fulfilled") {
         lastData = tsekhResult.value;
-        setLastUpdated(lastData.lastEdited);
       } else if (!lastData) {
         document.getElementById("admTsekhReportWrap").innerHTML = '<div class="loading-note">Не удалось загрузить данные</div>';
-        return false;
+        return;
       }
       if (syreResult.status === "fulfilled" && syreResult.value.success) {
         syreValues = syreResult.value.values;
+        syreLastEdited = syreResult.value.lastEdited;
       }
       renderReport();
-      return tsekhResult.status === "fulfilled" && tsekhResult.value && tsekhResult.value.success !== false
-        && syreResult.status === "fulfilled" && syreResult.value && syreResult.value.success !== false;
+    }
+    function formatLastEdited(iso) {
+      if (!iso) return "—";
+      const d = new Date(iso);
+      if (isNaN(d)) return "—";
+      const time = d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
+      const date = d.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" });
+      return `${time} · ${date}`;
     }
     function renderReport() {
       if (!lastData) return;
       document.getElementById("admTsekhBlocksVal").textContent = lastData.blocksInShop ?? 0;
       document.getElementById("admTsekhFreeVal").textContent = lastData.freeSlots ?? 198;
+      document.getElementById("admTsekhUpdated").textContent = formatLastEdited(lastData.lastEdited);
       let html = '<table class="tsk-table"><thead>';
       html += '<tr class="tsk-syre-row"><th></th>';
+      let unmappedCount = 0;
       MATERIALS.forEach(mat => {
         const syreKey = SYRE_KEY_FOR[mat];
-        html += `<th>${syreKey !== undefined ? (syreValues[syreKey] ?? 0) : ""}</th>`;
+        if (syreKey !== undefined) html += `<th>${syreValues[syreKey] ?? 0}</th>`;
+        else unmappedCount++;
       });
-      html += '<th></th></tr>';
+      html += `<th class="tsk-syre-updated" colspan="${unmappedCount + 1}"><div class="tsk-syre-updated-pill"><span class="stat-label">Сырьё</span><span class="stat-value">${formatLastEdited(syreLastEdited)}</span></div></th></tr>`;
       html += '<tr><th>Марка</th>';
       MATERIALS.forEach(mat => html += `<th>${MATERIAL_LABELS[mat]}</th>`);
       html += '<th>Объём</th></tr></thead><tbody>';
@@ -2069,13 +2162,22 @@
       }).catch(() => showToast("Ошибка сети"));
     }
 
+    let reportScreenActive = false;
     function setPolling(active) {
+      reportScreenActive = active;
       if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
       if (active) {
         if (lastData) renderReport();
         loadData();
         pollTimer = setInterval(loadData, 5000);
       }
+    }
+
+    let refreshingPull = false;
+    async function pullRefresh() {
+      if (refreshingPull) return;
+      refreshingPull = true;
+      try { await loadData(); } finally { refreshingPull = false; }
     }
 
     let initialized = false;
@@ -2089,40 +2191,63 @@
       document.getElementById("admTsekhRemoveBtn").onclick = () => submitEntry(-1);
       document.getElementById("admTsekhClearAllBtn").onclick = clearAllTable;
       loadData();
+
+      initPullToRefresh(
+        document.getElementById("admTsekhReportPtr"),
+        document.getElementById("admTsekhReportWrap"),
+        pullRefresh,
+        { shouldStart: () => reportScreenActive }
+      );
     }
-    return { init, setPolling, refresh: loadData };
+    return { init, setPolling };
   })();
 
   // ==================== ADMIN · SKLAD (report + edit, sharing one data source) ====================
   const AdminSklad = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbxyCUYYc6XiR5M5nsoqeJn0IjmKWlJVRqZGAREsVHckGy1WPiGxwg41_qRcNipOZaaUTg/exec";
     const TABLES = [
-      { id: "пачки", label: "пачки" }, { id: "2000", label: "2000" },
+      { id: "пачки", label: "Пачки" }, { id: "2000", label: "2000" },
       { id: "3000", label: "3000" }, { id: "4000", label: "4000" }
     ];
     let ROWS = [], COLS = [], dataByTable = {};
     let currentTableIndex = 0, selectedRow = null, selectedCol = null, valStr = "";
     let loaded = false;
     let editActive = false; // true while the "Редактирование · Склад" screen is the visible one
+    let lastEdited = null;
+    let reportScreenActive = false;
 
     function currentTable() { return TABLES[currentTableIndex]; }
+
+    function formatLastEdited(iso) {
+      if (!iso) return "—";
+      const d = new Date(iso);
+      if (isNaN(d)) return "—";
+      const time = d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
+      const date = d.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" });
+      return `${time} · ${date}`;
+    }
+    function renderHeaderTimestamp() {
+      document.getElementById("admSkladUpdatedPill").style.visibility = reportScreenActive ? "visible" : "hidden";
+      document.getElementById("admSkladUpdated").textContent = formatLastEdited(lastEdited);
+    }
+    function setReportActive(active) {
+      reportScreenActive = active;
+      renderHeaderTimestamp();
+    }
 
     async function loadAllData() {
       try {
         const res = await fetch(`${API_URL}?action=getAllData`);
         const data = await res.json();
-        if (!data || !data.success || !data.tables) throw new Error("invalid response");
         ROWS = data.rows; COLS = data.cols; dataByTable = data.tables;
+        lastEdited = data.lastEdited;
         loaded = true;
-        setLastUpdated(data.lastEdited);
-        renderGrid(); renderReport();
-        return true;
+        renderGrid(); renderReport(); renderHeaderTimestamp();
       } catch (err) {
         if (!loaded) {
           document.getElementById("admSkladGridWrap").innerHTML = '<div class="loading-note">Не удалось загрузить таблицу</div>';
           document.getElementById("admSkladReportWrap").innerHTML = '<div class="loading-note">Не удалось загрузить таблицу</div>';
         }
-        return false;
       }
     }
     function updateHeaderForEdit() {
@@ -2200,7 +2325,8 @@
       showToast(`${t.label} · ${r}, ${c}: ${v}`);
       if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {};
       dataByTable[t.id][r][c] = Number(v);
-      valStr = ""; renderVal(); renderGrid(); renderReport(); updateBtnState();
+      lastEdited = new Date().toISOString();
+      valStr = ""; renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({ action: "setCell", table: t.id, row: r, col: c, value: v })
@@ -2212,7 +2338,8 @@
       const t = currentTable(); const r = selectedRow, c = selectedCol;
       showToast(`Очищено: ${t.label} · ${r}, ${c}`);
       dataByTable[t.id][r][c] = "";
-      valStr = ""; renderVal(); renderGrid(); renderReport(); updateBtnState();
+      lastEdited = new Date().toISOString();
+      valStr = ""; renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({ action: "deleteCell", table: t.id, row: r, col: c })
@@ -2225,7 +2352,8 @@
       if (!ok) return;
       ROWS.forEach(r => { COLS.forEach(c => { if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {}; dataByTable[t.id][r][c] = ""; }); });
       selectedRow = null; selectedCol = null; valStr = "";
-      renderVal(); renderGrid(); renderReport(); updateBtnState();
+      lastEdited = new Date().toISOString();
+      renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({ action: "clearAll", table: t.id })
@@ -2240,7 +2368,7 @@
       TABLES.forEach(t => {
         const values = dataByTable[t.id] || {};
         html += `<div class="skl-report-block">`;
-        html += `<table class="skl-report-table"><thead><tr><th>${t.label}</th>`;
+        html += `<table class="skl-report-table"><thead><tr><th class="skl-report-corner">${t.label}</th>`;
         COLS.forEach(c => html += `<th>${c}</th>`);
         html += '</tr></thead><tbody>';
         ROWS.forEach(r => {
@@ -2256,7 +2384,6 @@
       editActive = active;
       if (active) { updateHeaderForEdit(); }
       if (active) { selectedRow = null; selectedCol = null; valStr = ""; renderVal(); updateBtnState(); }
-      syncWarehouseEditScale();
     }
     function cycleTable(dir) {
       const next = currentTableIndex + dir;
@@ -2267,6 +2394,13 @@
     }
 
     let initialized = false;
+    let refreshingPull = false;
+    async function pullRefresh() {
+      if (refreshingPull) return;
+      refreshingPull = true;
+      try { await loadAllData(); } finally { refreshingPull = false; }
+    }
+
     function init() {
       if (initialized) return;
       initialized = true;
@@ -2275,6 +2409,24 @@
       document.getElementById("admSkladDeleteBtn").onclick = deleteValue;
       loadAllData();
 
+      // Report screen (Отчёт · Склад): standard pull-to-refresh, no competing gesture here.
+      initPullToRefresh(
+        document.getElementById("admSkladReportPtr"),
+        document.getElementById("admSkladReportWrap"),
+        pullRefresh,
+        { shouldStart: () => reportScreenActive }
+      );
+
+      // Редактирование · Склад screen: vertical swipe already cycles between the 4 tables.
+      // Swiping down further when already on the first table (Пачки) used to do nothing —
+      // repurposed as refresh, same as the standalone Sklad screen.
+      initPullToRefresh(
+        document.getElementById("admSkladGridPtr"),
+        document.getElementById("admSkladGridWrap"),
+        pullRefresh,
+        { shouldStart: () => editActive && currentTableIndex === 0 }
+      );
+
       // Vertical swipe cycles tables — only while the "Редактирование · Склад" screen (index 3) is active.
       const viewport = document.getElementById("adminViewport");
       let vStartX = 0, vStartY = 0;
@@ -2282,122 +2434,20 @@
         vStartX = e.touches[0].clientX; vStartY = e.touches[0].clientY;
       }, { passive: true });
       viewport.addEventListener("touchend", (e) => {
-        if (!editActive || viewport.dataset.pullRefreshBusy === "1") return;
+        if (!editActive) return;
         const dx = e.changedTouches[0].clientX - vStartX;
         const dy = e.changedTouches[0].clientY - vStartY;
         if (Math.abs(dy) < 55 || Math.abs(dy) < Math.abs(dx) * 1.3) return;
         cycleTable(dy < 0 ? 1 : -1);
       }, { passive: true });
     }
-    return { init, setEditActive, refresh: loadAllData };
+    return { init, setEditActive, setReportActive };
   })();
 
   // ==================== ADMIN HEADER TOGGLE (АТ·Цех + stats vs default title) ====================
   function setAdminHeaderTsekhActive(active) {
     document.getElementById("adminHeaderDefault").style.display = active ? "none" : "flex";
     document.getElementById("adminHeaderTsekh").style.display = active ? "flex" : "none";
-  }
-
-  // ==================== MANUAL PULL-TO-REFRESH ====================
-  function attachPullToRefresh(viewportEl, refreshFn, isActive) {
-    if (!viewportEl || viewportEl.dataset.pullRefreshAttached === "1") return;
-    viewportEl.dataset.pullRefreshAttached = "1";
-
-    const indicator = document.createElement("div");
-    indicator.className = "pull-refresh-indicator";
-    viewportEl.appendChild(indicator);
-
-    let startX = 0, startY = 0, pull = 0, dragging = false, refreshing = false;
-
-    viewportEl.addEventListener("touchstart", (e) => {
-      if (refreshing || !e.touches || e.touches.length !== 1) return;
-      if (typeof isActive === "function" && !isActive()) return;
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-      pull = 0;
-      dragging = startY <= 28;
-      if (dragging) {
-        indicator.style.opacity = "1";
-        indicator.style.transform = "translateX(-50%) translateY(0)";
-      }
-    }, { passive: true });
-
-    viewportEl.addEventListener("touchmove", (e) => {
-      if (!dragging || refreshing || !e.touches || e.touches.length !== 1) return;
-      const dx = e.touches[0].clientX - startX;
-      const dy = e.touches[0].clientY - startY;
-      if (dy <= 0 || Math.abs(dx) > Math.abs(dy) * 1.15) {
-        pull = 0;
-        indicator.style.opacity = "0";
-        return;
-      }
-      pull = Math.min(72, (dy * 0.52));
-      indicator.style.opacity = String(Math.min(1, pull / 32));
-      indicator.style.transform = `translateX(-50%) translateY(${pull}px)`;
-    }, { passive: true });
-
-    async function finishPull() {
-      if (!dragging) return;
-      dragging = false;
-      const shouldRefresh = pull >= 56;
-      if (!shouldRefresh) {
-        indicator.style.opacity = "0";
-        indicator.style.transform = "translateX(-50%) translateY(0)";
-        return;
-      }
-      refreshing = true;
-      viewportEl.dataset.pullRefreshBusy = "1";
-      indicator.classList.add("refreshing");
-      indicator.style.opacity = "1";
-      indicator.style.transform = "translateX(-50%) translateY(18px)";
-      try {
-        const result = await refreshFn();
-        if (result === false) throw new Error("refresh failed");
-        showToast("Данные обновлены");
-      } catch (err) {
-        showToast("Не удалось обновить данные");
-      } finally {
-        refreshing = false;
-        viewportEl.dataset.pullRefreshBusy = "0";
-        indicator.classList.remove("refreshing");
-        indicator.style.opacity = "0";
-        indicator.style.transform = "translateX(-50%) translateY(0)";
-      }
-    }
-
-    viewportEl.addEventListener("touchend", finishPull, { passive: true });
-    viewportEl.addEventListener("touchcancel", finishPull, { passive: true });
-  }
-
-  // ==================== WAREHOUSE EDIT AUTO-SCALE ====================
-  function syncWarehouseEditScale() {
-    const viewport = document.getElementById("skladViewport");
-    const skladWrap = document.getElementById("sklAddWrap");
-    if (viewport && skladWrap) {
-      const available = Math.max(1, viewport.clientHeight);
-      const scale = Math.min(1, Math.max(0.68, available / 640));
-      skladWrap.style.setProperty("--skl-edit-scale", scale.toFixed(4));
-    }
-
-    const adminViewport = document.getElementById("adminViewport");
-    const adminWrap = document.getElementById("admSkladAddWrap");
-    const adminSwiper = swipers.admin;
-    const adminEditVisible = !!adminSwiper && adminSwiper.current() === 3;
-
-    if (adminViewport && adminWrap) {
-      if (!adminEditVisible) {
-        adminWrap.style.setProperty("--skl-edit-scale", "1");
-        return;
-      }
-
-      // Run after the horizontal swiper has settled so clientHeight is the real
-      // visible height of the admin editor on short screens.
-      requestAnimationFrame(() => {
-        const available = Math.max(1, adminViewport.clientHeight);
-        const scale = Math.min(1, Math.max(0.68, available / 640));
-        adminWrap.style.setProperty("--skl-edit-scale", scale.toFixed(4));
-      });
-    }
   }
 
   // ==================== ROLE SWIPERS (created once, lazily) ====================
@@ -2407,7 +2457,6 @@
     if (swipers[role]) return swipers[role];
     if (role === "sklad") {
       fixTrackChildWidths(document.getElementById("skladTrack"), 3);
-      attachPullToRefresh(document.getElementById("skladViewport"), Sklad.refresh, () => swipers.sklad ? swipers.sklad.current() !== 2 : true);
       swipers.sklad = createSwiper(
         document.getElementById("skladViewport"),
         document.getElementById("skladTrack"),
@@ -2415,10 +2464,8 @@
         { onChange: (i) => Sklad.setHorizIndex(i) }
       );
       Sklad.init();
-      syncWarehouseEditScale();
     } else if (role === "tsekh") {
       fixTrackChildWidths(document.getElementById("tsekhTrack"), 3);
-      attachPullToRefresh(document.getElementById("tsekhViewport"), Tsekh.refresh, () => swipers.tsekh ? swipers.tsekh.current() !== 2 : true);
       swipers.tsekh = createSwiper(
         document.getElementById("tsekhViewport"),
         document.getElementById("tsekhTrack"),
@@ -2434,15 +2481,8 @@
         2
       );
       Syre.init();
-      attachPullToRefresh(document.getElementById("syreViewport"), Syre.refresh, () => swipers.syre ? swipers.syre.current() !== 1 : true);
     } else if (role === "admin") {
       fixTrackChildWidths(document.getElementById("adminTrack"), 6);
-      attachPullToRefresh(document.getElementById("adminViewport"), async () => {
-        const i = swipers.admin ? swipers.admin.current() : 0;
-        if (i === 0) return AdminTsekh.refresh();
-        if (i === 1 || i === 3) return AdminSklad.refresh();
-        if (i === 4) return AdminSyre.refresh();
-      }, () => swipers.admin ? swipers.admin.current() !== 5 : true);
       swipers.admin = createSwiper(
         document.getElementById("adminViewport"),
         document.getElementById("adminTrack"),
@@ -2454,7 +2494,7 @@
             AdminTsekh.setPolling(i === 0);   // auto-refresh only while viewing the Цех report, matching the original app
             setAdminHeaderTsekhActive(i === 0); // header swaps to "АТ · Цех" + stats only on the Цех report screen
             AdminSklad.setEditActive(i === 3); // vertical swipe (table cycling) only live on the Склад edit screen
-            syncWarehouseEditScale();
+            AdminSklad.setReportActive(i === 1); // show the shared last-edited timestamp only on the Склад report screen
             AdminSyre.setPolling(i === 4);    // auto-refresh only while viewing the Сырьё edit screen
           }
         }
@@ -2462,7 +2502,6 @@
       AdminTsekh.init();
       AdminSklad.init();
       AdminSyre.init();
-      syncWarehouseEditScale();
     }
     return swipers[role];
   }
@@ -2473,7 +2512,6 @@
     showTopScreen(screenId);
     const sw = ensureSwiper(role);
     sw.goTo(0, false); // always land on the main screen of the role, no leftover offset from last exit view
-    requestAnimationFrame(syncWarehouseEditScale);
   }
 
   // ==================== LOGOUT ====================
@@ -2566,10 +2604,7 @@
     const yyyy = d.getFullYear();
     return `${dd}.${mm}.${yyyy}`;
   }
-  document.querySelectorAll(".date-pill").forEach(el => {
-    el.textContent = "—";
-    el.title = "Последнее обновление: ожидание данных";
-  });
+  document.querySelectorAll(".date-pill").forEach(el => el.textContent = formatDate(new Date()));
 
   // ==================== INIT: restore saved role, or show login ====================
   (function init() {
@@ -2580,9 +2615,6 @@
       showTopScreen("screenLogin");
     }
   })();
-
-  window.addEventListener("resize", syncWarehouseEditScale, { passive: true });
-  if (window.visualViewport) window.visualViewport.addEventListener("resize", syncWarehouseEditScale, { passive: true });
 
   // ==================== DISABLE PINCH / DOUBLE-TAP ZOOM ====================
   document.addEventListener("gesturestart", e => e.preventDefault());
