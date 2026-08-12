@@ -1068,34 +1068,45 @@
     containerEl.addEventListener("touchcancel", () => { pulling = false; setHeight(0); }, { passive: true });
   }
 
-  // ==================== AUTO-FIT TABLE (no scroll, shrinks to the available space) ====================
+  // ==================== AUTO-FIT TABLE (no scroll, shrinks OR grows to fill the available space) ====================
   // Used by the Sklad editing grid (skl-table): the row count comes from the backend and
-  // varies, so a fixed font size can either leave empty space or overflow depending on how
-  // many rows there are. This measures the table's natural height right after it's rendered
-  // and steps --skl-row-font down (via binary search) until it fits wrapEl's height exactly —
-  // no scrolling, no clipping. Cheap: runs once per render, not on every keystroke, and each
-  // step is a single reflow read, so a handful of steps is a sub-millisecond cost.
+  // varies, so a fixed font size either leaves empty space (few rows) or overflows (many rows).
+  // This measures the table's natural size right after it's rendered and binary-searches
+  // --skl-row-font until the table fills wrapEl as closely as possible on BOTH axes —
+  // growing to fill empty space when there's room, shrinking when there isn't, and never
+  // growing past what the narrowest column can hold (table-layout:fixed means column width
+  // doesn't grow with font size, so a table with many columns caps out sooner on width than
+  // on height). No scrolling, no clipping. Cheap: runs once per render, not on every keystroke.
   function fitTableToContainer(wrapEl, tableEl, opts = {}) {
     if (!tableEl) return;
-    const maxFont = opts.maxFont || 17;
+    const maxFont = opts.maxFont || 40;
     const minFont = opts.minFont || 9;
-    const available = wrapEl.clientHeight;
-    if (available <= 0) return; // not laid out yet (e.g. screen not visible) — skip, next render will retry
+    const availableH = wrapEl.clientHeight;
+    const availableW = wrapEl.clientWidth;
+    if (availableH <= 0 || availableW <= 0) return; // not laid out yet — skip, next render will retry
 
-    // Fast path: try the max size first, since most of the time (few rows) it already fits.
-    tableEl.style.setProperty("--skl-row-font", maxFont + "px");
-    tableEl.style.setProperty("--skl-cell-pad", "2px");
-    if (tableEl.scrollHeight <= available) return;
-
-    let lo = minFont, hi = maxFont, best = minFont;
-    for (let i = 0; i < 6; i++) { // 6 steps is enough precision for a 9–17px range
-      const mid = (lo + hi) / 2;
-      tableEl.style.setProperty("--skl-row-font", mid + "px");
-      tableEl.style.setProperty("--skl-cell-pad", Math.max(1, mid * 0.12) + "px");
-      if (tableEl.scrollHeight <= available) { best = mid; lo = mid; } else { hi = mid; }
+    function fitsAt(font) {
+      tableEl.style.setProperty("--skl-row-font", font + "px");
+      tableEl.style.setProperty("--skl-cell-pad", Math.max(1, font * 0.12) + "px");
+      // scrollWidth briefly exceeds clientWidth if a cell's content can't wrap at this font
+      // size (e.g. a 3-digit number in a narrow column) — checking both axes catches that,
+      // not just vertical overflow.
+      return tableEl.scrollHeight <= availableH && tableEl.scrollWidth <= availableW + 1;
     }
-    tableEl.style.setProperty("--skl-row-font", best + "px");
-    tableEl.style.setProperty("--skl-cell-pad", Math.max(1, best * 0.12) + "px");
+
+    // Binary search the largest font that still fits both axes — grows the table to use
+    // the full available space when there's room (few rows/columns), shrinks it when there
+    // isn't, instead of being capped at one fixed size.
+    let lo = minFont, hi = maxFont, best = minFont;
+    if (fitsAt(maxFont)) {
+      best = maxFont; // whole range fits — just use the top of it
+    } else {
+      for (let i = 0; i < 8; i++) { // 8 steps gives sub-pixel precision across a 9–40px range
+        const mid = (lo + hi) / 2;
+        if (fitsAt(mid)) { best = mid; lo = mid; } else { hi = mid; }
+      }
+    }
+    fitsAt(best);
   }
 
   // ==================== SKLAD MODULE ====================
