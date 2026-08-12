@@ -976,6 +976,10 @@
     });
   }
 
+  // ==================== UNIFIED BACKEND CONFIG ====================
+  // Deploy the unified Apps Script as a Web app and paste its /exec URL here once.
+  const UNIFIED_API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
+
   // ==================== TOAST ====================
   function showToast(msg) {
     const t = document.getElementById("toast");
@@ -992,7 +996,7 @@
 
   // ==================== SKLAD MODULE ====================
   const Sklad = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxyCUYYc6XiR5M5nsoqeJn0IjmKWlJVRqZGAREsVHckGy1WPiGxwg41_qRcNipOZaaUTg/exec";
+    const API_URL = UNIFIED_API_URL;
     const TABLES = [
       { id: "пачки", label: "Пачки" },
       { id: "2000", label: "2000" },
@@ -1010,7 +1014,7 @@
 
     async function loadAllData() {
       try {
-        const res = await fetch(`${API_URL}?action=getAllData&_=${Date.now()}`, { cache: "no-store" });
+        const res = await fetch(`${API_URL}?action=warehouse.get&_=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         ROWS = data.rows; COLS = data.cols; dataByTable = data.tables;
         loaded = true;
@@ -1126,7 +1130,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "setCell", table: t.id, row: r, col: c, value: v })
+        body: JSON.stringify({ action: "warehouse.setCell", table: t.id, row: r, col: c, value: v })
       }).then(res => res.json()).then(data => {
         if (!data.success) {
           showToast("Не сохранилось на сервере — обновите данные");
@@ -1147,7 +1151,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "deleteCell", table: t.id, row: r, col: c })
+        body: JSON.stringify({ action: "warehouse.deleteCell", table: t.id, row: r, col: c })
       }).then(res => res.json()).then(data => {
         if (!data.success) {
           showToast("Не удалось очистить на сервере");
@@ -1167,7 +1171,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll", table: t.id })
+        body: JSON.stringify({ action: "warehouse.clearAll", table: t.id })
       }).then(res => res.json()).then(data => {
         if (!data.success) {
           showToast("Не удалось очистить на сервере");
@@ -1249,7 +1253,7 @@
 
   // ==================== TSEKH MODULE ====================
   const Tsekh = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbwaJVr6TgQEEUeYsMdgyxc3KxLMK7g2JsXgI_XCrYaYdEdC_JpQRV0YJtUkFcja_74lSA/exec";
+    const API_URL = UNIFIED_API_URL;
     const MARKS_MIN = 7;
     const MARKS_MAX = 40;
     const MATERIALS = ["201", "301", "401", "Микс", "БД", "Рез"];
@@ -1360,7 +1364,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
+        body: JSON.stringify({ action: "workshop.add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
       }).then(res => res.json()).then(data => {
         if (!data.success) showToast(qtySign > 0 ? "Не сохранилось на сервере — попробуйте снова" : "Не удалось удалить блок — попробуйте снова");
         else loadTableData();
@@ -1371,7 +1375,7 @@
 
     async function loadTableData() {
       try {
-        const res = await fetch(`${API_URL}?action=getData`);
+        const res = await fetch(`${API_URL}?action=workshop.get&_=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         lastData = data;
         renderTable(data);
@@ -1410,7 +1414,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll" })
+        body: JSON.stringify({ action: "workshop.clear" })
       }).then(res => res.json()).then(data => {
         if (data.success) {
           showToast("Таблица очищена");
@@ -1457,7 +1461,7 @@
 
   // ==================== SYRE (СЫРЬЁ) MODULE ====================
   const Syre = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
+    const API_URL = UNIFIED_API_URL;
     const MATERIALS = ["201", "301", "401", "МИКС"];
 
     let values = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
@@ -1494,7 +1498,7 @@
       if (pendingSaves > 0) return; // a save is still unconfirmed — don't risk clobbering it this tick
       const mySeq = ++reqSeq;
       try {
-        const res = await fetch(`${API_URL}?action=getData`);
+        const res = await fetch(`${API_URL}?action=raw.get&_=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         // Re-check pendingSaves: a save may have started while this GET was in flight.
         // BUG FIX: this GET was sent BEFORE mySeq was compared to appliedSeq below, so a
@@ -1630,7 +1634,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "add", material, qty })
+        body: JSON.stringify({ action: "raw.add", material, qty })
       }).then(res => res.json()).then(data => {
         if (data.success) {
           // Only touch the ONE material this request was for, and only if no newer
@@ -1662,7 +1666,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll" })
+        body: JSON.stringify({ action: "raw.clearAll" })
       }).then(res => res.json()).then(data => {
         if (data.success) {
           // Same per-material gating as loadValues: only stamp a material as cleared if
@@ -1703,7 +1707,7 @@
 
   // ==================== ADMIN · SYRE (edit — shares the same data source as the Сырьё role) ====================
   const AdminSyre = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
+    const API_URL = UNIFIED_API_URL;
     const MATERIALS = ["201", "301", "401", "МИКС"];
 
     let values = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
@@ -1723,7 +1727,7 @@
       if (pendingSaves > 0) return;
       const mySeq = ++reqSeq;
       try {
-        const res = await fetch(`${API_URL}?action=getData`);
+        const res = await fetch(`${API_URL}?action=raw.get&_=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         // BUG FIX: apply the snapshot per material (against appliedSeqByMaterial), not as
         // one wholesale overwrite of `values`. A poll started before a commitValue can
@@ -1856,7 +1860,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "add", material, qty })
+        body: JSON.stringify({ action: "raw.add", material, qty })
       }).then(res => res.json()).then(data => {
         if (data.success) {
           if (mySeq > appliedSeqByMaterial[material]) {
@@ -1884,7 +1888,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll" })
+        body: JSON.stringify({ action: "raw.clearAll" })
       }).then(res => res.json()).then(data => {
         if (data.success) {
           MATERIALS.forEach(m => {
@@ -1919,14 +1923,14 @@
 
   // ==================== ADMIN · TSEKH (report + edit, sharing one data source) ====================
   const AdminTsekh = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbwaJVr6TgQEEUeYsMdgyxc3KxLMK7g2JsXgI_XCrYaYdEdC_JpQRV0YJtUkFcja_74lSA/exec";
+    const API_URL = UNIFIED_API_URL;
     const MARKS_MIN = 7, MARKS_MAX = 40;
     const MATERIALS = ["201", "301", "401", "Микс", "БД", "Рез"];
     const MATERIAL_LABELS = { "201": "201", "301": "301", "401": "401", "БД": "Б/Д", "Микс": "Микс", "Рез": "Рез" };
 
     // Сырьё (raw-material stock) is shown as a small label row above the matching report
     // columns — only 201/301/401/Микс have a raw-material counterpart; Б/Д and Рез don't.
-    const SYRE_API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
+    const SYRE_API_URL = UNIFIED_API_URL;
     const SYRE_KEY_FOR = { "201": "201", "301": "301", "401": "401", "Микс": "МИКС" };
     let syreValues = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
     let syreLastEdited = null;
@@ -2002,7 +2006,7 @@
       resetForm();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
+        body: JSON.stringify({ action: "workshop.add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
       }).then(res => res.json()).then(data => {
         if (!data.success) showToast("Не сохранилось на сервере — попробуйте снова");
         else loadData();
@@ -2010,8 +2014,8 @@
     }
     async function loadData() {
       const [tsekhResult, syreResult] = await Promise.allSettled([
-        fetch(`${API_URL}?action=getData`).then(res => res.json()),
-        fetch(`${SYRE_API_URL}?action=getData`).then(res => res.json())
+        fetch(`${API_URL}?action=workshop.get&_=${Date.now()}`, { cache: "no-store" }).then(res => res.json()),
+        fetch(`${SYRE_API_URL}?action=raw.get&_=${Date.now()}`, { cache: "no-store" }).then(res => res.json())
       ]);
       if (tsekhResult.status === "fulfilled") {
         lastData = tsekhResult.value;
@@ -2066,7 +2070,7 @@
       if (!ok) return;
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll" })
+        body: JSON.stringify({ action: "workshop.clear" })
       }).then(res => res.json()).then(data => {
         if (data.success) { showToast("Таблица очищена"); lastData = null; loadData(); }
         else showToast("Не удалось очистить");
@@ -2099,7 +2103,7 @@
 
   // ==================== ADMIN · SKLAD (report + edit, sharing one data source) ====================
   const AdminSklad = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxyCUYYc6XiR5M5nsoqeJn0IjmKWlJVRqZGAREsVHckGy1WPiGxwg41_qRcNipOZaaUTg/exec";
+    const API_URL = UNIFIED_API_URL;
     const TABLES = [
       { id: "пачки", label: "Пачки" }, { id: "2000", label: "2000" },
       { id: "3000", label: "3000" }, { id: "4000", label: "4000" }
@@ -2132,7 +2136,7 @@
 
     async function loadAllData() {
       try {
-        const res = await fetch(`${API_URL}?action=getAllData&_=${Date.now()}`, { cache: "no-store" });
+        const res = await fetch(`${API_URL}?action=warehouse.get&_=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         ROWS = data.rows; COLS = data.cols; dataByTable = data.tables;
         lastEdited = data.lastEdited;
@@ -2224,7 +2228,7 @@
       valStr = ""; renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "setCell", table: t.id, row: r, col: c, value: v })
+        body: JSON.stringify({ action: "warehouse.setCell", table: t.id, row: r, col: c, value: v })
       }).then(res => res.json()).then(data => {
         if (!data.success) { showToast("Не сохранилось на сервере — обновите данные"); return; }
         return loadAllData();
@@ -2239,7 +2243,7 @@
       valStr = ""; renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "deleteCell", table: t.id, row: r, col: c })
+        body: JSON.stringify({ action: "warehouse.deleteCell", table: t.id, row: r, col: c })
       }).then(res => res.json()).then(data => {
         if (!data.success) { showToast("Не удалось очистить на сервере"); return; }
         return loadAllData();
@@ -2255,7 +2259,7 @@
       renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll", table: t.id })
+        body: JSON.stringify({ action: "warehouse.clearAll", table: t.id })
       }).then(res => res.json()).then(data => {
         if (!data.success) { showToast("Не удалось очистить на сервере"); return; }
         showToast(`Таблица «${t.label}» очищена`);
