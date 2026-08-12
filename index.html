@@ -167,9 +167,9 @@
   .field-display.filled.active { color:var(--red); }
 
   .skl-add-wrap { flex:1; min-height:0; display:flex; flex-direction:column; padding:6px 10px 8px; gap:5px; }
-  .skl-grid-wrap { flex:1 1 0%; min-height:0; height:0; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
+  .skl-grid-wrap { flex:1 1 0%; min-height:0; height:0; display:flex; flex-direction:column; justify-content:stretch; align-items:stretch; overflow:hidden; }
   .skl-table {
-    --skl-row-font:17px; --skl-cell-pad:2px; width:100%; height:auto; border-collapse:collapse;
+    --skl-row-font:17px; --skl-cell-pad:2px; --skl-row-height:auto; width:100%; height:100%; border-collapse:collapse;
     border:2px solid var(--red); border-radius:6px; overflow:hidden; font-size:var(--skl-row-font); table-layout:fixed;
   }
   .skl-table thead th {
@@ -183,6 +183,7 @@
     padding:calc(var(--skl-cell-pad) * 3) 3px; font-size:calc(var(--skl-row-font) * .76);
     font-weight:800; text-align:left; border-right:1px solid var(--gray-border); border-bottom:1px solid var(--gray-border);
   }
+  .skl-table tbody tr { height:var(--skl-row-height); }
   .skl-table tbody td {
     padding:var(--skl-cell-pad); text-align:center; border-bottom:1px solid var(--gray-border);
     border-right:1px solid var(--gray-border); color:var(--black); font-weight:700;
@@ -657,168 +658,235 @@
     containerEl.addEventListener("touchcancel",()=>{pulling=false;setH(0);},{passive:true});
   }
 
-  // iOS/Safari-safe table autofit.
-  // Safari can report an intermediate flex height during the first layout pass,
-  // especially with 100dvh / viewport-fit=cover. In that case the old algorithm
-  // measured a smaller container, chose a smaller font, and the table kept large
-  // empty gutters above/below.
+  // ==================== RESPONSIVE SKLAD TABLE FIT ====================
+  //
+  // The table is treated as a layout with TWO independent constraints:
+  // 1) font size is chosen from WIDTH, so all columns/content fit horizontally;
+  // 2) row height is chosen from the remaining HEIGHT, so the table fills the
+  //    whole available area instead of being vertically centered with empty space.
+  //
+  // This avoids the iOS Safari failure mode where a binary search over font-size
+  // stops because width is already the limiting factor, leaving unused height.
+
   function fitTableToContainer(wrapEl, tableEl, opts = {}) {
     if (!wrapEl || !tableEl) return;
 
-    const maxFont = opts.maxFont || 40;
-    const minFont = opts.minFont || 9;
-    const minPad = opts.minPad || 1;
-    const padRatio = opts.padRatio || 0.12;
-
-    // Reserve a tiny amount for sub-pixel rounding so Safari does not alternate
-    // between two sizes when the viewport height changes by 1 px.
+    const maxFont = opts.maxFont || 24;
+    const minFont = opts.minFont || 8;
+    const fontPadRatio = opts.fontPadRatio || 0.08;
     const EPS = 1.5;
 
-    function getAvailable() {
-      const wrapRect = wrapEl.getBoundingClientRect();
-      const tableStyle = getComputedStyle(tableEl);
-      const wrapStyle = getComputedStyle(wrapEl);
+    const getAvailableBox = () => {
+      const r = wrapEl.getBoundingClientRect();
+      const cs = getComputedStyle(wrapEl);
 
-      // Use the actual rendered box, not only clientHeight. This is more reliable
-      // on iOS when the flex item is affected by dynamic browser chrome.
-      let h = Math.floor(wrapRect.height);
-      let w = Math.floor(wrapRect.width);
+      const paddingX =
+        (parseFloat(cs.paddingLeft) || 0) +
+        (parseFloat(cs.paddingRight) || 0) +
+        (parseFloat(cs.borderLeftWidth) || 0) +
+        (parseFloat(cs.borderRightWidth) || 0);
 
-      // The wrapper may temporarily report 0/too-small dimensions during a layout
-      // pass. visualViewport gives us a useful fallback on iOS Safari.
-      if (h <= 0 && window.visualViewport) {
-        h = Math.floor(window.visualViewport.height || 0);
-      }
-      if (w <= 0) {
-        w = Math.floor(document.documentElement.clientWidth || window.innerWidth || 0);
-      }
+      const paddingY =
+        (parseFloat(cs.paddingTop) || 0) +
+        (parseFloat(cs.paddingBottom) || 0) +
+        (parseFloat(cs.borderTopWidth) || 0) +
+        (parseFloat(cs.borderBottomWidth) || 0);
 
-      // Account for wrapper padding/border if present.
-      const padY =
-        (parseFloat(wrapStyle.paddingTop) || 0) +
-        (parseFloat(wrapStyle.paddingBottom) || 0) +
-        (parseFloat(wrapStyle.borderTopWidth) || 0) +
-        (parseFloat(wrapStyle.borderBottomWidth) || 0);
+      return {
+        width: Math.max(0, Math.floor(r.width - paddingX)),
+        height: Math.max(0, Math.floor(r.height - paddingY))
+      };
+    };
 
-      const padX =
-        (parseFloat(wrapStyle.paddingLeft) || 0) +
-        (parseFloat(wrapStyle.paddingRight) || 0) +
-        (parseFloat(wrapStyle.borderLeftWidth) || 0) +
-        (parseFloat(wrapStyle.borderRightWidth) || 0);
+    const applyFont = (font) => {
+      tableEl.style.setProperty("--skl-row-font", `${font}px`);
+      tableEl.style.setProperty(
+        "--skl-cell-pad",
+        `${Math.max(0.5, font * fontPadRatio)}px`
+      );
+    };
 
-      // Avoid a negative or wildly incorrect available size.
-      h = Math.max(0, h - padY);
-      w = Math.max(0, w - padX);
-
-      // Keep this read so Safari flushes pending layout before we measure table size.
-      void tableStyle;
-
-      return { h, w };
-    }
-
-    function applyFont(font) {
-      tableEl.style.setProperty("--skl-row-font", font + "px");
-      tableEl.style.setProperty("--skl-cell-pad", Math.max(minPad, font * padRatio) + "px");
-    }
-
-    function measure() {
-      // Force layout after applying font/padding.
+    const measureNaturalWidth = () => {
+      // Let the browser tell us the real horizontal footprint at this font.
+      tableEl.style.height = "auto";
+      tableEl.style.removeProperty("--skl-row-height");
       const rect = tableEl.getBoundingClientRect();
-      const h = Math.max(tableEl.scrollHeight, rect.height);
-      const w = Math.max(tableEl.scrollWidth, rect.width);
-      return { h, w };
-    }
+      return Math.max(rect.width, tableEl.scrollWidth);
+    };
 
-    function fitsAt(font, available) {
+    const fitsWidth = (font, availableWidth) => {
       applyFont(font);
-      const measured = measure();
-      return measured.h <= available.h + EPS && measured.w <= available.w + EPS;
-    }
+      const width = measureNaturalWidth();
+      return width <= availableWidth + EPS;
+    };
 
-    function run() {
-      const available = getAvailable();
-      if (available.h <= 0 || available.w <= 0) return false;
-
-      // First find the largest font that fits.
+    const findFontByWidth = (availableWidth) => {
       let lo = minFont;
       let hi = maxFont;
       let best = minFont;
 
-      if (fitsAt(maxFont, available)) {
-        best = maxFont;
-      } else {
-        for (let i = 0; i < 11; i++) {
+      if (fitsWidth(maxFont, availableWidth)) return maxFont;
+
+      for (let i = 0; i < 12; i++) {
+        const mid = (lo + hi) / 2;
+        if (fitsWidth(mid, availableWidth)) {
+          best = mid;
+          lo = mid;
+        } else {
+          hi = mid;
+        }
+      }
+      return best;
+    };
+
+    const getNaturalRowMetrics = () => {
+      const thead = tableEl.querySelector("thead");
+      const rows = [...tableEl.querySelectorAll("tbody tr")];
+      if (!thead || rows.length === 0) return null;
+
+      // Measure without forced table/body heights.
+      tableEl.style.height = "auto";
+      tableEl.style.removeProperty("--skl-row-height");
+
+      const headerHeight = thead.getBoundingClientRect().height;
+      const naturalRowHeights = rows.map(
+        row => row.getBoundingClientRect().height
+      );
+
+      return {
+        thead,
+        rows,
+        headerHeight,
+        naturalRowHeights,
+        maxNaturalRowHeight: Math.max(...naturalRowHeights, 0)
+      };
+    };
+
+    const applyRowHeight = (rowHeight, metrics) => {
+      if (!metrics) return;
+
+      // Use a CSS variable rather than relying only on table height distribution.
+      // Safari honors explicit <tr> heights much more consistently.
+      tableEl.style.setProperty("--skl-row-height", `${Math.max(0, rowHeight)}px`);
+
+      metrics.rows.forEach(row => {
+        row.style.height = `${Math.max(0, rowHeight)}px`;
+      });
+
+      // Explicit table height makes the outer box equal to the wrapper.
+      tableEl.style.height = "100%";
+    };
+
+    const run = () => {
+      const available = getAvailableBox();
+      if (available.width <= 0 || available.height <= 0) return;
+
+      // PASS 1: width determines font size.
+      let bestFont = findFontByWidth(available.width);
+      applyFont(bestFont);
+
+      // PASS 2: make sure the chosen font can still fit vertically on very short phones.
+      let metrics = getNaturalRowMetrics();
+      if (!metrics || metrics.rows.length === 0) return;
+
+      let targetRowHeight =
+        (available.height - metrics.headerHeight) / metrics.rows.length;
+
+      // If the screen is extremely short, reduce font until natural content
+      // can fit inside the target row height.
+      if (targetRowHeight > 0 && metrics.maxNaturalRowHeight > targetRowHeight + EPS) {
+        let lo = minFont;
+        let hi = bestFont;
+        let fittingFont = minFont;
+
+        for (let i = 0; i < 10; i++) {
           const mid = (lo + hi) / 2;
-          if (fitsAt(mid, available)) {
+          applyFont(mid);
+          metrics = getNaturalRowMetrics();
+
+          if (metrics && metrics.maxNaturalRowHeight <= targetRowHeight + EPS) {
+            fittingFont = mid;
+            lo = mid;
+          } else {
+            hi = mid;
+          }
+        }
+
+        bestFont = fittingFont;
+        applyFont(bestFont);
+        metrics = getNaturalRowMetrics();
+        targetRowHeight =
+          (available.height - metrics.headerHeight) / metrics.rows.length;
+      }
+
+      if (metrics && metrics.rows.length) {
+        const safeRowHeight = Math.max(
+          0,
+          (available.height - metrics.headerHeight) / metrics.rows.length
+        );
+        applyRowHeight(safeRowHeight, metrics);
+      }
+
+      // Final horizontal guard after all Safari layout changes.
+      const finalWidth = tableEl.getBoundingClientRect().width;
+      if (finalWidth > available.width + EPS) {
+        let lo = minFont;
+        let hi = bestFont;
+        let best = minFont;
+
+        for (let i = 0; i < 10; i++) {
+          const mid = (lo + hi) / 2;
+          applyFont(mid);
+          const width = measureNaturalWidth();
+          if (width <= available.width + EPS) {
             best = mid;
             lo = mid;
           } else {
             hi = mid;
           }
         }
-      }
 
-      applyFont(best);
-
-      // Grow the final table vertically to use the available area more fully.
-      // On Safari this second pass eliminates the visible "air" above/below after
-      // the first binary-search pass.
-      const after = measure();
-      if (after.h > 0 && after.h < available.h - 1) {
-        let low = best;
-        let high = Math.min(maxFont, best * Math.max(1.15, available.h / after.h));
-
-        for (let i = 0; i < 10; i++) {
-          const mid = (low + high) / 2;
-          if (fitsAt(mid, available)) {
-            low = mid;
-            best = mid;
-          } else {
-            high = mid;
-          }
-        }
         applyFont(best);
+        metrics = getNaturalRowMetrics();
+
+        if (metrics && metrics.rows.length) {
+          const rowHeight =
+            (available.height - metrics.headerHeight) / metrics.rows.length;
+          applyRowHeight(rowHeight, metrics);
+        }
       }
+    };
 
-      return true;
-    }
-
-    // Run now, then once after the next paint. The second pass is the important
-    // iOS fix: by then Safari has normally committed the final flex/viewport size.
     run();
-    requestAnimationFrame(() => requestAnimationFrame(run));
+
+    // iOS Safari commits flex/dvh/visualViewport changes across multiple paint
+    // cycles. Running after two RAFs catches the final geometry.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(run);
+    });
   }
 
   function scheduleTableFit(wrapEl, tableEl, opts = {}) {
     if (!wrapEl || !tableEl) return;
 
-    let raf1 = 0;
-    let raf2 = 0;
+    let raf = 0;
 
     const rerun = () => {
-      cancelAnimationFrame(raf1);
-      cancelAnimationFrame(raf2);
-
-      raf1 = requestAnimationFrame(() => {
-        raf2 = requestAnimationFrame(() => {
-          fitTableToContainer(wrapEl, tableEl, opts);
-        });
-      });
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => fitTableToContainer(wrapEl, tableEl, opts));
     };
 
     rerun();
 
-    // iOS Safari changes the effective viewport when browser chrome appears/disappears.
-    if (window.visualViewport && !wrapEl._tableFitVVAttached) {
-      wrapEl._tableFitVVAttached = true;
-      window.visualViewport.addEventListener("resize", rerun, { passive: true });
-      window.visualViewport.addEventListener("scroll", rerun, { passive: true });
+    if (!wrapEl._sklFitRO && "ResizeObserver" in window) {
+      wrapEl._sklFitRO = new ResizeObserver(() => rerun());
+      wrapEl._sklFitRO.observe(wrapEl);
     }
 
-    if ("ResizeObserver" in window && !wrapEl._tableFitRO) {
-      const ro = new ResizeObserver(() => rerun());
-      ro.observe(wrapEl);
-      wrapEl._tableFitRO = ro;
+    if (!wrapEl._sklFitVV && window.visualViewport) {
+      wrapEl._sklFitVV = true;
+      window.visualViewport.addEventListener("resize", rerun, { passive: true });
+      window.visualViewport.addEventListener("scroll", rerun, { passive: true });
     }
   }
 
