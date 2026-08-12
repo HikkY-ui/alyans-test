@@ -78,15 +78,15 @@
     display: flex; align-items: center; justify-content: space-between; width: 100%;
   }
   .admin-header-tsekh { display: none; width: 100%; align-items: center; justify-content: space-between; }
-  .admin-header-tsekh-stats { display: flex; align-items: center; gap: 6px; }
+  .admin-header-tsekh-stats { display: flex; align-items: center; gap: 4px; }
   .admin-header-tsekh-pill {
-    display: flex; align-items: baseline; gap: 4px;
-    border: 2px solid var(--red); border-radius: 20px; padding: 2px 8px;
+    display: flex; align-items: baseline; gap: 3px;
+    border: 2px solid var(--red); border-radius: 20px; padding: 2px 5px;
   }
   .admin-header-tsekh-pill .stat-label {
-    font-size: 8px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.2px;
+    font-size: 6.5px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.2px; white-space: nowrap;
   }
-  .admin-header-tsekh-pill .stat-value { font-size: 13px; font-weight: 800; color: var(--black); }
+  .admin-header-tsekh-pill .stat-value { font-size: 11px; font-weight: 800; color: var(--black); white-space: nowrap; }
 
 
   /* ===== Screen: Login (role select) ===== */
@@ -500,6 +500,15 @@
     border-bottom: 1px solid var(--gray-border);
   }
   .tsk-table thead tr.tsk-syre-row th:last-child { border-right: none; }
+  .tsk-table thead tr.tsk-syre-row th.tsk-syre-updated { padding: 0; }
+  .tsk-syre-updated-pill {
+    display: inline-flex; align-items: baseline; gap: 4px; justify-content: center;
+    border: 2px solid var(--red); border-radius: 20px; padding: 2px 8px; margin: 0 auto;
+  }
+  .tsk-syre-updated-pill .stat-label {
+    font-size: 8px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.2px;
+  }
+  .tsk-syre-updated-pill .stat-value { font-size: 13px; font-weight: 800; color: var(--black); }
   .tsk-table tbody td {
     padding: 0px 1px;
     text-align: center;
@@ -719,11 +728,16 @@
       <div class="admin-header-default" id="adminHeaderDefault">
         <div class="brand">А<span>Т</span></div>
         <div class="header-title" id="adminScreenTitle">Отчёт · Цех</div>
-        <div class="header-spacer"></div>
+        <div class="admin-header-tsekh-pill" id="admSkladUpdatedPill" style="visibility:hidden;">
+          <span class="stat-label">Обновлено</span><span class="stat-value" id="admSkladUpdated">—</span>
+        </div>
       </div>
       <div class="admin-header-tsekh" id="adminHeaderTsekh">
         <div class="brand">А<span>Т</span></div>
         <div class="admin-header-tsekh-stats">
+          <div class="admin-header-tsekh-pill">
+            <span class="stat-label">Обновлено</span><span class="stat-value" id="admTsekhUpdated">—</span>
+          </div>
           <div class="admin-header-tsekh-pill">
             <span class="stat-label">Блоков в цеху</span><span class="stat-value" id="admTsekhBlocksVal">—</span>
           </div>
@@ -1862,6 +1876,7 @@
     const SYRE_API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
     const SYRE_KEY_FOR = { "201": "201", "301": "301", "401": "401", "Микс": "МИКС" };
     let syreValues = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
+    let syreLastEdited = null;
 
     let markaStr = "", qtyStr = "", selectedMaterial = null, activeField = "marka";
     let lastData = null;
@@ -1953,20 +1968,32 @@
       }
       if (syreResult.status === "fulfilled" && syreResult.value.success) {
         syreValues = syreResult.value.values;
+        syreLastEdited = syreResult.value.lastEdited;
       }
       renderReport();
+    }
+    function formatLastEdited(iso) {
+      if (!iso) return "—";
+      const d = new Date(iso);
+      if (isNaN(d)) return "—";
+      const time = d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
+      const date = d.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" });
+      return `${time} · ${date}`;
     }
     function renderReport() {
       if (!lastData) return;
       document.getElementById("admTsekhBlocksVal").textContent = lastData.blocksInShop ?? 0;
       document.getElementById("admTsekhFreeVal").textContent = lastData.freeSlots ?? 198;
+      document.getElementById("admTsekhUpdated").textContent = formatLastEdited(lastData.lastEdited);
       let html = '<table class="tsk-table"><thead>';
       html += '<tr class="tsk-syre-row"><th></th>';
+      let unmappedCount = 0;
       MATERIALS.forEach(mat => {
         const syreKey = SYRE_KEY_FOR[mat];
-        html += `<th>${syreKey !== undefined ? (syreValues[syreKey] ?? 0) : ""}</th>`;
+        if (syreKey !== undefined) html += `<th>${syreValues[syreKey] ?? 0}</th>`;
+        else unmappedCount++;
       });
-      html += '<th></th></tr>';
+      html += `<th class="tsk-syre-updated" colspan="${unmappedCount + 1}"><div class="tsk-syre-updated-pill"><span class="stat-label">Сырьё</span><span class="stat-value">${formatLastEdited(syreLastEdited)}</span></div></th></tr>`;
       html += '<tr><th>Марка</th>';
       MATERIALS.forEach(mat => html += `<th>${MATERIAL_LABELS[mat]}</th>`);
       html += '<th>Объём</th></tr></thead><tbody>';
@@ -2028,16 +2055,36 @@
     let currentTableIndex = 0, selectedRow = null, selectedCol = null, valStr = "";
     let loaded = false;
     let editActive = false; // true while the "Редактирование · Склад" screen is the visible one
+    let lastEdited = null;
+    let reportScreenActive = false;
 
     function currentTable() { return TABLES[currentTableIndex]; }
+
+    function formatLastEdited(iso) {
+      if (!iso) return "—";
+      const d = new Date(iso);
+      if (isNaN(d)) return "—";
+      const time = d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
+      const date = d.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" });
+      return `${time} · ${date}`;
+    }
+    function renderHeaderTimestamp() {
+      document.getElementById("admSkladUpdatedPill").style.visibility = reportScreenActive ? "visible" : "hidden";
+      document.getElementById("admSkladUpdated").textContent = formatLastEdited(lastEdited);
+    }
+    function setReportActive(active) {
+      reportScreenActive = active;
+      renderHeaderTimestamp();
+    }
 
     async function loadAllData() {
       try {
         const res = await fetch(`${API_URL}?action=getAllData`);
         const data = await res.json();
         ROWS = data.rows; COLS = data.cols; dataByTable = data.tables;
+        lastEdited = data.lastEdited;
         loaded = true;
-        renderGrid(); renderReport();
+        renderGrid(); renderReport(); renderHeaderTimestamp();
       } catch (err) {
         if (!loaded) {
           document.getElementById("admSkladGridWrap").innerHTML = '<div class="loading-note">Не удалось загрузить таблицу</div>';
@@ -2120,7 +2167,8 @@
       showToast(`${t.label} · ${r}, ${c}: ${v}`);
       if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {};
       dataByTable[t.id][r][c] = Number(v);
-      valStr = ""; renderVal(); renderGrid(); renderReport(); updateBtnState();
+      lastEdited = new Date().toISOString();
+      valStr = ""; renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({ action: "setCell", table: t.id, row: r, col: c, value: v })
@@ -2132,7 +2180,8 @@
       const t = currentTable(); const r = selectedRow, c = selectedCol;
       showToast(`Очищено: ${t.label} · ${r}, ${c}`);
       dataByTable[t.id][r][c] = "";
-      valStr = ""; renderVal(); renderGrid(); renderReport(); updateBtnState();
+      lastEdited = new Date().toISOString();
+      valStr = ""; renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({ action: "deleteCell", table: t.id, row: r, col: c })
@@ -2145,7 +2194,8 @@
       if (!ok) return;
       ROWS.forEach(r => { COLS.forEach(c => { if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {}; dataByTable[t.id][r][c] = ""; }); });
       selectedRow = null; selectedCol = null; valStr = "";
-      renderVal(); renderGrid(); renderReport(); updateBtnState();
+      lastEdited = new Date().toISOString();
+      renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({ action: "clearAll", table: t.id })
@@ -2208,7 +2258,7 @@
         cycleTable(dy < 0 ? 1 : -1);
       }, { passive: true });
     }
-    return { init, setEditActive };
+    return { init, setEditActive, setReportActive };
   })();
 
   // ==================== ADMIN HEADER TOGGLE (АТ·Цех + stats vs default title) ====================
@@ -2261,6 +2311,7 @@
             AdminTsekh.setPolling(i === 0);   // auto-refresh only while viewing the Цех report, matching the original app
             setAdminHeaderTsekhActive(i === 0); // header swaps to "АТ · Цех" + stats only on the Цех report screen
             AdminSklad.setEditActive(i === 3); // vertical swipe (table cycling) only live on the Склад edit screen
+            AdminSklad.setReportActive(i === 1); // show the shared last-edited timestamp only on the Склад report screen
             AdminSyre.setPolling(i === 4);    // auto-refresh only while viewing the Сырьё edit screen
           }
         }
