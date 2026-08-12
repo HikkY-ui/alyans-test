@@ -1362,8 +1362,9 @@
 
     async function loadTableData() {
       try {
-        const res = await fetch(`${API_URL}?action=getData`);
+        const res = await fetch(`${API_URL}?action=tsekh.get`);
         const data = await res.json();
+        if (!data || data.success === false) throw new Error(data?.error || "Ошибка API");
         lastData = data;
         setLastUpdated(data.lastEdited);
         renderTable(data);
@@ -2014,8 +2015,8 @@
     }
     async function loadData() {
       const [tsekhResult, syreResult] = await Promise.allSettled([
-        fetch(`${API_URL}?action=getData`).then(res => res.json()),
-        fetch(`${SYRE_API_URL}?action=getData`).then(res => res.json())
+        fetch(`${API_URL}?action=tsekh.get`).then(res => res.json()),
+        fetch(`${SYRE_API_URL}?action=syre.get`).then(res => res.json())
       ]);
       if (tsekhResult.status === "fulfilled" && tsekhResult.value && tsekhResult.value.success !== false) {
         lastData = tsekhResult.value;
