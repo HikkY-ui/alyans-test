@@ -79,6 +79,7 @@
   }
   .admin-header-tsekh { display: none; width: 100%; align-items: center; justify-content: space-between; }
   .admin-header-tsekh-stats { display: flex; align-items: center; gap: 6px; }
+  .admin-last-updated { flex-shrink: 0; }
   .admin-header-tsekh-pill {
     display: flex; align-items: baseline; gap: 4px;
     border: 2px solid var(--red); border-radius: 20px; padding: 2px 8px;
@@ -750,7 +751,7 @@
       <div class="admin-header-default" id="adminHeaderDefault">
         <div class="brand">А<span>Т</span></div>
         <div class="header-title" id="adminScreenTitle">Отчёт · Цех</div>
-        <div class="header-spacer"></div>
+        <div class="date-pill admin-last-updated" style="font-size:9px;font-weight:700;color:var(--red);border:2px solid var(--red);border-radius:20px;padding:1px 7px;white-space:nowrap;">—</div>
       </div>
       <div class="admin-header-tsekh" id="adminHeaderTsekh">
         <div class="brand">А<span>Т</span></div>
@@ -761,6 +762,7 @@
           <div class="admin-header-tsekh-pill">
             <span class="stat-label">Свободных мест</span><span class="stat-value" id="admTsekhFreeVal">—</span>
           </div>
+          <div class="date-pill admin-last-updated" style="font-size:8px;font-weight:700;color:var(--red);border:2px solid var(--red);border-radius:20px;padding:1px 6px;white-space:nowrap;">—</div>
         </div>
       </div>
     </header>
@@ -966,6 +968,27 @@
     document.querySelectorAll(".top-screen").forEach(s => s.classList.toggle("active", s.id === id));
   }
 
+  // ==================== LAST UPDATED ====================
+  function formatLastEdited(value) {
+    if (!value) return "—";
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) return "—";
+    const dd = String(d.getDate()).padStart(2, "0");
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const yyyy = d.getFullYear();
+    const hh = String(d.getHours()).padStart(2, "0");
+    const min = String(d.getMinutes()).padStart(2, "0");
+    return `${dd}.${mm}.${yyyy} ${hh}:${min}`;
+  }
+
+  function setLastUpdated(value, selector = ".date-pill") {
+    const text = formatLastEdited(value);
+    document.querySelectorAll(selector).forEach(el => {
+      el.textContent = text;
+      el.title = value ? `Последнее обновление: ${text}` : "Последнее обновление неизвестно";
+    });
+  }
+
   // ==================== SKLAD MODULE ====================
   const Sklad = (function () {
     const API_URL = "https://script.google.com/macros/s/AKfycbz3gRxvNHHr0t_7vOi8fe-os5swnP6fdsZGBmZMSEmn3AZWXMhxBxpR8YijIXWXd0UP/exec";
@@ -988,8 +1011,10 @@
       try {
         const res = await fetch(`${API_URL}?action=getAllData`);
         const data = await res.json();
+        if (!data || !data.success || !data.tables) throw new Error("invalid response");
         ROWS = data.rows; COLS = data.cols; dataByTable = data.tables;
         loaded = true;
+        setLastUpdated(data.lastEdited);
         renderGrid();
         renderReport();
         return true;
@@ -1329,7 +1354,7 @@
         body: JSON.stringify({ action: "add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
       }).then(res => res.json()).then(data => {
         if (!data.success) showToast(qtySign > 0 ? "Не сохранилось на сервере — попробуйте снова" : "Не удалось удалить блок — попробуйте снова");
-        else loadTableData();
+        else { setLastUpdated(data.lastEdited); loadTableData(); }
       }).catch(() => {
         showToast(qtySign > 0 ? "Ошибка сети — запись не сохранена" : "Ошибка сети — блок не удалён");
       });
@@ -1340,6 +1365,7 @@
         const res = await fetch(`${API_URL}?action=getData`);
         const data = await res.json();
         lastData = data;
+        setLastUpdated(data.lastEdited);
         renderTable(data);
         return true;
       } catch (err) {
@@ -1381,6 +1407,7 @@
         body: JSON.stringify({ action: "clearAll" })
       }).then(res => res.json()).then(data => {
         if (data.success) {
+          setLastUpdated(data.lastEdited);
           showToast("Таблица очищена");
           lastData = null;
           loadTableData();
@@ -1474,6 +1501,7 @@
         // snapshot per material (against appliedSeqByMaterial, same as commitValue does)
         // fixes this: a material with a newer confirmed write is left untouched.
         if (data.success && pendingSaves === 0) {
+          setLastUpdated(data.lastEdited);
           MATERIALS.forEach(m => {
             if (mySeq > appliedSeqByMaterial[m]) {
               appliedSeqByMaterial[m] = mySeq;
@@ -1604,6 +1632,7 @@
         body: JSON.stringify({ action: "add", material, qty })
       }).then(res => res.json()).then(data => {
         if (data.success) {
+          setLastUpdated(data.lastEdited);
           // Only touch the ONE material this request was for, and only if no newer
           // response for that same material has already landed. A concurrent add for a
           // different material may still be unconfirmed server-side, so its value in
@@ -1704,6 +1733,7 @@
         // the just-saved add. This was the source of the Сырьё table desyncing between
         // the "сырье" role and the admin's "Редактирование · Сырьё" screen.
         if (data.success && pendingSaves === 0) {
+          setLastUpdated(data.lastEdited);
           MATERIALS.forEach(m => {
             if (mySeq > appliedSeqByMaterial[m]) {
               appliedSeqByMaterial[m] = mySeq;
@@ -1861,6 +1891,7 @@
         body: JSON.stringify({ action: "clearAll" })
       }).then(res => res.json()).then(data => {
         if (data.success) {
+          setLastUpdated(data.lastEdited);
           MATERIALS.forEach(m => {
             if (mySeq > appliedSeqByMaterial[m]) {
               appliedSeqByMaterial[m] = mySeq;
@@ -1978,7 +2009,7 @@
         body: JSON.stringify({ action: "add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
       }).then(res => res.json()).then(data => {
         if (!data.success) showToast("Не сохранилось на сервере — попробуйте снова");
-        else loadData();
+        else { setLastUpdated(data.lastEdited); loadData(); }
       }).catch(() => showToast("Ошибка сети — не сохранено"));
     }
     async function loadData() {
@@ -1988,6 +2019,7 @@
       ]);
       if (tsekhResult.status === "fulfilled" && tsekhResult.value && tsekhResult.value.success !== false) {
         lastData = tsekhResult.value;
+        setLastUpdated(lastData.lastEdited);
       } else if (!lastData) {
         document.getElementById("admTsekhReportWrap").innerHTML = '<div class="loading-note">Не удалось загрузить данные</div>';
         return false;
@@ -2078,8 +2110,10 @@
       try {
         const res = await fetch(`${API_URL}?action=getAllData`);
         const data = await res.json();
+        if (!data || !data.success || !data.tables) throw new Error("invalid response");
         ROWS = data.rows; COLS = data.cols; dataByTable = data.tables;
         loaded = true;
+        setLastUpdated(data.lastEdited);
         renderGrid(); renderReport();
         return true;
       } catch (err) {
@@ -2221,6 +2255,7 @@
       editActive = active;
       if (active) { updateHeaderForEdit(); }
       if (active) { selectedRow = null; selectedCol = null; valStr = ""; renderVal(); updateBtnState(); }
+      syncWarehouseEditScale();
     }
     function cycleTable(dir) {
       const next = currentTableIndex + dir;
@@ -2335,17 +2370,33 @@
 
   // ==================== WAREHOUSE EDIT AUTO-SCALE ====================
   function syncWarehouseEditScale() {
-    const targets = [
-      { viewport: document.getElementById("skladViewport"), wrap: document.getElementById("sklAddWrap") },
-      { viewport: document.getElementById("adminViewport"), wrap: document.getElementById("admSkladAddWrap") }
-    ];
-    const baseHeight = 640;
-    targets.forEach(({ viewport, wrap }) => {
-      if (!viewport || !wrap) return;
+    const viewport = document.getElementById("skladViewport");
+    const skladWrap = document.getElementById("sklAddWrap");
+    if (viewport && skladWrap) {
       const available = Math.max(1, viewport.clientHeight);
-      const scale = Math.min(1, Math.max(0.72, available / baseHeight));
-      wrap.style.setProperty("--skl-edit-scale", scale.toFixed(4));
-    });
+      const scale = Math.min(1, Math.max(0.68, available / 640));
+      skladWrap.style.setProperty("--skl-edit-scale", scale.toFixed(4));
+    }
+
+    const adminViewport = document.getElementById("adminViewport");
+    const adminWrap = document.getElementById("admSkladAddWrap");
+    const adminSwiper = swipers.admin;
+    const adminEditVisible = !!adminSwiper && adminSwiper.current() === 3;
+
+    if (adminViewport && adminWrap) {
+      if (!adminEditVisible) {
+        adminWrap.style.setProperty("--skl-edit-scale", "1");
+        return;
+      }
+
+      // Run after the horizontal swiper has settled so clientHeight is the real
+      // visible height of the admin editor on short screens.
+      requestAnimationFrame(() => {
+        const available = Math.max(1, adminViewport.clientHeight);
+        const scale = Math.min(1, Math.max(0.68, available / 640));
+        adminWrap.style.setProperty("--skl-edit-scale", scale.toFixed(4));
+      });
+    }
   }
 
   // ==================== ROLE SWIPERS (created once, lazily) ====================
@@ -2402,6 +2453,7 @@
             AdminTsekh.setPolling(i === 0);   // auto-refresh only while viewing the Цех report, matching the original app
             setAdminHeaderTsekhActive(i === 0); // header swaps to "АТ · Цех" + stats only on the Цех report screen
             AdminSklad.setEditActive(i === 3); // vertical swipe (table cycling) only live on the Склад edit screen
+            syncWarehouseEditScale();
             AdminSyre.setPolling(i === 4);    // auto-refresh only while viewing the Сырьё edit screen
           }
         }
@@ -2420,6 +2472,7 @@
     showTopScreen(screenId);
     const sw = ensureSwiper(role);
     sw.goTo(0, false); // always land on the main screen of the role, no leftover offset from last exit view
+    requestAnimationFrame(syncWarehouseEditScale);
   }
 
   // ==================== LOGOUT ====================
@@ -2512,7 +2565,10 @@
     const yyyy = d.getFullYear();
     return `${dd}.${mm}.${yyyy}`;
   }
-  document.querySelectorAll(".date-pill").forEach(el => el.textContent = formatDate(new Date()));
+  document.querySelectorAll(".date-pill").forEach(el => {
+    el.textContent = "—";
+    el.title = "Последнее обновление: ожидание данных";
+  });
 
   // ==================== INIT: restore saved role, or show login ====================
   (function init() {
