@@ -46,16 +46,9 @@
     background: var(--white);
   }
 
-  /* ===== Top-level screens (login / code / role apps) ===== */
-  .top-screen {
-    display: none;
-    flex-direction: column;
-    height: 100%;
-    min-height: 0;
-  }
+  .top-screen { display: none; flex-direction: column; height: 100%; min-height: 0; }
   .top-screen.active { display: flex; }
 
-  /* ===== Header (shared style) ===== */
   header {
     padding: 6px 16px 5px;
     border-bottom: 2px solid var(--black);
@@ -64,6 +57,7 @@
     justify-content: space-between;
     flex-shrink: 0;
   }
+
   .brand { font-weight: 800; font-size: 13px; letter-spacing: -0.5px; }
   .brand span { color: var(--red); }
   .header-title { font-size: 13px; font-weight: 800; text-align: center; flex: 1; }
@@ -73,7 +67,6 @@
   }
   .header-spacer { width: 28px; flex-shrink: 0; }
 
-  /* ===== Admin: header swap (default title vs compact "АТ" + stats pills, on the Цех report screen) ===== */
   .admin-header-default {
     display: flex; align-items: center; justify-content: space-between; width: 100%;
   }
@@ -88,59 +81,32 @@
   }
   .admin-header-tsekh-pill .stat-value { font-size: 11px; font-weight: 800; color: var(--black); white-space: nowrap; }
 
-
-  /* ===== Screen: Login (role select) ===== */
   #screenLogin { justify-content: center; padding: 24px; gap: 14px; }
   .login-logo { text-align: center; margin-bottom: 18px; }
   .login-logo .big-a { color: var(--red); }
   .login-logo .big-t { color: var(--black); }
   .login-logo-letters {
-    font-size: 64px;
-    font-weight: 900;
-    letter-spacing: -2px;
-    line-height: 1;
+    font-size: 64px; font-weight: 900; letter-spacing: -2px; line-height: 1;
   }
   .login-logo-sub {
-    margin-top: 6px;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--gray-text);
-    text-transform: uppercase;
+    margin-top: 6px; font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    color: var(--gray-text); text-transform: uppercase;
   }
 
   .role-btn {
-    width: 100%;
-    padding: 22px;
-    border: 2px solid var(--black);
-    border-radius: 16px;
-    background: var(--white);
-    color: var(--black);
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    width: 100%; padding: 22px; border: 2px solid var(--black); border-radius: 16px;
+    background: var(--white); color: var(--black); font-size: 18px; font-weight: 800;
+    letter-spacing: 0.3px; display: flex; align-items: center; justify-content: space-between;
   }
   .role-btn:active { background: var(--gray-bg); }
   .role-btn .arrow { color: var(--red); font-size: 20px; font-weight: 900; }
 
-  /* ===== Screen: Code entry ===== */
   #screenCode { padding: 10px 24px 24px; justify-content: center; gap: 22px; }
   .code-role-label {
-    text-align: center;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--gray-text);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    text-align: center; font-size: 13px; font-weight: 700; color: var(--gray-text);
+    text-transform: uppercase; letter-spacing: 1px;
   }
-  .code-dots {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-  }
+  .code-dots { display: flex; justify-content: center; gap: 16px; }
   .code-dots.shake { animation: shake 0.35s; }
   @keyframes shake {
     0%, 100% { transform: translateX(0); }
@@ -150,175 +116,88 @@
     80% { transform: translateX(4px); }
   }
   .code-dot {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 2px solid var(--gray-border);
-    background: var(--white);
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid var(--gray-border); background: var(--white);
     transition: background 0.15s, border-color 0.15s, transform 0.15s;
   }
   .code-dot.filled { background: var(--red); border-color: var(--red); transform: scale(1.05); }
 
   .keypad {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: min-content;
-    gap: 8px;
-    width: 100%;
-    flex-shrink: 0; /* keypad keeps its own size always — the table above it shrinks/scrolls instead */
+    display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: min-content;
+    gap: 8px; width: 100%;
   }
   .key {
-    border: 2px solid var(--gray-border);
-    border-radius: 12px;
-    background: var(--gray-bg);
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--black);
-    padding: 18px 0;
-    width: 100%;
+    border: 2px solid var(--gray-border); border-radius: 12px; background: var(--gray-bg);
+    font-size: 20px; font-weight: 700; color: var(--black); padding: 18px 0; width: 100%;
   }
   .key.clear { color: var(--red); }
   .key:active { background: var(--gray-border); }
   .key.ghost { visibility: hidden; }
 
-  /* Sklad's own keypad is more compact than the login/code keypad — matches the
-     original standalone app, leaves enough room for the grid table above it. */
   #sklKeypad { gap: 5px; }
   #sklKeypad .key { padding: 8px 0; font-size: 15px; }
   #sklKeypad .key.add-key { font-size: 22px; }
 
-  /* Admin's "Редактирование · Склад" screen reuses the same grid+keypad layout as
-     the standalone Sklad screen, so its keypad needs the same compact sizing —
-     otherwise it falls back to the large login-style keys and the table gets
-     pushed out of view (cut-off rows above the keypad). */
   #admSkladKeypad { gap: 5px; }
   #admSkladKeypad .key { padding: 8px 0; font-size: 15px; }
   #admSkladKeypad .key.add-key { font-size: 22px; }
 
-  /* ===== Generic swipe engine ===== */
-  .swipe-viewport {
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-    position: relative;
-  }
+  .swipe-viewport { flex: 1; min-height: 0; overflow: hidden; position: relative; }
   .swipe-track {
-    display: flex;
-    height: 100%;
+    display: flex; height: 100%;
     transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
     will-change: transform;
   }
   .swipe-screen {
-    flex: 0 0 100%;
-    height: 100%;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
+    flex: 0 0 100%; height: 100%; min-height: 0; display: flex; flex-direction: column;
   }
 
-  .dots-indicator {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    padding: 6px 0 4px;
-    flex-shrink: 0;
-  }
+  .dots-indicator { display: flex; justify-content: center; gap: 6px; padding: 6px 0 4px; flex-shrink: 0; }
   .dots-indicator .idot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--gray-border);
+    width: 6px; height: 6px; border-radius: 50%; background: var(--gray-border);
     transition: background 0.2s, transform 0.2s;
   }
   .dots-indicator .idot.active { background: var(--red); transform: scale(1.3); }
 
-  /* ===== Placeholder / exit content ===== */
   .placeholder-content {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 10px;
-    color: var(--gray-text);
-    font-size: 14px;
-    font-weight: 600;
-    padding: 24px;
-    text-align: center;
+    flex: 1; display: flex; align-items: center; justify-content: center; flex-direction: column;
+    gap: 10px; color: var(--gray-text); font-size: 14px; font-weight: 600; padding: 24px; text-align: center;
   }
 
-  .exit-screen {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-  }
+  .exit-screen { flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px; }
   .exit-btn {
-    padding: 20px 40px;
-    border: 2px solid var(--red);
-    border-radius: 16px;
-    background: var(--white);
-    color: var(--red);
-    font-size: 16px;
-    font-weight: 800;
-    letter-spacing: 0.3px;
+    padding: 20px 40px; border: 2px solid var(--red); border-radius: 16px;
+    background: var(--white); color: var(--red); font-size: 16px; font-weight: 800; letter-spacing: 0.3px;
   }
   .exit-btn:active { background: var(--gray-bg); }
 
-  /* ===== SKLAD: add/grid screen ===== */
-  /* ===== Shared "value display" field (used by Sklad quantity, Tsekh marka/qty, etc.) ===== */
   .field-display {
-    width: 100%;
-    flex-shrink: 0;
-    border: 2px solid var(--gray-border);
-    border-radius: 12px;
-    padding: 5px;
-    font-size: 16px;
-    font-weight: 800;
-    text-align: center;
-    background: var(--gray-bg);
-    color: var(--gray-text);
-    transition: border-color 0.15s, background 0.15s, color 0.15s;
+    width: 100%; flex-shrink: 0; border: 2px solid var(--gray-border); border-radius: 12px;
+    padding: 5px; font-size: 16px; font-weight: 800; text-align: center; background: var(--gray-bg);
+    color: var(--gray-text); transition: border-color 0.15s, background 0.15s, color 0.15s;
   }
   .field-display.filled { color: var(--black); background: var(--white); border-color: var(--black); }
   .field-display.active { border-color: var(--red); background: var(--white); color: var(--red); }
   .field-display.filled.active { color: var(--red); }
 
   .skl-add-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 6px 10px 8px; gap: 5px; }
-  /* skl-grid-wrap holds the grid table. It gets first claim on the flex-shared
-     vertical space (flex:1) while the value display, keypad, and button row below
-     it are flex-shrink:0 (fixed-height controls, see further down) — that way the
-     keypad/buttons never move or get pushed off-screen, and the table never shifts
-     from typing (typing only updates the value display text, not this wrap).
-     No scrolling here: JS measures the rendered table after each render and shrinks
-     --skl-row-font (and the matching cell padding) via fitTableToContainer() until
-     the whole table fits the available height exactly — see near renderGrid(). */
-  .skl-grid-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+  .skl-grid-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; }
   .skl-table {
-    --skl-row-font: 17px;
-    --skl-cell-pad: 2px;
-    width: 100%;
-    border-collapse: collapse;
-    border: 2px solid var(--red);
-    border-radius: 6px;
-    overflow: hidden;
-    font-size: var(--skl-row-font);
-    table-layout: fixed;
+    width: 100%; height: 100%; border-collapse: collapse; border: 2px solid var(--red);
+    border-radius: 6px; overflow: hidden; font-size: 17px; table-layout: fixed;
   }
   .skl-table thead th {
-    background: var(--black); color: var(--white);
-    padding: calc(var(--skl-cell-pad) * 3) 1px; font-size: calc(var(--skl-row-font) * 0.76); font-weight: 700; text-align: center;
-    border-right: 1px solid rgba(255,255,255,0.25);
+    background: var(--black); color: var(--white); padding: 6px 1px; font-size: 13px;
+    font-weight: 700; text-align: center; border-right: 1px solid rgba(255,255,255,0.25);
   }
   .skl-table thead th:last-child { border-right: none; }
   .skl-table tbody th {
-    background: var(--gray-bg); color: var(--black);
-    padding: calc(var(--skl-cell-pad) * 3) 3px; font-size: calc(var(--skl-row-font) * 0.76); font-weight: 800; text-align: left;
-    border-right: 1px solid var(--gray-border); border-bottom: 1px solid var(--gray-border);
+    background: var(--gray-bg); color: var(--black); padding: 6px 3px; font-size: 13px; font-weight: 800;
+    text-align: left; border-right: 1px solid var(--gray-border); border-bottom: 1px solid var(--gray-border);
   }
   .skl-table tbody td {
-    padding: var(--skl-cell-pad); text-align: center;
-    border-bottom: 1px solid var(--gray-border); border-right: 1px solid var(--gray-border);
-    color: var(--black); font-weight: 700;
+    padding: 2px; text-align: center; border-bottom: 1px solid var(--gray-border);
+    border-right: 1px solid var(--gray-border); color: var(--black); font-weight: 700;
   }
   .skl-table tbody td:last-child { border-right: none; }
   .skl-table tbody td.selected { background: var(--red); color: var(--white); font-weight: 800; }
@@ -326,199 +205,114 @@
   .key.add-key { background: var(--green); color: var(--white); border-color: var(--green); font-size: 22px; }
   .key.add-key:disabled { background: var(--gray-border); color: var(--gray-text); border-color: var(--gray-border); }
 
-  .skl-btn-row { display: flex; gap: 8px; flex-shrink: 0; min-height: 0; }
+  .skl-btn-row { display: flex; gap: 8px; flex-shrink: 0; }
   .skl-action-btn {
-    flex: 1; padding: 10px; border-radius: 12px; background: var(--white);
-    color: var(--red); border: 2px solid var(--red); font-size: 12px; font-weight: 800; letter-spacing: 0.3px;
+    flex: 1; padding: 10px; border-radius: 12px; background: var(--white); color: var(--red);
+    border: 2px solid var(--red); font-size: 12px; font-weight: 800; letter-spacing: 0.3px;
   }
   .skl-action-btn:disabled { border-color: var(--gray-border); color: var(--gray-border); }
 
-  /* ===== SKLAD: report screen =====
-     4 tables stacked = 4 equal quarters of the available height, via CSS grid rows
-     (not flex) so every block gets EXACTLY 1/4 — flex could round unevenly and let
-     the browser silently clip whichever block came up short (that's what was cutting
-     off the first table). Nothing here scrolls; sizes are tightened (smaller fonts/
-     padding) so all 4 fit without needing to. */
-  .skl-report-wrap { flex: 1; min-height: 0; display: grid; grid-template-rows: repeat(4, 1fr); gap: 3px; padding: 4px 8px 4px; }
-  .skl-report-block { min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
-  .skl-report-table { width: 100%; height: 100%; border-collapse: collapse; border: 1.5px solid var(--red); border-radius: 4px; overflow: hidden; font-size: 11px; table-layout: fixed; }
+  .skl-report-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 4px; overflow: hidden; padding: 6px 10px 6px; }
+  .skl-report-block { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .skl-report-block-label { font-size: 9px; font-weight: 800; color: var(--red); margin: 0 0 1px 2px; flex-shrink: 0; }
+  .skl-report-table {
+    width: 100%; flex: 1; min-height: 0; border-collapse: collapse; border: 1.5px solid var(--red);
+    border-radius: 4px; overflow: hidden; font-size: 13px; table-layout: fixed;
+  }
   .skl-report-table th {
-    background: var(--black); color: var(--white); padding: 0 1px; font-size: 9px; font-weight: 700; text-align: center; line-height: 1.5;
-    border-right: 1px solid rgba(255,255,255,0.2);
+    background: var(--black); color: var(--white); padding: 1px; font-size: 10px; font-weight: 700;
+    text-align: center; border-right: 1px solid rgba(255,255,255,0.2);
   }
   .skl-report-table th:last-child { border-right: none; }
-  /* Corner cell of each report table now carries the table's own name (Пачки/2000/3000/4000)
-     instead of a separate label line above the table — saves vertical space. Same black
-     background as the rest of the header row, just a bit smaller to fit the word. */
-  .skl-report-table th.skl-report-corner { font-size: 7px; letter-spacing: -0.2px; padding: 0; }
   .skl-report-table tbody th {
-    background: var(--gray-bg); color: var(--black); text-align: left; padding: 0 2px; font-size: 10px; line-height: 1.4;
+    background: var(--gray-bg); color: var(--black); text-align: left; padding: 1px 2px;
     border-right: 1px solid var(--gray-border); border-bottom: 1px solid var(--gray-border);
   }
   .skl-report-table td {
-    text-align: center; color: var(--black); font-weight: 700; padding: 0;
+    text-align: center; color: var(--black); font-weight: 700;
     border-bottom: 1px solid var(--gray-border); border-right: 1px solid var(--gray-border);
   }
   .skl-report-table td:last-child { border-right: none; }
 
   .loading-note { text-align: center; color: var(--gray-text); font-size: 12px; padding: 20px 0; }
 
-  /* ===== SYRE (СЫРЬЁ): add screen ===== */
   .syre-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 6px 10px 8px; gap: 8px; }
   .syre-summary-table { height: auto; flex-shrink: 0; border-color: var(--black); font-size: 20px; }
   .syre-summary-table thead th { padding: 8px 1px; font-size: 15px; }
-  .syre-summary-table tbody td { padding: 10px 1px; font-size: 20px; font-weight: 800; color: var(--black); border-color: var(--gray-border); }
+  .syre-summary-table tbody td {
+    padding: 10px 1px; font-size: 20px; font-weight: 800; color: var(--black); border-color: var(--gray-border);
+  }
   .syre-fields { display: flex; flex-direction: column; gap: 8px; flex: 1; min-height: 0; }
   .syre-field-row { display: flex; align-items: stretch; gap: 8px; flex: 1; }
-  .syre-field-label { width: 46px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: var(--black); text-align: left; display: flex; align-items: center; }
-  .syre-field-row .field-display { flex: 1; width: auto; display: flex; align-items: center; justify-content: center; padding: 5px; font-size: 20px; }
-
+  .syre-field-label {
+    width: 46px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: var(--black); text-align: left;
+    display: flex; align-items: center;
+  }
+  .syre-field-row .field-display {
+    flex: 1; width: auto; display: flex; align-items: center; justify-content: center; padding: 5px; font-size: 20px;
+  }
   #syreKeypad { gap: 7px; flex-shrink: 0; }
   #syreKeypad .key { padding: 12px 0; font-size: 17px; }
   #syreKeypad .key.add-key { font-size: 22px; }
 
-  /* ===== TSEKH: add screen ===== */
   #screenTsekhAdd { padding: 5px 16px 5px; gap: 3px; display: flex; flex-direction: column; flex: 1; min-height: 0; }
 
   .section-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    color: var(--gray-text);
-    text-transform: uppercase;
-    margin: 0 0 4px 2px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.8px; color: var(--gray-text);
+    text-transform: uppercase; margin: 0 0 4px 2px;
   }
-
-  /* Tsekh's marka/qty displays are 17px (vs Sklad's 16px) — scoped to match the original exactly. */
   #tsekhMarkaDisplay, #tsekhQtyDisplay { font-size: 17px; }
 
-  .material-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-  }
+  .material-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
   .material-btn {
-    padding: 6px 4px;
-    border: 2px solid var(--gray-border);
-    border-radius: 10px;
-    background: var(--gray-bg);
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--black);
-    text-align: center;
+    padding: 6px 4px; border: 2px solid var(--gray-border); border-radius: 10px; background: var(--gray-bg);
+    font-size: 12px; font-weight: 700; color: var(--black); text-align: center;
   }
   .material-btn.selected { background: var(--white); border-color: var(--red); color: var(--red); }
 
-  /* Tsekh's keypad gap is 6px (vs the login keypad's 8px) — matches the original exactly. */
   #tsekhKeypad { gap: 6px; }
 
   .add-btn {
-    width: 100%;
-    padding: 26px;
-    border: none;
-    border-radius: 14px;
-    background: var(--black);
-    color: var(--white);
-    font-size: 21px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    flex-shrink: 0;
-    margin-top: 8px;
+    width: 100%; padding: 26px; border: none; border-radius: 14px; background: var(--black); color: var(--white);
+    font-size: 21px; font-weight: 800; letter-spacing: 0.5px; flex-shrink: 0; margin-top: 8px;
   }
   .add-btn:disabled { background: var(--gray-border); color: var(--gray-text); }
 
   .secondary-btn-row { display: flex; gap: 8px; margin-top: 6px; }
   .tsk-clear-btn {
-    background: var(--white);
-    color: var(--red);
-    border: 2px solid var(--red);
-    padding: 10px;
-    font-size: 12px;
-    margin-top: 0;
-    flex: 1;
-    border-radius: 14px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
+    background: var(--white); color: var(--red); border: 2px solid var(--red); padding: 10px; font-size: 12px;
+    margin-top: 0; flex: 1; border-radius: 14px; font-weight: 800; letter-spacing: 0.5px;
   }
   .tsk-clear-btn:disabled { border-color: var(--gray-border); color: var(--gray-border); }
   .tsk-remove-btn {
-    padding: 10px;
-    font-size: 12px;
-    margin-top: 0;
-    flex: 1;
-    border: none;
-    border-radius: 14px;
-    background: var(--black);
-    color: var(--white);
-    font-weight: 800;
-    letter-spacing: 0.5px;
+    padding: 10px; font-size: 12px; margin-top: 0; flex: 1; border: none; border-radius: 14px;
+    background: var(--black); color: var(--white); font-weight: 800; letter-spacing: 0.5px;
   }
   .tsk-remove-btn:disabled { background: var(--gray-border); color: var(--gray-text); }
 
-  /* ===== TSEKH: table screen ===== */
   #screenTsekhTable { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-  .stats-row {
-    display: flex;
-    gap: 6px;
-    padding: 5px 10px 4px;
-    flex-shrink: 0;
-  }
-  .stat-box {
-    flex: 1;
-    border: 2px solid var(--red);
-    border-radius: 8px;
-    padding: 3px 4px;
-    text-align: center;
-  }
+  .stats-row { display: flex; gap: 6px; padding: 5px 10px 4px; flex-shrink: 0; }
+  .stat-box { flex: 1; border: 2px solid var(--red); border-radius: 8px; padding: 3px 4px; text-align: center; }
   .stat-box .stat-value { font-size: 13px; font-weight: 800; color: var(--black); line-height: 1.1; }
   .stat-box .stat-label {
-    font-size: 7px;
-    font-weight: 700;
-    color: var(--gray-text);
-    text-transform: uppercase;
-    margin-top: 0;
-    letter-spacing: 0.2px;
+    font-size: 7px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; margin-top: 0; letter-spacing: 0.2px;
   }
 
   .tsk-table-wrap {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    padding: 0 8px 8px;
-    display: flex;
-    flex-direction: column;
+    flex: 1; min-height: 0; overflow: hidden; padding: 0 8px 8px; display: flex; flex-direction: column;
   }
   .tsk-table {
-    width: 100%;
-    height: 100%;
-    border-collapse: collapse;
-    border: 2px solid var(--red);
-    border-radius: 6px;
-    overflow: hidden;
-    font-size: 14px;
-    table-layout: fixed;
+    width: 100%; height: 100%; border-collapse: collapse; border: 2px solid var(--red);
+    border-radius: 6px; overflow: hidden; font-size: 14px; table-layout: fixed;
   }
   .tsk-table thead th {
-    background: var(--black);
-    color: var(--white);
-    padding: 2px 1px;
-    font-size: 9px;
-    font-weight: 700;
-    text-align: center;
-    border-right: 1px solid rgba(255,255,255,0.25);
+    background: var(--black); color: var(--white); padding: 2px 1px; font-size: 9px; font-weight: 700;
+    text-align: center; border-right: 1px solid rgba(255,255,255,0.25);
   }
   .tsk-table thead th:last-child { border-right: none; }
   .tsk-table thead tr.tsk-syre-row th {
-    background: var(--white);
-    color: var(--black);
-    padding: 1px 1px;
-    font-size: 16px;
-    font-weight: 800;
-    line-height: 1.1;
-    border-right: 1px solid var(--gray-border);
-    border-bottom: 1px solid var(--gray-border);
+    background: var(--white); color: var(--black); padding: 1px 1px; font-size: 16px; font-weight: 800;
+    line-height: 1.1; border-right: 1px solid var(--gray-border); border-bottom: 1px solid var(--gray-border);
   }
   .tsk-table thead tr.tsk-syre-row th:last-child { border-right: none; }
   .tsk-table thead tr.tsk-syre-row th.tsk-syre-updated { padding: 0; }
@@ -531,13 +325,8 @@
   }
   .tsk-syre-updated-pill .stat-value { font-size: 13px; font-weight: 800; color: var(--black); }
   .tsk-table tbody td {
-    padding: 0px 1px;
-    text-align: center;
-    border-bottom: 1px solid var(--gray-border);
-    border-right: 1px solid var(--gray-border);
-    color: var(--black);
-    font-weight: 800;
-    line-height: 1.05;
+    padding: 0px 1px; text-align: center; border-bottom: 1px solid var(--gray-border);
+    border-right: 1px solid var(--gray-border); color: var(--black); font-weight: 800; line-height: 1.05;
   }
   .tsk-table tbody td:last-child { border-right: none; }
   .tsk-table tbody td.zero { color: var(--gray-border); font-weight: 400; }
@@ -545,49 +334,17 @@
   .tsk-table tbody td.volume-col { font-weight: 800; color: var(--red); }
 
   .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--black);
-    color: var(--white);
-    padding: 10px 18px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 600;
-    opacity: 0;
-    transition: all 0.25s ease;
-    pointer-events: none;
-    z-index: 20;
-    max-width: 85%;
-    text-align: center;
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--black); color: var(--white); padding: 10px 18px; border-radius: 10px; font-size: 13px;
+    font-weight: 600; opacity: 0; transition: all 0.25s ease; pointer-events: none; z-index: 20;
+    max-width: 85%; text-align: center;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-  /* ===== Pull-to-refresh indicator (manual refresh, on top of the existing auto-poll) ===== */
-  .ptr-indicator {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 0;
-    overflow: hidden;
-    color: var(--red);
-    transition: height 0.15s ease;
-  }
-  .ptr-indicator svg {
-    width: 18px; height: 18px;
-    animation: ptr-spin 0.7s linear infinite;
-    animation-play-state: paused;
-  }
-  .ptr-indicator.ptr-spinning svg { animation-play-state: running; }
-  @keyframes ptr-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- ===================== LOGIN SCREEN ===================== -->
   <div class="top-screen active" id="screenLogin">
     <div class="login-logo">
       <div class="login-logo-letters"><span class="big-a">А</span><span class="big-t">Т</span></div>
@@ -599,7 +356,6 @@
     <button class="role-btn" data-role="syre">Сырьё <span class="arrow">›</span></button>
   </div>
 
-  <!-- ===================== CODE ENTRY SCREEN ===================== -->
   <div class="top-screen" id="screenCode">
     <header>
       <button class="back-btn" id="codeBackBtn">‹</button>
@@ -609,16 +365,12 @@
     <div style="flex:1; min-height:0; display:flex; flex-direction:column; justify-content:center; gap:22px; padding: 10px 24px 24px;">
       <div class="code-role-label">Введите 4-значный код</div>
       <div class="code-dots" id="codeDots">
-        <div class="code-dot"></div>
-        <div class="code-dot"></div>
-        <div class="code-dot"></div>
-        <div class="code-dot"></div>
+        <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
       </div>
       <div class="keypad" id="codeKeypad"></div>
     </div>
   </div>
 
-  <!-- ===================== SKLAD APP ===================== -->
   <div class="top-screen" id="appSklad">
     <header>
       <div class="brand">А<span>Т</span></div>
@@ -627,11 +379,8 @@
     </header>
     <div class="swipe-viewport" id="skladViewport">
       <div class="swipe-track" id="skladTrack">
-
-        <!-- Screen 0: Добавить (grid + keypad, vertical swipe cycles tables) -->
         <div class="swipe-screen">
           <div class="skl-add-wrap">
-            <div class="ptr-indicator" id="sklGridPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="skl-grid-wrap" id="sklGridWrap"><div class="loading-note">Загрузка...</div></div>
             <div class="field-display" id="sklValDisplay">0</div>
             <div class="keypad" id="sklKeypad"></div>
@@ -641,23 +390,16 @@
             </div>
           </div>
         </div>
-
-        <!-- Screen 1: Отчёт (all 4 tables) -->
         <div class="swipe-screen">
-          <div class="ptr-indicator" id="sklReportPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div class="skl-report-wrap" id="sklReportWrap"><div class="loading-note">Загрузка...</div></div>
         </div>
-
-        <!-- Screen 2: Выход -->
         <div class="swipe-screen">
           <div class="exit-screen"><button class="exit-btn" data-exit="sklad">Выйти</button></div>
         </div>
-
       </div>
     </div>
   </div>
 
-  <!-- ===================== TSEKH APP ===================== -->
   <div class="top-screen" id="appTsekh">
     <header>
       <div class="brand">А<span>Т</span></div>
@@ -665,29 +407,23 @@
     </header>
     <div class="swipe-viewport" id="tsekhViewport">
       <div class="swipe-track" id="tsekhTrack">
-
-        <!-- Screen 0: Добавить -->
         <div class="swipe-screen">
           <div id="screenTsekhAdd">
             <div>
               <div class="section-label">Марка</div>
               <div class="field-display" id="tsekhMarkaDisplay" data-field="marka">7-40</div>
             </div>
-
             <div>
               <div class="section-label">Сырьё</div>
               <div class="material-grid" id="tsekhMaterialGrid"></div>
             </div>
-
             <div>
               <div class="section-label">Количество</div>
               <div class="field-display" id="tsekhQtyDisplay" data-field="qty">0</div>
             </div>
-
             <div style="margin-top: 4px;">
               <div class="keypad" id="tsekhKeypad"></div>
             </div>
-
             <button class="add-btn" id="tsekhAddBtn" disabled>ДОБАВИТЬ</button>
             <div class="secondary-btn-row">
               <button class="add-btn tsk-clear-btn" id="tsekhClearAllBtn">ОЧИСТИТЬ ТАБЛИЦУ</button>
@@ -695,37 +431,22 @@
             </div>
           </div>
         </div>
-
-        <!-- Screen 1: Таблица -->
         <div class="swipe-screen">
           <div id="screenTsekhTable">
             <div class="stats-row">
-              <div class="stat-box">
-                <div class="stat-value" id="tsekhBlocksInShopVal">—</div>
-                <div class="stat-label">Блоков в цеху</div>
-              </div>
-              <div class="stat-box">
-                <div class="stat-value" id="tsekhFreeSlotsVal">—</div>
-                <div class="stat-label">Свободных мест</div>
-              </div>
+              <div class="stat-box"><div class="stat-value" id="tsekhBlocksInShopVal">—</div><div class="stat-label">Блоков в цеху</div></div>
+              <div class="stat-box"><div class="stat-value" id="tsekhFreeSlotsVal">—</div><div class="stat-label">Свободных мест</div></div>
             </div>
-            <div class="ptr-indicator" id="tsekhTablePtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="tsk-table-wrap" id="tsekhTableWrap">
-              <div class="loading-note">Загрузка...</div>
-            </div>
+            <div class="tsk-table-wrap" id="tsekhTableWrap"><div class="loading-note">Загрузка...</div></div>
           </div>
         </div>
-
-        <!-- Screen 2: Выход -->
         <div class="swipe-screen">
           <div class="exit-screen"><button class="exit-btn" data-exit="tsekh">Выйти</button></div>
         </div>
-
       </div>
     </div>
   </div>
 
-  <!-- ===================== SYRE (СЫРЬЁ) APP ===================== -->
   <div class="top-screen" id="appSyre">
     <header>
       <div class="brand">А<span>Т</span></div>
@@ -734,18 +455,11 @@
     </header>
     <div class="swipe-viewport" id="syreViewport">
       <div class="swipe-track" id="syreTrack">
-
-        <!-- Screen 0: Ввод количества -->
         <div class="swipe-screen">
           <div class="syre-wrap">
             <table class="skl-table syre-summary-table">
               <thead><tr><th>201</th><th>301</th><th>401</th><th>МИКС</th></tr></thead>
-              <tbody><tr>
-                <td id="syreSum-201">0</td>
-                <td id="syreSum-301">0</td>
-                <td id="syreSum-401">0</td>
-                <td id="syreSum-МИКС">0</td>
-              </tr></tbody>
+              <tbody><tr><td id="syreSum-201">0</td><td id="syreSum-301">0</td><td id="syreSum-401">0</td><td id="syreSum-МИКС">0</td></tr></tbody>
             </table>
             <div class="syre-fields" id="syreFields"></div>
             <div class="keypad" id="syreKeypad"></div>
@@ -755,17 +469,13 @@
             </div>
           </div>
         </div>
-
-        <!-- Screen 1: Выход -->
         <div class="swipe-screen">
           <div class="exit-screen"><button class="exit-btn" data-exit="syre">Выйти</button></div>
         </div>
-
       </div>
     </div>
   </div>
 
-  <!-- ===================== ADMIN APP ===================== -->
   <div class="top-screen" id="appAdmin">
     <header id="adminHeader">
       <div class="admin-header-default" id="adminHeaderDefault">
@@ -778,36 +488,25 @@
       <div class="admin-header-tsekh" id="adminHeaderTsekh">
         <div class="brand">А<span>Т</span></div>
         <div class="admin-header-tsekh-stats">
-          <div class="admin-header-tsekh-pill">
-            <span class="stat-label">Обновлено</span><span class="stat-value" id="admTsekhUpdated">—</span>
-          </div>
-          <div class="admin-header-tsekh-pill">
-            <span class="stat-label">Блоков в цеху</span><span class="stat-value" id="admTsekhBlocksVal">—</span>
-          </div>
-          <div class="admin-header-tsekh-pill">
-            <span class="stat-label">Свободных мест</span><span class="stat-value" id="admTsekhFreeVal">—</span>
-          </div>
+          <div class="admin-header-tsekh-pill"><span class="stat-label">Обновлено</span><span class="stat-value" id="admTsekhUpdated">—</span></div>
+          <div class="admin-header-tsekh-pill"><span class="stat-label">Блоков в цеху</span><span class="stat-value" id="admTsekhBlocksVal">—</span></div>
+          <div class="admin-header-tsekh-pill"><span class="stat-label">Свободных мест</span><span class="stat-value" id="admTsekhFreeVal">—</span></div>
         </div>
       </div>
     </header>
+
     <div class="swipe-viewport" id="adminViewport">
       <div class="swipe-track" id="adminTrack">
-
-        <!-- Screen 0: Отчёт · Цех (read-only) — сырьё is now labeled above its matching columns in the table itself -->
         <div class="swipe-screen">
           <div style="flex:1; min-height:0; display:flex; flex-direction:column;">
-            <div class="ptr-indicator" id="admTsekhReportPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="tsk-table-wrap" id="admTsekhReportWrap"><div class="loading-note">Загрузка...</div></div>
           </div>
         </div>
 
-        <!-- Screen 1: Склад (read-only report) -->
         <div class="swipe-screen">
-          <div class="ptr-indicator" id="admSkladReportPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div class="skl-report-wrap" id="admSkladReportWrap"><div class="loading-note">Загрузка...</div></div>
         </div>
 
-        <!-- Screen 2: Цех (edit — full add form) -->
         <div class="swipe-screen">
           <div id="admTsekhEdit" style="padding: 5px 16px 5px; gap: 3px; display: flex; flex-direction: column; flex: 1; min-height: 0;">
             <div>
@@ -833,10 +532,8 @@
           </div>
         </div>
 
-        <!-- Screen 3: Склад (edit — grid + keypad, vertical swipe cycles tables) -->
         <div class="swipe-screen">
           <div class="skl-add-wrap">
-            <div class="ptr-indicator" id="admSkladGridPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="skl-grid-wrap" id="admSkladGridWrap"><div class="loading-note">Загрузка...</div></div>
             <div class="field-display" id="admSkladValDisplay">0</div>
             <div class="keypad" id="admSkladKeypad"></div>
@@ -847,17 +544,11 @@
           </div>
         </div>
 
-        <!-- Screen 4: Редактирование · Сырьё (identical to the Сырьё role screen) -->
         <div class="swipe-screen">
           <div class="syre-wrap">
             <table class="skl-table syre-summary-table">
               <thead><tr><th>201</th><th>301</th><th>401</th><th>МИКС</th></tr></thead>
-              <tbody><tr>
-                <td id="admSyreSum-201">0</td>
-                <td id="admSyreSum-301">0</td>
-                <td id="admSyreSum-401">0</td>
-                <td id="admSyreSum-МИКС">0</td>
-              </tr></tbody>
+              <tbody><tr><td id="admSyreSum-201">0</td><td id="admSyreSum-301">0</td><td id="admSyreSum-401">0</td><td id="admSyreSum-МИКС">0</td></tr></tbody>
             </table>
             <div class="syre-fields" id="admSyreFields"></div>
             <div class="keypad" id="admSyreKeypad"></div>
@@ -868,36 +559,61 @@
           </div>
         </div>
 
-        <!-- Screen 5: Выход -->
-        <div class="swipe-screen"><div class="exit-screen"><button class="exit-btn" data-exit="admin">Выйти</button></div></div>
-
+        <div class="swipe-screen">
+          <div class="exit-screen"><button class="exit-btn" data-exit="admin">Выйти</button></div>
+        </div>
       </div>
     </div>
+
     <div class="dots-indicator" id="adminDots">
-      <div class="idot active"></div><div class="idot"></div><div class="idot"></div><div class="idot"></div><div class="idot"></div><div class="idot"></div>
+      <div class="idot active"></div><div class="idot"></div><div class="idot"></div>
+      <div class="idot"></div><div class="idot"></div><div class="idot"></div>
     </div>
   </div>
-
 </div>
-
 
 <div class="toast" id="toast"></div>
 
 <script>
-  // ==================== ACCESS CODES (placeholders — заменить перед выдачей сотрудникам) ====================
+  // ==================== UNIFIED BACKEND ====================
+  const API_URL = "https://script.google.com/macros/s/AKfycbztYZE7iWRxrXpeOt16S1mxcHHcVCk0KTkRhqaCjeatdgfs9Y7H9BUcub1E5pzEnx7d/exec";
+
+  async function apiGet(module, action, params = {}) {
+    const query = new URLSearchParams({
+      module,
+      action,
+      ...params
+    });
+
+    const res = await fetch(`${API_URL}?${query.toString()}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  async function apiPost(module, body = {}) {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ module, ...body })
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  // ==================== ACCESS CODES ====================
   const ACCESS_CODES = {
     admin: "1111",
     sklad: "2222",
     tsekh: "3333",
     syre: "4444"
   };
+
   const ROLE_TITLES = { admin: "Администратор", sklad: "Склад", tsekh: "Цех", syre: "Сырьё" };
   const ADMIN_SCREEN_TITLES = ["Отчёт · Цех", "Склад", "Цех", "Склад", "Сырьё", "Выход"];
-
   const STORAGE_KEY = "at_role";
 
-  // ==================== GENERIC SMOOTH SWIPER ====================
-  // Handles live-follow drag + fast, smooth snap between N horizontal screens.
+  // ==================== GENERIC SWIPER ====================
   function createSwiper(viewportEl, trackEl, count, opts = {}) {
     let index = opts.startIndex || 0;
     const dotsEl = opts.dotsEl;
@@ -938,7 +654,7 @@
       if (axisLocked === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
         axisLocked = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
       }
-      if (axisLocked !== "x") return; // let vertical gestures pass through untouched
+      if (axisLocked !== "x") return;
       deltaX = dx;
       const basePercent = -index * stepPercent;
       const dragPercent = (dx / viewportEl.clientWidth) * stepPercent;
@@ -956,12 +672,9 @@
       }
       applyTransform(true);
       updateDots();
-      // Only notify listeners when a real swipe actually changed the screen —
-      // NOT on a plain tap (e.g. selecting a Sklad grid cell). Firing onChange
-      // on every touchend used to force a mid-tap re-render that discarded
-      // the cell selection and swallowed the click that was supposed to make it.
       if (index !== prevIndex && opts.onChange) opts.onChange(index);
     }
+
     viewportEl.addEventListener("touchend", endDrag, { passive: true });
     viewportEl.addEventListener("touchcancel", endDrag, { passive: true });
 
@@ -970,10 +683,6 @@
     return { goTo, current: () => index };
   }
 
-  // ==================== SWIPE TRACK SIZING ====================
-  // Track must be count*100% of the viewport, and each screen exactly 1/count of the
-  // track. We set `flex` (not `width`) inline because the .swipe-screen class sets
-  // flex-basis via the `flex` shorthand, which otherwise wins over a plain width rule.
   function fixTrackChildWidths(trackEl, count) {
     trackEl.style.width = (count * 100) + "%";
     [...trackEl.children].forEach(ch => {
@@ -981,7 +690,6 @@
     });
   }
 
-  // ==================== TOAST ====================
   function showToast(msg) {
     const t = document.getElementById("toast");
     t.textContent = msg;
@@ -990,128 +698,12 @@
     showToast._tm = setTimeout(() => t.classList.remove("show"), 1800);
   }
 
-  // ==================== TOP-LEVEL SCREEN SWITCH ====================
   function showTopScreen(id) {
     document.querySelectorAll(".top-screen").forEach(s => s.classList.toggle("active", s.id === id));
   }
 
-  // ==================== PULL-TO-REFRESH (manual refresh; auto-poll is untouched) ====================
-  // Generic swipe-down-to-refresh for a scrollable data container. Works alongside the
-  // existing 5s auto-poll — this only lets the user force an immediate reload, e.g. right
-  // after someone else on another device just made a change.
-  //
-  // indicatorEl: the small spinner row placed just above containerEl in the markup.
-  // containerEl: the scrollable wrap whose content gets replaced by onRefresh (e.g. sklReportWrap).
-  // onRefresh: function returning a Promise (or plain function) that reloads + re-renders data.
-  // opts.shouldStart(): optional guard — return false to let the touch pass through untouched
-  //                     (used on the Sklad grid screens so this doesn't fight the existing
-  //                     up/down swipe that cycles between Пачки/2000/3000/4000).
-  const PULL_THRESHOLD = 62; // px of downward drag needed to trigger a refresh on release
-  const PULL_MAX = 90;       // visual cap so the indicator doesn't grow forever under a long drag
-
-  function initPullToRefresh(indicatorEl, containerEl, onRefresh, opts = {}) {
-    let startY = 0, pulling = false, dragY = 0, refreshing = false;
-
-    function setHeight(px) {
-      indicatorEl.style.height = px + "px";
-    }
-
-    containerEl.addEventListener("touchstart", (e) => {
-      if (refreshing) return;
-      if (opts.shouldStart && !opts.shouldStart()) return;
-      // Only start a pull when the container is already scrolled to its top —
-      // otherwise this is just the user scrolling down through a long table.
-      if (containerEl.scrollTop > 0) return;
-      startY = e.touches[0].clientY;
-      pulling = true;
-      dragY = 0;
-    }, { passive: true });
-
-    containerEl.addEventListener("touchmove", (e) => {
-      if (!pulling || refreshing) return;
-      const dy = e.touches[0].clientY - startY;
-      if (dy <= 0) { // user reversed direction / is actually scrolling content — bail out cleanly
-        pulling = false;
-        setHeight(0);
-        return;
-      }
-      dragY = Math.min(dy, PULL_MAX * 1.6);
-      setHeight(Math.min(dragY * 0.55, PULL_MAX));
-    }, { passive: true });
-
-    function endPull() {
-      if (!pulling) return;
-      pulling = false;
-      const shouldRefresh = dragY * 0.55 >= PULL_THRESHOLD * 0.9;
-      if (shouldRefresh && !refreshing) {
-        refreshing = true;
-        setHeight(PULL_THRESHOLD * 0.7);
-        indicatorEl.classList.add("ptr-spinning");
-        // Safety timeout: if the backend hangs, don't leave the spinner running forever —
-        // stop showing it after 8s even though the underlying request may still resolve
-        // later and silently update the data when it does.
-        let settled = false;
-        const stop = () => {
-          if (settled) return;
-          settled = true;
-          refreshing = false;
-          indicatorEl.classList.remove("ptr-spinning");
-          setHeight(0);
-        };
-        const timeoutId = setTimeout(stop, 8000);
-        Promise.resolve(onRefresh()).finally(() => { clearTimeout(timeoutId); stop(); });
-      } else {
-        setHeight(0);
-      }
-    }
-    containerEl.addEventListener("touchend", endPull, { passive: true });
-    containerEl.addEventListener("touchcancel", () => { pulling = false; setHeight(0); }, { passive: true });
-  }
-
-  // ==================== AUTO-FIT TABLE (no scroll, shrinks OR grows to fill the available space) ====================
-  // Used by the Sklad editing grid (skl-table): the row count comes from the backend and
-  // varies, so a fixed font size either leaves empty space (few rows) or overflows (many rows).
-  // This measures the table's natural size right after it's rendered and binary-searches
-  // --skl-row-font until the table fills wrapEl as closely as possible on BOTH axes —
-  // growing to fill empty space when there's room, shrinking when there isn't, and never
-  // growing past what the narrowest column can hold (table-layout:fixed means column width
-  // doesn't grow with font size, so a table with many columns caps out sooner on width than
-  // on height). No scrolling, no clipping. Cheap: runs once per render, not on every keystroke.
-  function fitTableToContainer(wrapEl, tableEl, opts = {}) {
-    if (!tableEl) return;
-    const maxFont = opts.maxFont || 40;
-    const minFont = opts.minFont || 9;
-    const availableH = wrapEl.clientHeight;
-    const availableW = wrapEl.clientWidth;
-    if (availableH <= 0 || availableW <= 0) return; // not laid out yet — skip, next render will retry
-
-    function fitsAt(font) {
-      tableEl.style.setProperty("--skl-row-font", font + "px");
-      tableEl.style.setProperty("--skl-cell-pad", Math.max(1, font * 0.12) + "px");
-      // scrollWidth briefly exceeds clientWidth if a cell's content can't wrap at this font
-      // size (e.g. a 3-digit number in a narrow column) — checking both axes catches that,
-      // not just vertical overflow.
-      return tableEl.scrollHeight <= availableH && tableEl.scrollWidth <= availableW + 1;
-    }
-
-    // Binary search the largest font that still fits both axes — grows the table to use
-    // the full available space when there's room (few rows/columns), shrinks it when there
-    // isn't, instead of being capped at one fixed size.
-    let lo = minFont, hi = maxFont, best = minFont;
-    if (fitsAt(maxFont)) {
-      best = maxFont; // whole range fits — just use the top of it
-    } else {
-      for (let i = 0; i < 8; i++) { // 8 steps gives sub-pixel precision across a 9–40px range
-        const mid = (lo + hi) / 2;
-        if (fitsAt(mid)) { best = mid; lo = mid; } else { hi = mid; }
-      }
-    }
-    fitsAt(best);
-  }
-
-  // ==================== SKLAD MODULE ====================
+  // ==================== SKLAD ====================
   const Sklad = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxyCUYYc6XiR5M5nsoqeJn0IjmKWlJVRqZGAREsVHckGy1WPiGxwg41_qRcNipOZaaUTg/exec";
     const TABLES = [
       { id: "пачки", label: "Пачки" },
       { id: "2000", label: "2000" },
@@ -1123,15 +715,16 @@
     let currentTableIndex = 0;
     let selectedRow = null, selectedCol = null, valStr = "";
     let loaded = false;
-    let horizIndex = 0; // 0 = Добавить, 1 = Отчёт, 2 = Выход — kept in sync by the outer swiper
+    let horizIndex = 0;
 
     function currentTable() { return TABLES[currentTableIndex]; }
 
     async function loadAllData() {
       try {
-        const res = await fetch(`${API_URL}?action=getAllData`);
-        const data = await res.json();
-        ROWS = data.rows; COLS = data.cols; dataByTable = data.tables;
+        const data = await apiGet("sklad", "getAllData");
+        ROWS = data.rows;
+        COLS = data.cols;
+        dataByTable = data.tables;
         loaded = true;
         renderGrid();
         renderReport();
@@ -1167,12 +760,10 @@
         html += "</tr>";
       });
       html += "</tbody></table>";
-      const wrap = document.getElementById("sklGridWrap");
-      wrap.innerHTML = html;
+      document.getElementById("sklGridWrap").innerHTML = html;
       document.querySelectorAll("#sklGridWrap .skl-table tbody td").forEach(td => {
         td.onclick = () => selectCell(td.dataset.row, td.dataset.col);
       });
-      fitTableToContainer(wrap, wrap.querySelector(".skl-table"));
     }
 
     function selectCell(row, col) {
@@ -1204,6 +795,7 @@
         btn.onclick = () => handleDigit(k);
         keypad.appendChild(btn);
       });
+
       const addBtn = document.createElement("button");
       addBtn.className = "key add-key";
       addBtn.id = "sklAddBtn";
@@ -1235,7 +827,7 @@
       renderVal(); updateBtnState();
     }
 
-    function commitValue() {
+    async function commitValue() {
       if (selectedRow === null || valStr === "") return;
       const t = currentTable();
       const r = selectedRow, c = selectedCol, v = valStr;
@@ -1244,47 +836,53 @@
       dataByTable[t.id][r][c] = Number(v);
       valStr = "";
       renderVal(); renderGrid(); renderReport(); updateBtnState();
-      fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "setCell", table: t.id, row: r, col: c, value: v })
-      }).then(res => res.json()).then(data => {
+
+      try {
+        const data = await apiPost("sklad", { action: "setCell", table: t.id, row: r, col: c, value: v });
         if (!data.success) showToast("Не сохранилось на сервере — попробуйте снова");
-      }).catch(() => showToast("Ошибка сети — не сохранено"));
+      } catch (err) {
+        showToast("Ошибка сети — не сохранено");
+      }
     }
 
-    function deleteValue() {
+    async function deleteValue() {
       if (selectedRow === null) return;
       const t = currentTable();
       const r = selectedRow, c = selectedCol;
       showToast(`Очищено: ${t.label} · ${r}, ${c}`);
+      if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {};
       dataByTable[t.id][r][c] = "";
       valStr = "";
       renderVal(); renderGrid(); renderReport(); updateBtnState();
-      fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "deleteCell", table: t.id, row: r, col: c })
-      }).then(res => res.json()).then(data => {
+
+      try {
+        const data = await apiPost("sklad", { action: "deleteCell", table: t.id, row: r, col: c });
         if (!data.success) showToast("Не удалось очистить на сервере");
-      }).catch(() => showToast("Ошибка сети"));
+      } catch (err) {
+        showToast("Ошибка сети");
+      }
     }
 
-    function clearAllCurrentTable() {
+    async function clearAllCurrentTable() {
       const t = currentTable();
       const ok = confirm(`Точно очистить всю таблицу «${t.label}»? Это действие нельзя отменить.`);
       if (!ok) return;
-      ROWS.forEach(r => { COLS.forEach(c => { if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {}; dataByTable[t.id][r][c] = ""; }); });
+      ROWS.forEach(r => {
+        COLS.forEach(c => {
+          if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {};
+          dataByTable[t.id][r][c] = "";
+        });
+      });
       selectedRow = null; selectedCol = null; valStr = "";
       renderVal(); renderGrid(); renderReport(); updateBtnState();
-      fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll", table: t.id })
-      }).then(res => res.json()).then(data => {
+
+      try {
+        const data = await apiPost("sklad", { action: "clearAll", table: t.id });
         if (data.success) showToast(`Таблица «${t.label}» очищена`);
         else showToast("Не удалось очистить на сервере");
-      }).catch(() => showToast("Ошибка сети"));
+      } catch (err) {
+        showToast("Ошибка сети");
+      }
     }
 
     function renderReport() {
@@ -1293,8 +891,8 @@
       let html = "";
       TABLES.forEach(t => {
         const values = dataByTable[t.id] || {};
-        html += `<div class="skl-report-block">`;
-        html += `<table class="skl-report-table"><thead><tr><th class="skl-report-corner">${t.label}</th>`;
+        html += `<div class="skl-report-block"><div class="skl-report-block-label">${t.label}</div>`;
+        html += '<table class="skl-report-table"><thead><tr><th></th>';
         COLS.forEach(c => html += `<th>${c}</th>`);
         html += '</tr></thead><tbody>';
         ROWS.forEach(r => {
@@ -1329,13 +927,6 @@
     }
 
     let initialized = false;
-    let refreshingPull = false;
-    async function pullRefresh() {
-      if (refreshingPull) return;
-      refreshingPull = true;
-      try { await loadAllData(); } finally { refreshingPull = false; }
-    }
-
     function init() {
       if (initialized) return;
       initialized = true;
@@ -1344,27 +935,6 @@
       document.getElementById("sklDeleteBtn").onclick = deleteValue;
       loadAllData();
 
-      // Report screen (Отчёт): standard pull-to-refresh, no competing gesture here.
-      initPullToRefresh(
-        document.getElementById("sklReportPtr"),
-        document.getElementById("sklReportWrap"),
-        pullRefresh,
-        { shouldStart: () => horizIndex === 1 }
-      );
-
-      // Добавить screen: vertical swipe already cycles between the 4 tables (Пачки/2000/3000/4000).
-      // Swiping down further than that when already on the first table (Пачки) used to do
-      // nothing — that's repurposed as the refresh gesture, so it never conflicts with
-      // paging between tables.
-      initPullToRefresh(
-        document.getElementById("sklGridPtr"),
-        document.getElementById("sklGridWrap"),
-        pullRefresh,
-        { shouldStart: () => horizIndex === 0 && currentTableIndex === 0 }
-      );
-
-      // Vertical swipe cycles tables — only meaningful on the "Добавить" screen (index 0).
-      // Runs independently of the horizontal swiper below; both simply read the same touch events.
       const viewport = document.getElementById("skladViewport");
       let vStartX = 0, vStartY = 0;
       viewport.addEventListener("touchstart", (e) => {
@@ -1382,9 +952,8 @@
     return { init, setHorizIndex };
   })();
 
-  // ==================== TSEKH MODULE ====================
+  // ==================== TSEKH ====================
   const Tsekh = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbwaJVr6TgQEEUeYsMdgyxc3KxLMK7g2JsXgI_XCrYaYdEdC_JpQRV0YJtUkFcja_74lSA/exec";
     const MARKS_MIN = 7;
     const MARKS_MAX = 40;
     const MATERIALS = ["201", "301", "401", "Микс", "БД", "Рез"];
@@ -1393,8 +962,8 @@
     let markaStr = "";
     let qtyStr = "";
     let selectedMaterial = null;
-    let activeField = "marka"; // "marka" | "qty"
-    let horizIndex = 0;        // 0 = Добавить, 1 = Таблица, 2 = Выход
+    let activeField = "marka";
+    let horizIndex = 0;
     let tablePollTimer = null;
     let lastData = null;
 
@@ -1435,8 +1004,7 @@
     function buildKeypad() {
       const keypad = document.getElementById("tsekhKeypad");
       keypad.innerHTML = "";
-      const keys = ["1","2","3","4","5","6","7","8","9","C","0","⌫"];
-      keys.forEach(k => {
+      ["1","2","3","4","5","6","7","8","9","C","0","⌫"].forEach(k => {
         const btn = document.createElement("button");
         btn.className = "key" + (k === "C" ? " clear" : "");
         btn.textContent = k;
@@ -1448,19 +1016,14 @@
     function handleKey(k) {
       const isMarka = activeField === "marka";
       let val = isMarka ? markaStr : qtyStr;
-
-      if (k === "C") {
-        val = "";
-      } else if (k === "⌫") {
-        val = val.slice(0, -1);
-      } else {
+      if (k === "C") val = "";
+      else if (k === "⌫") val = val.slice(0, -1);
+      else {
         const maxLen = isMarka ? 2 : 4;
         if (val.length < maxLen) val += k;
       }
-
       if (isMarka) markaStr = val; else qtyStr = val;
-      renderFields();
-      updateAddBtnState();
+      renderFields(); updateAddBtnState();
     }
 
     function markaValid() {
@@ -1475,39 +1038,38 @@
     }
 
     function resetForm() {
-      markaStr = "";
-      qtyStr = "";
-      selectedMaterial = null;
+      markaStr = ""; qtyStr = ""; selectedMaterial = null;
       document.querySelectorAll("#tsekhMaterialGrid .material-btn").forEach(b => b.classList.remove("selected"));
-      renderFields();
-      setActiveField("marka");
-      updateAddBtnState();
+      renderFields(); setActiveField("marka"); updateAddBtnState();
     }
 
-    function submitEntry(qtySign) {
-      if (!markaValid()) {
-        showToast("Марка должна быть от 7 до 40");
-        return;
-      }
+    async function submitEntry(qtySign) {
+      if (!markaValid()) { showToast("Марка должна быть от 7 до 40"); return; }
       const markaVal = markaStr, qtyVal = qtyStr, materialVal = selectedMaterial;
       showToast(`Марка ${markaVal}, ${MATERIAL_LABELS[materialVal]}: ${qtySign > 0 ? "+" : "−"}${qtyVal}`);
       resetForm();
-      fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
-      }).then(res => res.json()).then(data => {
-        if (!data.success) showToast(qtySign > 0 ? "Не сохранилось на сервере — попробуйте снова" : "Не удалось удалить блок — попробуйте снова");
-        else loadTableData();
-      }).catch(() => {
+
+      try {
+        const data = await apiPost("tsekh", {
+          action: "add",
+          marka: Number(markaVal),
+          material: materialVal,
+          qty: qtySign * Number(qtyVal)
+        });
+
+        if (!data.success) {
+          showToast(qtySign > 0 ? "Не сохранилось на сервере — попробуйте снова" : "Не удалось удалить блок — попробуйте снова");
+        } else {
+          await loadTableData();
+        }
+      } catch (err) {
         showToast(qtySign > 0 ? "Ошибка сети — запись не сохранена" : "Ошибка сети — блок не удалён");
-      });
+      }
     }
 
     async function loadTableData() {
       try {
-        const res = await fetch(`${API_URL}?action=getData`);
-        const data = await res.json();
+        const data = await apiGet("tsekh", "getData");
         lastData = data;
         renderTable(data);
       } catch (err) {
@@ -1525,36 +1087,34 @@
       html += '<th>Объём</th></tr></thead><tbody>';
 
       data.rows.forEach(row => {
-        html += '<tr>';
+        html += "<tr>";
         html += `<td class="marka-col">${row.marka}</td>`;
         MATERIALS.forEach(mat => {
           const v = row.materials[mat] || 0;
           html += `<td class="${v === 0 ? "zero" : ""}">${v === 0 ? "" : v}</td>`;
         });
         html += `<td class="volume-col">${row.volume === 0 ? "" : Math.round(row.volume * 10) / 10}</td>`;
-        html += '</tr>';
+        html += "</tr>";
       });
 
-      html += '</tbody></table>';
+      html += "</tbody></table>";
       document.getElementById("tsekhTableWrap").innerHTML = html;
     }
 
-    function clearAllTable() {
+    async function clearAllTable() {
       const ok = confirm("Точно очистить всю таблицу за сегодня? Это действие нельзя отменить.");
       if (!ok) return;
-      fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll" })
-      }).then(res => res.json()).then(data => {
+
+      try {
+        const data = await apiPost("tsekh", { action: "clearAll" });
         if (data.success) {
           showToast("Таблица очищена");
           lastData = null;
           loadTableData();
-        } else {
-          showToast("Не удалось очистить");
-        }
-      }).catch(() => showToast("Ошибка сети"));
+        } else showToast("Не удалось очистить");
+      } catch (err) {
+        showToast("Ошибка сети");
+      }
     }
 
     function setHorizIndex(i) {
@@ -1579,56 +1139,25 @@
 
       markaDisplay().onclick = () => setActiveField("marka");
       qtyDisplay().onclick = () => setActiveField("qty");
-
       document.getElementById("tsekhAddBtn").onclick = () => submitEntry(1);
       document.getElementById("tsekhRemoveBlockBtn").onclick = () => submitEntry(-1);
       document.getElementById("tsekhClearAllBtn").onclick = clearAllTable;
 
-      loadTableData(); // warm the cache in the background so Таблица feels instant on first open
-
-      let refreshingPull = false;
-      initPullToRefresh(
-        document.getElementById("tsekhTablePtr"),
-        document.getElementById("tsekhTableWrap"),
-        async () => {
-          if (refreshingPull) return;
-          refreshingPull = true;
-          try { await loadTableData(); } finally { refreshingPull = false; }
-        },
-        { shouldStart: () => horizIndex === 1 }
-      );
+      loadTableData();
     }
 
     return { init, setHorizIndex };
   })();
 
-  // ==================== SYRE (СЫРЬЁ) MODULE ====================
+  // ==================== SYRE ====================
   const Syre = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
     const MATERIALS = ["201", "301", "401", "МИКС"];
 
     let values = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
-    let activeIndex = 0;   // index into MATERIALS — which field is currently receiving keypad input
+    let activeIndex = 0;
     let valStr = "";
     let loaded = false;
 
-    // ---- Anti-race-condition state ----
-    // reqSeq: every request that can update `values` (poll, add, or clearAll) gets an
-    // increasing id.
-    // appliedSeq: id of the last FULL-SNAPSHOT response we applied (poll / clearAll —
-    // both are authoritative for the whole table). A full snapshot is only applied if
-    // it's newer than the last one we applied, so a slow old poll can't overwrite a
-    // newer one.
-    // appliedSeqByMaterial: id of the last response applied to EACH individual material.
-    // An `add` response is only authoritative for the one material it was sent for — the
-    // server may still be mid-flight on a concurrent add for a *different* material, so
-    // its response must never overwrite the other three fields. This is what previously
-    // caused the numbers to visibly jump: replacing the whole `values` object from a
-    // single material's response briefly reverted the other, still-unconfirmed materials
-    // to their old value until their own response landed.
-    // pendingSaves: while an add/clearAll is in flight, the periodic poll skips applying
-    // (or skips entirely) so it can't roll back a value the user just entered but the
-    // server hasn't confirmed yet.
     let reqSeq = 0;
     let appliedSeq = 0;
     let appliedSeqByMaterial = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
@@ -1638,20 +1167,11 @@
     function activeMaterial() { return MATERIALS[activeIndex]; }
 
     async function loadValues() {
-      if (pendingSaves > 0) return; // a save is still unconfirmed — don't risk clobbering it this tick
+      if (pendingSaves > 0) return;
       const mySeq = ++reqSeq;
       try {
-        const res = await fetch(`${API_URL}?action=getData`);
-        const data = await res.json();
-        // Re-check pendingSaves: a save may have started while this GET was in flight.
-        // BUG FIX: this GET was sent BEFORE mySeq was compared to appliedSeq below, so a
-        // slow poll (started, say, before a commitValue) can resolve AFTER that add's own
-        // response already landed and bumped appliedSeqByMaterial for its one material —
-        // while `appliedSeq` (the old global gate) was never touched by that add, so this
-        // stale poll used to pass `mySeq > appliedSeq` anyway and blindly overwrite the
-        // WHOLE `values` object, silently reverting the just-confirmed add. Applying the
-        // snapshot per material (against appliedSeqByMaterial, same as commitValue does)
-        // fixes this: a material with a newer confirmed write is left untouched.
+        const data = await apiGet("syre", "getData");
+
         if (data.success && pendingSaves === 0) {
           MATERIALS.forEach(m => {
             if (mySeq > appliedSeqByMaterial[m]) {
@@ -1663,15 +1183,14 @@
           loaded = true;
           renderSummary();
         }
-      } catch (err) {
-        // Keep whatever is already on screen — data will refresh on next successful action.
-      }
+      } catch (err) {}
     }
 
     function startPolling() {
       if (pollTimer) return;
       pollTimer = setInterval(loadValues, 5000);
     }
+
     function stopPolling() {
       if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
     }
@@ -1718,6 +1237,7 @@
         btn.onclick = () => handleDigit(k);
         keypad.appendChild(btn);
       });
+
       const addBtn = document.createElement("button");
       addBtn.className = "key add-key";
       addBtn.id = "syreAddBtn";
@@ -1759,46 +1279,46 @@
       renderFields(); updateBtnState();
     }
 
-    // sign: +1 for ✓ (add to running total), -1 for УДАЛИТЬ (subtract, never below 0 — server clamps too)
-    function commitValue(sign) {
+    async function commitValue(sign) {
       if (valStr === "" || Number(valStr) <= 0) return;
       const material = activeMaterial();
       const qty = sign * Number(valStr);
       const label = sign > 0 ? "+" : "−";
       showToast(`${material}: ${label}${valStr}`);
 
-      // Optimistic local update so the summary + field reset instantly.
       values[material] = Math.max(0, (values[material] || 0) + qty);
       renderSummary();
       advanceField();
 
       pendingSaves++;
       const mySeq = ++reqSeq;
-      fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "add", material, qty })
-      }).then(res => res.json()).then(data => {
+
+      try {
+        const data = await apiPost("syre", { action: "add", material, qty });
+
         if (data.success) {
-          // Only touch the ONE material this request was for, and only if no newer
-          // response for that same material has already landed. A concurrent add for a
-          // different material may still be unconfirmed server-side, so its value in
-          // this response isn't authoritative yet — leave the other fields alone.
           if (mySeq > appliedSeqByMaterial[material]) {
             appliedSeqByMaterial[material] = mySeq;
             const serverVal = data.values ? data.values[material] : undefined;
-            if (serverVal !== undefined) { values[material] = serverVal; renderSummary(); }
+            if (serverVal !== undefined) {
+              values[material] = serverVal;
+              renderSummary();
+            }
           }
         } else {
           showToast("Не сохранилось на сервере — попробуйте снова");
         }
-      }).catch(() => showToast("Ошибка сети — не сохранено"))
-        .finally(() => { pendingSaves--; });
+      } catch (err) {
+        showToast("Ошибка сети — не сохранено");
+      } finally {
+        pendingSaves--;
+      }
     }
 
-    function clearAll() {
+    async function clearAll() {
       const ok = confirm("Точно очистить все количества сырья? Это действие нельзя отменить.");
       if (!ok) return;
+
       MATERIALS.forEach(m => values[m] = 0);
       renderSummary();
       activeIndex = 0; valStr = "";
@@ -1806,15 +1326,11 @@
 
       pendingSaves++;
       const mySeq = ++reqSeq;
-      fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll" })
-      }).then(res => res.json()).then(data => {
+
+      try {
+        const data = await apiPost("syre", { action: "clearAll" });
+
         if (data.success) {
-          // Same per-material gating as loadValues: only stamp a material as cleared if
-          // no request that started even later (a concurrent add) has already confirmed
-          // a newer value for it — otherwise this clear would wipe out that newer add.
           MATERIALS.forEach(m => {
             if (mySeq > appliedSeqByMaterial[m]) {
               appliedSeqByMaterial[m] = mySeq;
@@ -1827,8 +1343,11 @@
         } else {
           showToast("Не удалось очистить на сервере");
         }
-      }).catch(() => showToast("Ошибка сети"))
-        .finally(() => { pendingSaves--; });
+      } catch (err) {
+        showToast("Ошибка сети");
+      } finally {
+        pendingSaves--;
+      }
     }
 
     let initialized = false;
@@ -1842,22 +1361,20 @@
       document.getElementById("syreClearAllBtn").onclick = clearAll;
       document.getElementById("syreDeleteBtn").onclick = () => commitValue(-1);
       loadValues();
-      startPolling(); // keeps the table in sync with edits made from another phone
+      startPolling();
     }
 
     return { init, stopPolling };
   })();
 
-  // ==================== ADMIN · SYRE (edit — shares the same data source as the Сырьё role) ====================
+  // ==================== ADMIN · SYRE ====================
   const AdminSyre = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
     const MATERIALS = ["201", "301", "401", "МИКС"];
 
     let values = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
     let activeIndex = 0;
     let valStr = "";
     let loaded = false;
-
     let reqSeq = 0;
     let appliedSeq = 0;
     let appliedSeqByMaterial = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
@@ -1870,15 +1387,7 @@
       if (pendingSaves > 0) return;
       const mySeq = ++reqSeq;
       try {
-        const res = await fetch(`${API_URL}?action=getData`);
-        const data = await res.json();
-        // BUG FIX: apply the snapshot per material (against appliedSeqByMaterial), not as
-        // one wholesale overwrite of `values`. A poll started before a commitValue can
-        // resolve after that add's own response already confirmed a newer value for its
-        // one material — the old `mySeq > appliedSeq` check didn't see that (appliedSeq
-        // is only bumped by full snapshots), so the stale poll won and silently reverted
-        // the just-saved add. This was the source of the Сырьё table desyncing between
-        // the "сырье" role and the admin's "Редактирование · Сырьё" screen.
+        const data = await apiGet("syre", "getData");
         if (data.success && pendingSaves === 0) {
           MATERIALS.forEach(m => {
             if (mySeq > appliedSeqByMaterial[m]) {
@@ -1890,9 +1399,7 @@
           loaded = true;
           renderSummary();
         }
-      } catch (err) {
-        // Keep whatever is already on screen — data will refresh on next successful action.
-      }
+      } catch (err) {}
     }
 
     function setPolling(active) {
@@ -1946,6 +1453,7 @@
         btn.onclick = () => handleDigit(k);
         keypad.appendChild(btn);
       });
+
       const addBtn = document.createElement("button");
       addBtn.className = "key add-key";
       addBtn.id = "admSyreAddBtn";
@@ -1987,7 +1495,7 @@
       renderFields(); updateBtnState();
     }
 
-    function commitValue(sign) {
+    async function commitValue(sign) {
       if (valStr === "" || Number(valStr) <= 0) return;
       const material = activeMaterial();
       const qty = sign * Number(valStr);
@@ -2000,27 +1508,32 @@
 
       pendingSaves++;
       const mySeq = ++reqSeq;
-      fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "add", material, qty })
-      }).then(res => res.json()).then(data => {
+
+      try {
+        const data = await apiPost("syre", { action: "add", material, qty });
         if (data.success) {
           if (mySeq > appliedSeqByMaterial[material]) {
             appliedSeqByMaterial[material] = mySeq;
             const serverVal = data.values ? data.values[material] : undefined;
-            if (serverVal !== undefined) { values[material] = serverVal; renderSummary(); }
+            if (serverVal !== undefined) {
+              values[material] = serverVal;
+              renderSummary();
+            }
           }
         } else {
           showToast("Не сохранилось на сервере — попробуйте снова");
         }
-      }).catch(() => showToast("Ошибка сети — не сохранено"))
-        .finally(() => { pendingSaves--; });
+      } catch (err) {
+        showToast("Ошибка сети — не сохранено");
+      } finally {
+        pendingSaves--;
+      }
     }
 
-    function clearAll() {
+    async function clearAll() {
       const ok = confirm("Точно очистить все количества сырья? Это действие нельзя отменить.");
       if (!ok) return;
+
       MATERIALS.forEach(m => values[m] = 0);
       renderSummary();
       activeIndex = 0; valStr = "";
@@ -2028,11 +1541,9 @@
 
       pendingSaves++;
       const mySeq = ++reqSeq;
-      fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll" })
-      }).then(res => res.json()).then(data => {
+
+      try {
+        const data = await apiPost("syre", { action: "clearAll" });
         if (data.success) {
           MATERIALS.forEach(m => {
             if (mySeq > appliedSeqByMaterial[m]) {
@@ -2046,8 +1557,11 @@
         } else {
           showToast("Не удалось очистить на сервере");
         }
-      }).catch(() => showToast("Ошибка сети"))
-        .finally(() => { pendingSaves--; });
+      } catch (err) {
+        showToast("Ошибка сети");
+      } finally {
+        pendingSaves--;
+      }
     }
 
     let initialized = false;
@@ -2061,19 +1575,16 @@
       document.getElementById("admSyreClearAllBtn").onclick = clearAll;
       document.getElementById("admSyreDeleteBtn").onclick = () => commitValue(-1);
     }
+
     return { init, setPolling };
   })();
 
-  // ==================== ADMIN · TSEKH (report + edit, sharing one data source) ====================
+  // ==================== ADMIN · TSEKH ====================
   const AdminTsekh = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbwaJVr6TgQEEUeYsMdgyxc3KxLMK7g2JsXgI_XCrYaYdEdC_JpQRV0YJtUkFcja_74lSA/exec";
     const MARKS_MIN = 7, MARKS_MAX = 40;
     const MATERIALS = ["201", "301", "401", "Микс", "БД", "Рез"];
     const MATERIAL_LABELS = { "201": "201", "301": "301", "401": "401", "БД": "Б/Д", "Микс": "Микс", "Рез": "Рез" };
 
-    // Сырьё (raw-material stock) is shown as a small label row above the matching report
-    // columns — only 201/301/401/Микс have a raw-material counterpart; Б/Д and Рез don't.
-    const SYRE_API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
     const SYRE_KEY_FOR = { "201": "201", "301": "301", "401": "401", "Микс": "МИКС" };
     let syreValues = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
     let syreLastEdited = null;
@@ -2090,14 +1601,17 @@
       markaDisplay().classList.toggle("active", field === "marka");
       qtyDisplay().classList.toggle("active", field === "qty");
     }
+
     function renderFields() {
       markaDisplay().textContent = markaStr === "" ? "7-40" : markaStr;
       markaDisplay().classList.toggle("filled", markaStr !== "");
       qtyDisplay().textContent = qtyStr === "" ? "0" : qtyStr;
       qtyDisplay().classList.toggle("filled", qtyStr !== "");
     }
+
     function buildMaterialGrid() {
       const grid = document.getElementById("admTsekhMaterialGrid");
+      grid.innerHTML = "";
       MATERIALS.forEach(mat => {
         const btn = document.createElement("button");
         btn.className = "material-btn";
@@ -2112,8 +1626,10 @@
         grid.appendChild(btn);
       });
     }
+
     function buildKeypad() {
       const keypad = document.getElementById("admTsekhKeypad");
+      keypad.innerHTML = "";
       ["1","2","3","4","5","6","7","8","9","C","0","⌫"].forEach(k => {
         const btn = document.createElement("button");
         btn.className = "key" + (k === "C" ? " clear" : "");
@@ -2122,56 +1638,78 @@
         keypad.appendChild(btn);
       });
     }
+
     function handleKey(k) {
       const isMarka = activeField === "marka";
       let val = isMarka ? markaStr : qtyStr;
       if (k === "C") val = "";
       else if (k === "⌫") val = val.slice(0, -1);
-      else { const maxLen = isMarka ? 2 : 4; if (val.length < maxLen) val += k; }
+      else {
+        const maxLen = isMarka ? 2 : 4;
+        if (val.length < maxLen) val += k;
+      }
       if (isMarka) markaStr = val; else qtyStr = val;
       renderFields(); updateAddBtnState();
     }
-    function markaValid() { const n = Number(markaStr); return markaStr !== "" && n >= MARKS_MIN && n <= MARKS_MAX; }
+
+    function markaValid() {
+      const n = Number(markaStr);
+      return markaStr !== "" && n >= MARKS_MIN && n <= MARKS_MAX;
+    }
+
     function updateAddBtnState() {
       const ready = markaValid() && selectedMaterial !== null && qtyStr !== "" && Number(qtyStr) > 0;
       document.getElementById("admTsekhAddBtn").disabled = !ready;
       document.getElementById("admTsekhRemoveBtn").disabled = !ready;
     }
+
     function resetForm() {
       markaStr = ""; qtyStr = ""; selectedMaterial = null;
       document.querySelectorAll("#admTsekhMaterialGrid .material-btn").forEach(b => b.classList.remove("selected"));
       renderFields(); setActiveField("marka"); updateAddBtnState();
     }
-    function submitEntry(qtySign) {
+
+    async function submitEntry(qtySign) {
       if (!markaValid()) { showToast("Марка должна быть от 7 до 40"); return; }
       const markaVal = markaStr, qtyVal = qtyStr, materialVal = selectedMaterial;
       showToast(`Марка ${markaVal}, ${MATERIAL_LABELS[materialVal]}: ${qtySign > 0 ? "+" : "−"}${qtyVal}`);
       resetForm();
-      fetch(API_URL, {
-        method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
-      }).then(res => res.json()).then(data => {
+
+      try {
+        const data = await apiPost("tsekh", {
+          action: "add",
+          marka: Number(markaVal),
+          material: materialVal,
+          qty: qtySign * Number(qtyVal)
+        });
         if (!data.success) showToast("Не сохранилось на сервере — попробуйте снова");
         else loadData();
-      }).catch(() => showToast("Ошибка сети — не сохранено"));
+      } catch (err) {
+        showToast("Ошибка сети — не сохранено");
+      }
     }
+
     async function loadData() {
       const [tsekhResult, syreResult] = await Promise.allSettled([
-        fetch(`${API_URL}?action=getData`).then(res => res.json()),
-        fetch(`${SYRE_API_URL}?action=getData`).then(res => res.json())
+        apiGet("tsekh", "getData"),
+        apiGet("syre", "getData")
       ]);
+
       if (tsekhResult.status === "fulfilled") {
         lastData = tsekhResult.value;
       } else if (!lastData) {
         document.getElementById("admTsekhReportWrap").innerHTML = '<div class="loading-note">Не удалось загрузить данные</div>';
         return;
       }
+
       if (syreResult.status === "fulfilled" && syreResult.value.success) {
         syreValues = syreResult.value.values;
         syreLastEdited = syreResult.value.lastEdited;
       }
+
       renderReport();
     }
+
     function formatLastEdited(iso) {
       if (!iso) return "—";
       const d = new Date(iso);
@@ -2180,23 +1718,29 @@
       const date = d.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" });
       return `${time} · ${date}`;
     }
+
     function renderReport() {
       if (!lastData) return;
+
       document.getElementById("admTsekhBlocksVal").textContent = lastData.blocksInShop ?? 0;
       document.getElementById("admTsekhFreeVal").textContent = lastData.freeSlots ?? 198;
       document.getElementById("admTsekhUpdated").textContent = formatLastEdited(lastData.lastEdited);
+
       let html = '<table class="tsk-table"><thead>';
       html += '<tr class="tsk-syre-row"><th></th>';
       let unmappedCount = 0;
+
       MATERIALS.forEach(mat => {
         const syreKey = SYRE_KEY_FOR[mat];
         if (syreKey !== undefined) html += `<th>${syreValues[syreKey] ?? 0}</th>`;
         else unmappedCount++;
       });
+
       html += `<th class="tsk-syre-updated" colspan="${unmappedCount + 1}"><div class="tsk-syre-updated-pill"><span class="stat-label">Сырьё</span><span class="stat-value">${formatLastEdited(syreLastEdited)}</span></div></th></tr>`;
       html += '<tr><th>Марка</th>';
       MATERIALS.forEach(mat => html += `<th>${MATERIAL_LABELS[mat]}</th>`);
       html += '<th>Объём</th></tr></thead><tbody>';
+
       lastData.rows.forEach(row => {
         html += `<tr><td class="marka-col">${row.marka}</td>`;
         MATERIALS.forEach(mat => {
@@ -2205,24 +1749,25 @@
         });
         html += `<td class="volume-col">${row.volume === 0 ? "" : Math.round(row.volume * 10) / 10}</td></tr>`;
       });
-      html += '</tbody></table>';
+
+      html += "</tbody></table>";
       document.getElementById("admTsekhReportWrap").innerHTML = html;
     }
-    function clearAllTable() {
+
+    async function clearAllTable() {
       const ok = confirm("Точно очистить всю таблицу за сегодня? Это действие нельзя отменить.");
       if (!ok) return;
-      fetch(API_URL, {
-        method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll" })
-      }).then(res => res.json()).then(data => {
+
+      try {
+        const data = await apiPost("tsekh", { action: "clearAll" });
         if (data.success) { showToast("Таблица очищена"); lastData = null; loadData(); }
         else showToast("Не удалось очистить");
-      }).catch(() => showToast("Ошибка сети"));
+      } catch (err) {
+        showToast("Ошибка сети");
+      }
     }
 
-    let reportScreenActive = false;
     function setPolling(active) {
-      reportScreenActive = active;
       if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
       if (active) {
         if (lastData) renderReport();
@@ -2231,46 +1776,37 @@
       }
     }
 
-    let refreshingPull = false;
-    async function pullRefresh() {
-      if (refreshingPull) return;
-      refreshingPull = true;
-      try { await loadData(); } finally { refreshingPull = false; }
-    }
-
     let initialized = false;
     function init() {
       if (initialized) return;
       initialized = true;
-      buildMaterialGrid(); buildKeypad(); setActiveField("marka"); renderFields(); updateAddBtnState();
+      buildMaterialGrid();
+      buildKeypad();
+      setActiveField("marka");
+      renderFields();
+      updateAddBtnState();
       markaDisplay().onclick = () => setActiveField("marka");
       qtyDisplay().onclick = () => setActiveField("qty");
       document.getElementById("admTsekhAddBtn").onclick = () => submitEntry(1);
       document.getElementById("admTsekhRemoveBtn").onclick = () => submitEntry(-1);
       document.getElementById("admTsekhClearAllBtn").onclick = clearAllTable;
       loadData();
-
-      initPullToRefresh(
-        document.getElementById("admTsekhReportPtr"),
-        document.getElementById("admTsekhReportWrap"),
-        pullRefresh,
-        { shouldStart: () => reportScreenActive }
-      );
     }
+
     return { init, setPolling };
   })();
 
-  // ==================== ADMIN · SKLAD (report + edit, sharing one data source) ====================
+  // ==================== ADMIN · SKLAD ====================
   const AdminSklad = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxyCUYYc6XiR5M5nsoqeJn0IjmKWlJVRqZGAREsVHckGy1WPiGxwg41_qRcNipOZaaUTg/exec";
     const TABLES = [
       { id: "пачки", label: "Пачки" }, { id: "2000", label: "2000" },
       { id: "3000", label: "3000" }, { id: "4000", label: "4000" }
     ];
+
     let ROWS = [], COLS = [], dataByTable = {};
     let currentTableIndex = 0, selectedRow = null, selectedCol = null, valStr = "";
     let loaded = false;
-    let editActive = false; // true while the "Редактирование · Склад" screen is the visible one
+    let editActive = false;
     let lastEdited = null;
     let reportScreenActive = false;
 
@@ -2284,10 +1820,12 @@
       const date = d.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" });
       return `${time} · ${date}`;
     }
+
     function renderHeaderTimestamp() {
       document.getElementById("admSkladUpdatedPill").style.visibility = reportScreenActive ? "visible" : "hidden";
       document.getElementById("admSkladUpdated").textContent = formatLastEdited(lastEdited);
     }
+
     function setReportActive(active) {
       reportScreenActive = active;
       renderHeaderTimestamp();
@@ -2295,9 +1833,10 @@
 
     async function loadAllData() {
       try {
-        const res = await fetch(`${API_URL}?action=getAllData`);
-        const data = await res.json();
-        ROWS = data.rows; COLS = data.cols; dataByTable = data.tables;
+        const data = await apiGet("sklad", "getAllData");
+        ROWS = data.rows;
+        COLS = data.cols;
+        dataByTable = data.tables;
         lastEdited = data.lastEdited;
         loaded = true;
         renderGrid(); renderReport(); renderHeaderTimestamp();
@@ -2308,9 +1847,11 @@
         }
       }
     }
+
     function updateHeaderForEdit() {
       if (editActive) document.getElementById("adminScreenTitle").textContent = "Склад · " + currentTable().label;
     }
+
     function renderGrid() {
       if (!loaded) return;
       updateHeaderForEdit();
@@ -2319,6 +1860,7 @@
       let html = '<table class="skl-table"><thead><tr><th></th>';
       COLS.forEach(c => html += `<th>${c}</th>`);
       html += '</tr></thead><tbody>';
+
       ROWS.forEach(r => {
         html += `<tr><th>${r.replace(" ", "<br>")}</th>`;
         COLS.forEach(c => {
@@ -2328,44 +1870,51 @@
         });
         html += "</tr>";
       });
+
       html += "</tbody></table>";
-      const wrap = document.getElementById("admSkladGridWrap");
-      wrap.innerHTML = html;
+      document.getElementById("admSkladGridWrap").innerHTML = html;
       document.querySelectorAll("#admSkladGridWrap .skl-table tbody td").forEach(td => {
         td.onclick = () => selectCell(td.dataset.row, td.dataset.col);
       });
-      fitTableToContainer(wrap, wrap.querySelector(".skl-table"));
     }
+
     function selectCell(row, col) {
       selectedRow = row; selectedCol = col; valStr = "";
       renderVal(); renderGrid(); updateBtnState();
     }
+
     function renderVal() {
       const el = document.getElementById("admSkladValDisplay");
       el.textContent = valStr === "" ? "0" : valStr;
       el.classList.toggle("filled", valStr !== "");
       el.classList.toggle("active", selectedRow !== null);
     }
+
     function updateBtnState() {
       const cellChosen = selectedRow !== null && selectedCol !== null;
       const addBtn = document.getElementById("admSkladAddBtn");
       if (addBtn) addBtn.disabled = !(cellChosen && valStr !== "");
       document.getElementById("admSkladDeleteBtn").disabled = !cellChosen;
     }
+
     function buildKeypad() {
       const keypad = document.getElementById("admSkladKeypad");
+      keypad.innerHTML = "";
       ["1","2","3","4","5","6","7","8","9"].forEach(k => {
         const btn = document.createElement("button");
         btn.className = "key"; btn.textContent = k; btn.onclick = () => handleDigit(k);
         keypad.appendChild(btn);
       });
+
       const addBtn = document.createElement("button");
       addBtn.className = "key add-key"; addBtn.id = "admSkladAddBtn"; addBtn.textContent = "✓"; addBtn.disabled = true;
       addBtn.onclick = commitValue;
       keypad.appendChild(addBtn);
+
       const zeroBtn = document.createElement("button");
       zeroBtn.className = "key"; zeroBtn.textContent = "0"; zeroBtn.onclick = () => handleDigit("0");
       keypad.appendChild(zeroBtn);
+
       const backBtn = document.createElement("button");
       backBtn.className = "key"; backBtn.textContent = "⌫";
       backBtn.onclick = () => {
@@ -2374,12 +1923,14 @@
       };
       keypad.appendChild(backBtn);
     }
+
     function handleDigit(k) {
       if (selectedRow === null) { showToast("Сначала выберите ячейку в таблице"); return; }
       if (valStr.length < 6) valStr += k;
       renderVal(); updateBtnState();
     }
-    function commitValue() {
+
+    async function commitValue() {
       if (selectedRow === null || valStr === "") return;
       const t = currentTable(); const r = selectedRow, c = selectedCol, v = valStr;
       showToast(`${t.label} · ${r}, ${c}: ${v}`);
@@ -2387,64 +1938,91 @@
       dataByTable[t.id][r][c] = Number(v);
       lastEdited = new Date().toISOString();
       valStr = ""; renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
-      fetch(API_URL, {
-        method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "setCell", table: t.id, row: r, col: c, value: v })
-      }).then(res => res.json()).then(data => { if (!data.success) showToast("Не сохранилось на сервере — попробуйте снова"); })
-        .catch(() => showToast("Ошибка сети — не сохранено"));
+
+      try {
+        const data = await apiPost("sklad", { action: "setCell", table: t.id, row: r, col: c, value: v });
+        if (!data.success) showToast("Не сохранилось на сервере — попробуйте снова");
+      } catch (err) {
+        showToast("Ошибка сети — не сохранено");
+      }
     }
-    function deleteValue() {
+
+    async function deleteValue() {
       if (selectedRow === null) return;
       const t = currentTable(); const r = selectedRow, c = selectedCol;
       showToast(`Очищено: ${t.label} · ${r}, ${c}`);
+      if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {};
       dataByTable[t.id][r][c] = "";
       lastEdited = new Date().toISOString();
       valStr = ""; renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
-      fetch(API_URL, {
-        method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "deleteCell", table: t.id, row: r, col: c })
-      }).then(res => res.json()).then(data => { if (!data.success) showToast("Не удалось очистить на сервере"); })
-        .catch(() => showToast("Ошибка сети"));
+
+      try {
+        const data = await apiPost("sklad", { action: "deleteCell", table: t.id, row: r, col: c });
+        if (!data.success) showToast("Не удалось очистить на сервере");
+      } catch (err) {
+        showToast("Ошибка сети");
+      }
     }
-    function clearAllCurrentTable() {
+
+    async function clearAllCurrentTable() {
       const t = currentTable();
       const ok = confirm(`Точно очистить всю таблицу «${t.label}»? Это действие нельзя отменить.`);
       if (!ok) return;
-      ROWS.forEach(r => { COLS.forEach(c => { if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {}; dataByTable[t.id][r][c] = ""; }); });
+
+      ROWS.forEach(r => {
+        COLS.forEach(c => {
+          if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {};
+          dataByTable[t.id][r][c] = "";
+        });
+      });
+
       selectedRow = null; selectedCol = null; valStr = "";
       lastEdited = new Date().toISOString();
       renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
-      fetch(API_URL, {
-        method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll", table: t.id })
-      }).then(res => res.json()).then(data => {
-        if (data.success) showToast(`Таблица «${t.label}» очищена`); else showToast("Не удалось очистить на сервере");
-      }).catch(() => showToast("Ошибка сети"));
+
+      try {
+        const data = await apiPost("sklad", { action: "clearAll", table: t.id });
+        if (data.success) showToast(`Таблица «${t.label}» очищена`);
+        else showToast("Не удалось очистить на сервере");
+      } catch (err) {
+        showToast("Ошибка сети");
+      }
     }
+
     function renderReport() {
       if (!loaded) return;
       const wrap = document.getElementById("admSkladReportWrap");
       let html = "";
       TABLES.forEach(t => {
         const values = dataByTable[t.id] || {};
-        html += `<div class="skl-report-block">`;
-        html += `<table class="skl-report-table"><thead><tr><th class="skl-report-corner">${t.label}</th>`;
+        html += `<div class="skl-report-block"><div class="skl-report-block-label">${t.label}</div>`;
+        html += '<table class="skl-report-table"><thead><tr><th></th>';
         COLS.forEach(c => html += `<th>${c}</th>`);
         html += '</tr></thead><tbody>';
+
         ROWS.forEach(r => {
           html += `<tr><th>${r}</th>`;
-          COLS.forEach(c => { const v = (values[r] || {})[c]; html += `<td>${v === "" || v === undefined ? "" : v}</td>`; });
+          COLS.forEach(c => {
+            const v = (values[r] || {})[c];
+            html += `<td>${v === "" || v === undefined ? "" : v}</td>`;
+          });
           html += "</tr>";
         });
+
         html += "</tbody></table></div>";
       });
       wrap.innerHTML = html;
     }
+
     function setEditActive(active) {
       editActive = active;
       if (active) { updateHeaderForEdit(); }
-      if (active) { selectedRow = null; selectedCol = null; valStr = ""; renderVal(); updateBtnState(); }
+      if (active) {
+        selectedRow = null; selectedCol = null; valStr = "";
+        renderVal(); updateBtnState();
+      }
     }
+
     function cycleTable(dir) {
       const next = currentTableIndex + dir;
       if (next < 0 || next >= TABLES.length) return;
@@ -2454,13 +2032,6 @@
     }
 
     let initialized = false;
-    let refreshingPull = false;
-    async function pullRefresh() {
-      if (refreshingPull) return;
-      refreshingPull = true;
-      try { await loadAllData(); } finally { refreshingPull = false; }
-    }
-
     function init() {
       if (initialized) return;
       initialized = true;
@@ -2469,25 +2040,6 @@
       document.getElementById("admSkladDeleteBtn").onclick = deleteValue;
       loadAllData();
 
-      // Report screen (Отчёт · Склад): standard pull-to-refresh, no competing gesture here.
-      initPullToRefresh(
-        document.getElementById("admSkladReportPtr"),
-        document.getElementById("admSkladReportWrap"),
-        pullRefresh,
-        { shouldStart: () => reportScreenActive }
-      );
-
-      // Редактирование · Склад screen: vertical swipe already cycles between the 4 tables.
-      // Swiping down further when already on the first table (Пачки) used to do nothing —
-      // repurposed as refresh, same as the standalone Sklad screen.
-      initPullToRefresh(
-        document.getElementById("admSkladGridPtr"),
-        document.getElementById("admSkladGridWrap"),
-        pullRefresh,
-        { shouldStart: () => editActive && currentTableIndex === 0 }
-      );
-
-      // Vertical swipe cycles tables — only while the "Редактирование · Склад" screen (index 3) is active.
       const viewport = document.getElementById("adminViewport");
       let vStartX = 0, vStartY = 0;
       viewport.addEventListener("touchstart", (e) => {
@@ -2501,20 +2053,22 @@
         cycleTable(dy < 0 ? 1 : -1);
       }, { passive: true });
     }
+
     return { init, setEditActive, setReportActive };
   })();
 
-  // ==================== ADMIN HEADER TOGGLE (АТ·Цех + stats vs default title) ====================
+  // ==================== ADMIN HEADER TOGGLE ====================
   function setAdminHeaderTsekhActive(active) {
     document.getElementById("adminHeaderDefault").style.display = active ? "none" : "flex";
     document.getElementById("adminHeaderTsekh").style.display = active ? "flex" : "none";
   }
 
-  // ==================== ROLE SWIPERS (created once, lazily) ====================
+  // ==================== ROLE SWIPERS ====================
   const swipers = {};
 
   function ensureSwiper(role) {
     if (swipers[role]) return swipers[role];
+
     if (role === "sklad") {
       fixTrackChildWidths(document.getElementById("skladTrack"), 3);
       swipers.sklad = createSwiper(
@@ -2524,6 +2078,7 @@
         { onChange: (i) => Sklad.setHorizIndex(i) }
       );
       Sklad.init();
+
     } else if (role === "tsekh") {
       fixTrackChildWidths(document.getElementById("tsekhTrack"), 3);
       swipers.tsekh = createSwiper(
@@ -2533,14 +2088,12 @@
         { onChange: (i) => Tsekh.setHorizIndex(i) }
       );
       Tsekh.init();
+
     } else if (role === "syre") {
       fixTrackChildWidths(document.getElementById("syreTrack"), 2);
-      swipers.syre = createSwiper(
-        document.getElementById("syreViewport"),
-        document.getElementById("syreTrack"),
-        2
-      );
+      swipers.syre = createSwiper(document.getElementById("syreViewport"), document.getElementById("syreTrack"), 2);
       Syre.init();
+
     } else if (role === "admin") {
       fixTrackChildWidths(document.getElementById("adminTrack"), 6);
       swipers.admin = createSwiper(
@@ -2551,27 +2104,32 @@
           dotsEl: document.getElementById("adminDots"),
           onChange: (i) => {
             document.getElementById("adminScreenTitle").textContent = ADMIN_SCREEN_TITLES[i];
-            AdminTsekh.setPolling(i === 0);   // auto-refresh only while viewing the Цех report, matching the original app
-            setAdminHeaderTsekhActive(i === 0); // header swaps to "АТ · Цех" + stats only on the Цех report screen
-            AdminSklad.setEditActive(i === 3); // vertical swipe (table cycling) only live on the Склад edit screen
-            AdminSklad.setReportActive(i === 1); // show the shared last-edited timestamp only on the Склад report screen
-            AdminSyre.setPolling(i === 4);    // auto-refresh only while viewing the Сырьё edit screen
+            AdminTsekh.setPolling(i === 0);
+            setAdminHeaderTsekhActive(i === 0);
+            AdminSklad.setEditActive(i === 3);
+            AdminSklad.setReportActive(i === 1);
+            AdminSyre.setPolling(i === 4);
           }
         }
       );
+
       AdminTsekh.init();
       AdminSklad.init();
       AdminSyre.init();
     }
+
     return swipers[role];
   }
 
-  // ==================== ENTER ROLE ====================
   function enterRole(role) {
-    const screenId = role === "admin" ? "appAdmin" : role === "sklad" ? "appSklad" : role === "syre" ? "appSyre" : "appTsekh";
+    const screenId =
+      role === "admin" ? "appAdmin" :
+      role === "sklad" ? "appSklad" :
+      role === "syre" ? "appSyre" : "appTsekh";
+
     showTopScreen(screenId);
     const sw = ensureSwiper(role);
-    sw.goTo(0, false); // always land on the main screen of the role, no leftover offset from last exit view
+    sw.goTo(0, false);
   }
 
   // ==================== LOGOUT ====================
@@ -2613,7 +2171,7 @@
   function wrongCodeShake() {
     const wrap = document.getElementById("codeDots");
     wrap.classList.remove("shake");
-    void wrap.offsetWidth; // restart animation
+    void wrap.offsetWidth;
     wrap.classList.add("shake");
     showToast("Неверный код");
   }
@@ -2633,7 +2191,6 @@
     }
   }
 
-  // Code keypad: 1-9, ghost, 0, backspace
   const codeKeypad = document.getElementById("codeKeypad");
   const codeKeys = ["1","2","3","4","5","6","7","8","9","","0","⌫"];
   codeKeys.forEach(k => {
@@ -2645,11 +2202,8 @@
       btn.className = "key" + (k === "⌫" ? " clear" : "");
       btn.textContent = k;
       btn.onclick = () => {
-        if (k === "⌫") {
-          codeStr = codeStr.slice(0, -1);
-        } else if (codeStr.length < 4) {
-          codeStr += k;
-        }
+        if (k === "⌫") codeStr = codeStr.slice(0, -1);
+        else if (codeStr.length < 4) codeStr += k;
         renderCodeDots();
         submitCodeIfReady();
       };
@@ -2657,23 +2211,21 @@
     codeKeypad.appendChild(btn);
   });
 
-  // ==================== DATE (shared) ====================
+  // ==================== DATE ====================
   function formatDate(d) {
     const dd = String(d.getDate()).padStart(2, "0");
     const mm = String(d.getMonth() + 1).padStart(2, "0");
     const yyyy = d.getFullYear();
     return `${dd}.${mm}.${yyyy}`;
   }
+
   document.querySelectorAll(".date-pill").forEach(el => el.textContent = formatDate(new Date()));
 
-  // ==================== INIT: restore saved role, or show login ====================
+  // ==================== INIT ====================
   (function init() {
     const savedRole = localStorage.getItem(STORAGE_KEY);
-    if (savedRole && ACCESS_CODES[savedRole]) {
-      enterRole(savedRole);
-    } else {
-      showTopScreen("screenLogin");
-    }
+    if (savedRole && ACCESS_CODES[savedRole]) enterRole(savedRole);
+    else showTopScreen("screenLogin");
   })();
 
   // ==================== DISABLE PINCH / DOUBLE-TAP ZOOM ====================
@@ -2687,7 +2239,7 @@
     lastTouchEnd = now;
   }, { passive: false });
 
-  // ==================== SERVICE WORKER (PWA installability) ====================
+  // ==================== SERVICE WORKER ====================
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("service-worker.js").catch(() => {});
