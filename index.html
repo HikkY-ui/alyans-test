@@ -20,6 +20,7 @@
     --gray-bg: #F4F4F4;
     --gray-border: #E0E0E0;
     --gray-text: #8A8A8A;
+    --ui-scale: 1;
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
@@ -44,6 +45,7 @@
     max-width: 480px;
     margin: 0 auto;
     background: var(--white);
+    zoom: var(--ui-scale);
   }
 
   /* ===== Top-level screens (login / code / role apps) ===== */
@@ -215,6 +217,44 @@
     flex-direction: column;
   }
 
+  /* ===== Pull-to-refresh ===== */
+  .ptr-indicator {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 15;
+    width: 34px;
+    height: 34px;
+    margin-left: -17px;
+    border: 2px solid var(--gray-border);
+    border-top-color: var(--red);
+    border-radius: 50%;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(-46px) scale(.8);
+    transition: opacity .15s, transform .15s;
+    pointer-events: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  }
+  .ptr-indicator.ready {
+    opacity: 1;
+    transform: translateY(8px) scale(1);
+  }
+  .ptr-indicator.loading {
+    opacity: 1;
+    transform: translateY(8px) scale(1);
+    animation: ptrSpin .7s linear infinite;
+  }
+  .ptr-indicator svg { width: 17px; height: 17px; fill: none; stroke: var(--black); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  @keyframes ptrSpin { to { transform: rotate(360deg); } }
+  .ptr-pull {
+    transform: translateY(var(--ptr-offset, 0px));
+    transition: transform .16s ease;
+  }
+
   .dots-indicator {
     display: flex;
     justify-content: center;
@@ -325,12 +365,13 @@
   /* ===== SKLAD: report screen ===== */
   .skl-report-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 4px; overflow: hidden; padding: 6px 10px 6px; }
   .skl-report-block { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-  .skl-report-block-label { font-size: 9px; font-weight: 800; color: var(--red); margin: 0 0 1px 2px; flex-shrink: 0; }
+  .skl-report-block-label { display: none; }
   .skl-report-table { width: 100%; flex: 1; min-height: 0; border-collapse: collapse; border: 1.5px solid var(--red); border-radius: 4px; overflow: hidden; font-size: 13px; table-layout: fixed; }
   .skl-report-table th {
     background: var(--black); color: var(--white); padding: 1px; font-size: 10px; font-weight: 700; text-align: center;
     border-right: 1px solid rgba(255,255,255,0.2);
   }
+  .skl-report-table th.skl-report-table-title { font-size: 8.5px; line-height: 1; white-space: nowrap; }
   .skl-report-table th:last-child { border-right: none; }
   .skl-report-table tbody th {
     background: var(--gray-bg); color: var(--black); text-align: left; padding: 1px 2px;
@@ -935,6 +976,10 @@
     });
   }
 
+  // ==================== UNIFIED BACKEND CONFIG ====================
+  // Deploy the unified Apps Script as a Web app and paste its /exec URL here once.
+  const UNIFIED_API_URL = "https://script.google.com/macros/s/AKfycbw0u0xOpq5HOVnLFykiCXbgj-wlYwKHCvD2zwwmjOVuzy8MV9o1fy4DLgzE8t-E7i7q/exec";
+
   // ==================== TOAST ====================
   function showToast(msg) {
     const t = document.getElementById("toast");
@@ -951,7 +996,7 @@
 
   // ==================== SKLAD MODULE ====================
   const Sklad = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxyCUYYc6XiR5M5nsoqeJn0IjmKWlJVRqZGAREsVHckGy1WPiGxwg41_qRcNipOZaaUTg/exec";
+    const API_URL = UNIFIED_API_URL;
     const TABLES = [
       { id: "пачки", label: "Пачки" },
       { id: "2000", label: "2000" },
@@ -969,7 +1014,7 @@
 
     async function loadAllData() {
       try {
-        const res = await fetch(`${API_URL}?action=getAllData`);
+        const res = await fetch(`${API_URL}?action=warehouse.get&_=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         ROWS = data.rows; COLS = data.cols; dataByTable = data.tables;
         loaded = true;
@@ -1085,10 +1130,14 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "setCell", table: t.id, row: r, col: c, value: v })
+        body: JSON.stringify({ action: "warehouse.setCell", table: t.id, row: r, col: c, value: v })
       }).then(res => res.json()).then(data => {
-        if (!data.success) showToast("Не сохранилось на сервере — попробуйте снова");
-      }).catch(() => showToast("Ошибка сети — не сохранено"));
+        if (!data.success) {
+          showToast("Не сохранилось на сервере — обновите данные");
+          return;
+        }
+        return loadAllData();
+      }).catch(() => showToast("Ошибка сети — обновите данные"));
     }
 
     function deleteValue() {
@@ -1102,10 +1151,14 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "deleteCell", table: t.id, row: r, col: c })
+        body: JSON.stringify({ action: "warehouse.deleteCell", table: t.id, row: r, col: c })
       }).then(res => res.json()).then(data => {
-        if (!data.success) showToast("Не удалось очистить на сервере");
-      }).catch(() => showToast("Ошибка сети"));
+        if (!data.success) {
+          showToast("Не удалось очистить на сервере");
+          return;
+        }
+        return loadAllData();
+      }).catch(() => showToast("Ошибка сети — обновите данные"));
     }
 
     function clearAllCurrentTable() {
@@ -1118,11 +1171,15 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll", table: t.id })
+        body: JSON.stringify({ action: "warehouse.clearAll", table: t.id })
       }).then(res => res.json()).then(data => {
-        if (data.success) showToast(`Таблица «${t.label}» очищена`);
-        else showToast("Не удалось очистить на сервере");
-      }).catch(() => showToast("Ошибка сети"));
+        if (!data.success) {
+          showToast("Не удалось очистить на сервере");
+          return;
+        }
+        showToast(`Таблица «${t.label}» очищена`);
+        return loadAllData();
+      }).catch(() => showToast("Ошибка сети — обновите данные"));
     }
 
     function renderReport() {
@@ -1131,8 +1188,8 @@
       let html = "";
       TABLES.forEach(t => {
         const values = dataByTable[t.id] || {};
-        html += `<div class="skl-report-block"><div class="skl-report-block-label">${t.label}</div>`;
-        html += '<table class="skl-report-table"><thead><tr><th></th>';
+        html += `<div class="skl-report-block">`;
+        html += `<table class="skl-report-table"><thead><tr><th class="skl-report-table-title">${t.label}</th>`;
         COLS.forEach(c => html += `<th>${c}</th>`);
         html += '</tr></thead><tbody>';
         ROWS.forEach(r => {
@@ -1186,17 +1243,17 @@
         if (horizIndex !== 0) return;
         const dx = e.changedTouches[0].clientX - vStartX;
         const dy = e.changedTouches[0].clientY - vStartY;
-        if (Math.abs(dy) < 55 || Math.abs(dy) < Math.abs(dx) * 1.3) return;
+        if (Math.abs(dy) < 55 || Math.abs(dy) < Math.abs(dx) * 1.3 || dy >= 72) return;
         cycleTable(dy < 0 ? 1 : -1);
       }, { passive: true });
     }
 
-    return { init, setHorizIndex };
+    return { init, setHorizIndex, refresh: loadAllData };
   })();
 
   // ==================== TSEKH MODULE ====================
   const Tsekh = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbwaJVr6TgQEEUeYsMdgyxc3KxLMK7g2JsXgI_XCrYaYdEdC_JpQRV0YJtUkFcja_74lSA/exec";
+    const API_URL = UNIFIED_API_URL;
     const MARKS_MIN = 7;
     const MARKS_MAX = 40;
     const MATERIALS = ["201", "301", "401", "Микс", "БД", "Рез"];
@@ -1307,7 +1364,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
+        body: JSON.stringify({ action: "workshop.add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
       }).then(res => res.json()).then(data => {
         if (!data.success) showToast(qtySign > 0 ? "Не сохранилось на сервере — попробуйте снова" : "Не удалось удалить блок — попробуйте снова");
         else loadTableData();
@@ -1318,7 +1375,7 @@
 
     async function loadTableData() {
       try {
-        const res = await fetch(`${API_URL}?action=getData`);
+        const res = await fetch(`${API_URL}?action=workshop.get&_=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         lastData = data;
         renderTable(data);
@@ -1357,7 +1414,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll" })
+        body: JSON.stringify({ action: "workshop.clear" })
       }).then(res => res.json()).then(data => {
         if (data.success) {
           showToast("Таблица очищена");
@@ -1399,12 +1456,12 @@
       loadTableData(); // warm the cache in the background so Таблица feels instant on first open
     }
 
-    return { init, setHorizIndex };
+    return { init, setHorizIndex, refresh: loadTableData };
   })();
 
   // ==================== SYRE (СЫРЬЁ) MODULE ====================
   const Syre = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
+    const API_URL = UNIFIED_API_URL;
     const MATERIALS = ["201", "301", "401", "МИКС"];
 
     let values = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
@@ -1441,7 +1498,7 @@
       if (pendingSaves > 0) return; // a save is still unconfirmed — don't risk clobbering it this tick
       const mySeq = ++reqSeq;
       try {
-        const res = await fetch(`${API_URL}?action=getData`);
+        const res = await fetch(`${API_URL}?action=raw.get&_=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         // Re-check pendingSaves: a save may have started while this GET was in flight.
         // BUG FIX: this GET was sent BEFORE mySeq was compared to appliedSeq below, so a
@@ -1577,7 +1634,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "add", material, qty })
+        body: JSON.stringify({ action: "raw.add", material, qty })
       }).then(res => res.json()).then(data => {
         if (data.success) {
           // Only touch the ONE material this request was for, and only if no newer
@@ -1609,7 +1666,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll" })
+        body: JSON.stringify({ action: "raw.clearAll" })
       }).then(res => res.json()).then(data => {
         if (data.success) {
           // Same per-material gating as loadValues: only stamp a material as cleared if
@@ -1645,12 +1702,12 @@
       startPolling(); // keeps the table in sync with edits made from another phone
     }
 
-    return { init, stopPolling };
+    return { init, stopPolling, refresh: loadValues };
   })();
 
   // ==================== ADMIN · SYRE (edit — shares the same data source as the Сырьё role) ====================
   const AdminSyre = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
+    const API_URL = UNIFIED_API_URL;
     const MATERIALS = ["201", "301", "401", "МИКС"];
 
     let values = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
@@ -1670,7 +1727,7 @@
       if (pendingSaves > 0) return;
       const mySeq = ++reqSeq;
       try {
-        const res = await fetch(`${API_URL}?action=getData`);
+        const res = await fetch(`${API_URL}?action=raw.get&_=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         // BUG FIX: apply the snapshot per material (against appliedSeqByMaterial), not as
         // one wholesale overwrite of `values`. A poll started before a commitValue can
@@ -1803,7 +1860,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "add", material, qty })
+        body: JSON.stringify({ action: "raw.add", material, qty })
       }).then(res => res.json()).then(data => {
         if (data.success) {
           if (mySeq > appliedSeqByMaterial[material]) {
@@ -1831,7 +1888,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll" })
+        body: JSON.stringify({ action: "raw.clearAll" })
       }).then(res => res.json()).then(data => {
         if (data.success) {
           MATERIALS.forEach(m => {
@@ -1861,19 +1918,19 @@
       document.getElementById("admSyreClearAllBtn").onclick = clearAll;
       document.getElementById("admSyreDeleteBtn").onclick = () => commitValue(-1);
     }
-    return { init, setPolling };
+    return { init, setPolling, refresh: loadValues };
   })();
 
   // ==================== ADMIN · TSEKH (report + edit, sharing one data source) ====================
   const AdminTsekh = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbwaJVr6TgQEEUeYsMdgyxc3KxLMK7g2JsXgI_XCrYaYdEdC_JpQRV0YJtUkFcja_74lSA/exec";
+    const API_URL = UNIFIED_API_URL;
     const MARKS_MIN = 7, MARKS_MAX = 40;
     const MATERIALS = ["201", "301", "401", "Микс", "БД", "Рез"];
     const MATERIAL_LABELS = { "201": "201", "301": "301", "401": "401", "БД": "Б/Д", "Микс": "Микс", "Рез": "Рез" };
 
     // Сырьё (raw-material stock) is shown as a small label row above the matching report
     // columns — only 201/301/401/Микс have a raw-material counterpart; Б/Д and Рез don't.
-    const SYRE_API_URL = "https://script.google.com/macros/s/AKfycbxPxSFtq6gqhkEBxVvFnxMo2svDX2i4IQ0byLcnk1KovPpucplwY3zuXmHABhoojev9Mg/exec";
+    const SYRE_API_URL = UNIFIED_API_URL;
     const SYRE_KEY_FOR = { "201": "201", "301": "301", "401": "401", "Микс": "МИКС" };
     let syreValues = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
     let syreLastEdited = null;
@@ -1949,7 +2006,7 @@
       resetForm();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
+        body: JSON.stringify({ action: "workshop.add", marka: Number(markaVal), material: materialVal, qty: qtySign * Number(qtyVal) })
       }).then(res => res.json()).then(data => {
         if (!data.success) showToast("Не сохранилось на сервере — попробуйте снова");
         else loadData();
@@ -1957,8 +2014,8 @@
     }
     async function loadData() {
       const [tsekhResult, syreResult] = await Promise.allSettled([
-        fetch(`${API_URL}?action=getData`).then(res => res.json()),
-        fetch(`${SYRE_API_URL}?action=getData`).then(res => res.json())
+        fetch(`${API_URL}?action=workshop.get&_=${Date.now()}`, { cache: "no-store" }).then(res => res.json()),
+        fetch(`${SYRE_API_URL}?action=raw.get&_=${Date.now()}`, { cache: "no-store" }).then(res => res.json())
       ]);
       if (tsekhResult.status === "fulfilled") {
         lastData = tsekhResult.value;
@@ -2013,7 +2070,7 @@
       if (!ok) return;
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll" })
+        body: JSON.stringify({ action: "workshop.clear" })
       }).then(res => res.json()).then(data => {
         if (data.success) { showToast("Таблица очищена"); lastData = null; loadData(); }
         else showToast("Не удалось очистить");
@@ -2041,12 +2098,12 @@
       document.getElementById("admTsekhClearAllBtn").onclick = clearAllTable;
       loadData();
     }
-    return { init, setPolling };
+    return { init, setPolling, refresh: loadData };
   })();
 
   // ==================== ADMIN · SKLAD (report + edit, sharing one data source) ====================
   const AdminSklad = (function () {
-    const API_URL = "https://script.google.com/macros/s/AKfycbxyCUYYc6XiR5M5nsoqeJn0IjmKWlJVRqZGAREsVHckGy1WPiGxwg41_qRcNipOZaaUTg/exec";
+    const API_URL = UNIFIED_API_URL;
     const TABLES = [
       { id: "пачки", label: "Пачки" }, { id: "2000", label: "2000" },
       { id: "3000", label: "3000" }, { id: "4000", label: "4000" }
@@ -2079,7 +2136,7 @@
 
     async function loadAllData() {
       try {
-        const res = await fetch(`${API_URL}?action=getAllData`);
+        const res = await fetch(`${API_URL}?action=warehouse.get&_=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         ROWS = data.rows; COLS = data.cols; dataByTable = data.tables;
         lastEdited = data.lastEdited;
@@ -2171,9 +2228,11 @@
       valStr = ""; renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "setCell", table: t.id, row: r, col: c, value: v })
-      }).then(res => res.json()).then(data => { if (!data.success) showToast("Не сохранилось на сервере — попробуйте снова"); })
-        .catch(() => showToast("Ошибка сети — не сохранено"));
+        body: JSON.stringify({ action: "warehouse.setCell", table: t.id, row: r, col: c, value: v })
+      }).then(res => res.json()).then(data => {
+        if (!data.success) { showToast("Не сохранилось на сервере — обновите данные"); return; }
+        return loadAllData();
+      }).catch(() => showToast("Ошибка сети — обновите данные"));
     }
     function deleteValue() {
       if (selectedRow === null) return;
@@ -2184,9 +2243,11 @@
       valStr = ""; renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "deleteCell", table: t.id, row: r, col: c })
-      }).then(res => res.json()).then(data => { if (!data.success) showToast("Не удалось очистить на сервере"); })
-        .catch(() => showToast("Ошибка сети"));
+        body: JSON.stringify({ action: "warehouse.deleteCell", table: t.id, row: r, col: c })
+      }).then(res => res.json()).then(data => {
+        if (!data.success) { showToast("Не удалось очистить на сервере"); return; }
+        return loadAllData();
+      }).catch(() => showToast("Ошибка сети — обновите данные"));
     }
     function clearAllCurrentTable() {
       const t = currentTable();
@@ -2198,10 +2259,12 @@
       renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
       fetch(API_URL, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "clearAll", table: t.id })
+        body: JSON.stringify({ action: "warehouse.clearAll", table: t.id })
       }).then(res => res.json()).then(data => {
-        if (data.success) showToast(`Таблица «${t.label}» очищена`); else showToast("Не удалось очистить на сервере");
-      }).catch(() => showToast("Ошибка сети"));
+        if (!data.success) { showToast("Не удалось очистить на сервере"); return; }
+        showToast(`Таблица «${t.label}» очищена`);
+        return loadAllData();
+      }).catch(() => showToast("Ошибка сети — обновите данные"));
     }
     function renderReport() {
       if (!loaded) return;
@@ -2209,8 +2272,8 @@
       let html = "";
       TABLES.forEach(t => {
         const values = dataByTable[t.id] || {};
-        html += `<div class="skl-report-block"><div class="skl-report-block-label">${t.label}</div>`;
-        html += '<table class="skl-report-table"><thead><tr><th></th>';
+        html += `<div class="skl-report-block">`;
+        html += `<table class="skl-report-table"><thead><tr><th class="skl-report-table-title">${t.label}</th>`;
         COLS.forEach(c => html += `<th>${c}</th>`);
         html += '</tr></thead><tbody>';
         ROWS.forEach(r => {
@@ -2254,17 +2317,76 @@
         if (!editActive) return;
         const dx = e.changedTouches[0].clientX - vStartX;
         const dy = e.changedTouches[0].clientY - vStartY;
-        if (Math.abs(dy) < 55 || Math.abs(dy) < Math.abs(dx) * 1.3) return;
+        if (Math.abs(dy) < 55 || Math.abs(dy) < Math.abs(dx) * 1.3 || dy >= 72) return;
         cycleTable(dy < 0 ? 1 : -1);
       }, { passive: true });
     }
-    return { init, setEditActive, setReportActive };
+    return { init, setEditActive, setReportActive, refresh: loadAllData };
   })();
 
   // ==================== ADMIN HEADER TOGGLE (АТ·Цех + stats vs default title) ====================
   function setAdminHeaderTsekhActive(active) {
     document.getElementById("adminHeaderDefault").style.display = active ? "none" : "flex";
     document.getElementById("adminHeaderTsekh").style.display = active ? "flex" : "none";
+  }
+
+  // ==================== PULL-TO-REFRESH ====================
+  function installPullToRefresh(viewportEl, getScreenIndex, refreshFn) {
+    if (!viewportEl || viewportEl.dataset.ptrInstalled === "1") return;
+    viewportEl.dataset.ptrInstalled = "1";
+
+    const indicator = document.createElement("div");
+    indicator.className = "ptr-indicator";
+    indicator.innerHTML = '<svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0 2 5.3"/><path d="M22 7v4h-4"/></svg>';
+    viewportEl.appendChild(indicator);
+
+    let startX = 0, startY = 0, pulling = false, offset = 0, loading = false;
+    const threshold = 72, maxPull = 100;
+
+    viewportEl.addEventListener("touchstart", (e) => {
+      if (loading) return;
+      const t = e.touches[0];
+      startX = t.clientX; startY = t.clientY; offset = 0; pulling = true;
+      indicator.classList.remove("ready");
+    }, { passive: true });
+
+    viewportEl.addEventListener("touchmove", (e) => {
+      if (!pulling || loading) return;
+      const t = e.touches[0];
+      const dx = t.clientX - startX, dy = t.clientY - startY;
+      if (Math.abs(dx) > Math.abs(dy) || dy <= 0) {
+        if (dy < 0) pulling = false;
+        return;
+      }
+      // On the warehouse edit screen we already use vertical swipe to switch tables.
+      // Refresh wins only for a longer downward pull, preserving the existing table swipe.
+      offset = Math.min(maxPull, dy * 0.55);
+      indicator.style.setProperty("--ptr-offset", `${Math.max(0, offset - 8)}px`);
+      indicator.classList.toggle("ready", dy >= threshold);
+    }, { passive: true });
+
+    async function end() {
+      if (!pulling || loading) return;
+      const doRefresh = offset >= threshold * 0.55;
+      pulling = false;
+      indicator.style.setProperty("--ptr-offset", "0px");
+      if (!doRefresh) { indicator.classList.remove("ready"); return; }
+      loading = true;
+      indicator.classList.remove("ready");
+      indicator.classList.add("loading");
+      try {
+        await refreshFn(getScreenIndex());
+        showToast("Данные обновлены");
+      } catch (err) {
+        showToast("Не удалось обновить данные");
+      } finally {
+        loading = false;
+        indicator.classList.remove("loading");
+        indicator.classList.remove("ready");
+      }
+    }
+    viewportEl.addEventListener("touchend", end, { passive: true });
+    viewportEl.addEventListener("touchcancel", end, { passive: true });
   }
 
   // ==================== ROLE SWIPERS (created once, lazily) ====================
@@ -2281,6 +2403,7 @@
         { onChange: (i) => Sklad.setHorizIndex(i) }
       );
       Sklad.init();
+      installPullToRefresh(document.getElementById("skladViewport"), () => swipers.sklad.current(), async () => { await Sklad.refresh(); });
     } else if (role === "tsekh") {
       fixTrackChildWidths(document.getElementById("tsekhTrack"), 3);
       swipers.tsekh = createSwiper(
@@ -2290,6 +2413,7 @@
         { onChange: (i) => Tsekh.setHorizIndex(i) }
       );
       Tsekh.init();
+      installPullToRefresh(document.getElementById("tsekhViewport"), () => swipers.tsekh.current(), async () => { await Tsekh.refresh(); });
     } else if (role === "syre") {
       fixTrackChildWidths(document.getElementById("syreTrack"), 2);
       swipers.syre = createSwiper(
@@ -2298,6 +2422,7 @@
         2
       );
       Syre.init();
+      installPullToRefresh(document.getElementById("syreViewport"), () => swipers.syre.current(), async () => { await Syre.refresh(); });
     } else if (role === "admin") {
       fixTrackChildWidths(document.getElementById("adminTrack"), 6);
       swipers.admin = createSwiper(
@@ -2319,6 +2444,11 @@
       AdminTsekh.init();
       AdminSklad.init();
       AdminSyre.init();
+      installPullToRefresh(document.getElementById("adminViewport"), () => swipers.admin.current(), async (i) => {
+        if (i === 0 || i === 2) { await AdminTsekh.refresh(); }
+        else if (i === 1 || i === 3) { await AdminSklad.refresh(); }
+        else if (i === 4) { await AdminSyre.refresh(); }
+      });
     }
     return swipers[role];
   }
@@ -2450,6 +2580,38 @@
       navigator.serviceWorker.register("service-worker.js").catch(() => {});
     });
   }
+  // ==================== RESPONSIVE UI SCALE ====================
+  (function setupResponsiveScale() {
+    const root = document.documentElement;
+    const app = document.getElementById("app");
+    let raf = 0;
+    function updateScale() {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const vv = window.visualViewport;
+        const width = Math.max(280, Math.min(window.innerWidth, vv ? vv.width : window.innerWidth));
+        const height = vv ? vv.height : window.innerHeight;
+        // 480x800 is the design reference. Keep proportions, scale uniformly on
+        // smaller screens, and never enlarge on wide displays.
+        const widthScale = Math.min(1, width / 480);
+        const heightScale = Math.min(1, height / 800);
+        const scale = Math.max(0.72, Math.min(1, Math.min(widthScale, heightScale)));
+        root.style.setProperty("--ui-scale", scale.toFixed(4));
+        // Zoom changes the CSS layout viewport; compensate height so the scaled
+        // interface still exactly fits the visible area, including on mobile keyboards.
+        if (app) {
+          app.style.width = `${Math.min(480, width / scale)}px`;
+          app.style.height = `${100 / scale}dvh`;
+          app.style.maxWidth = "480px";
+        }
+      });
+    }
+    window.addEventListener("resize", updateScale, { passive: true });
+    window.addEventListener("orientationchange", updateScale, { passive: true });
+    if (window.visualViewport) window.visualViewport.addEventListener("resize", updateScale, { passive: true });
+    updateScale();
+  })();
+
 </script>
 </body>
 </html>
