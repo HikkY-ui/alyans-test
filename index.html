@@ -57,7 +57,6 @@
     justify-content: space-between;
     flex-shrink: 0;
   }
-
   .brand { font-weight: 800; font-size: 13px; letter-spacing: -0.5px; }
   .brand span { color: var(--red); }
   .header-title { font-size: 13px; font-weight: 800; text-align: center; flex: 1; }
@@ -67,9 +66,7 @@
   }
   .header-spacer { width: 28px; flex-shrink: 0; }
 
-  .admin-header-default {
-    display: flex; align-items: center; justify-content: space-between; width: 100%;
-  }
+  .admin-header-default { display: flex; align-items: center; justify-content: space-between; width: 100%; }
   .admin-header-tsekh { display: none; width: 100%; align-items: center; justify-content: space-between; }
   .admin-header-tsekh-stats { display: flex; align-items: center; gap: 4px; }
   .admin-header-tsekh-pill {
@@ -77,7 +74,8 @@
     border: 2px solid var(--red); border-radius: 20px; padding: 2px 5px;
   }
   .admin-header-tsekh-pill .stat-label {
-    font-size: 6.5px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.2px; white-space: nowrap;
+    font-size: 6.5px; font-weight: 700; color: var(--gray-text);
+    text-transform: uppercase; letter-spacing: 0.2px; white-space: nowrap;
   }
   .admin-header-tsekh-pill .stat-value { font-size: 11px; font-weight: 800; color: var(--black); white-space: nowrap; }
 
@@ -85,14 +83,11 @@
   .login-logo { text-align: center; margin-bottom: 18px; }
   .login-logo .big-a { color: var(--red); }
   .login-logo .big-t { color: var(--black); }
-  .login-logo-letters {
-    font-size: 64px; font-weight: 900; letter-spacing: -2px; line-height: 1;
-  }
+  .login-logo-letters { font-size: 64px; font-weight: 900; letter-spacing: -2px; line-height: 1; }
   .login-logo-sub {
     margin-top: 6px; font-size: 12px; font-weight: 700; letter-spacing: 2px;
     color: var(--gray-text); text-transform: uppercase;
   }
-
   .role-btn {
     width: 100%; padding: 22px; border: 2px solid var(--black); border-radius: 16px;
     background: var(--white); color: var(--black); font-size: 18px; font-weight: 800;
@@ -109,22 +104,18 @@
   .code-dots { display: flex; justify-content: center; gap: 16px; }
   .code-dots.shake { animation: shake 0.35s; }
   @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-10px); }
-    40% { transform: translateX(9px); }
-    60% { transform: translateX(-6px); }
-    80% { transform: translateX(4px); }
+    0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(9px)}
+    60%{transform:translateX(-6px)}80%{transform:translateX(4px)}
   }
   .code-dot {
-    width: 18px; height: 18px; border-radius: 50%;
-    border: 2px solid var(--gray-border); background: var(--white);
-    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--gray-border);
+    background: var(--white); transition: background .15s,border-color .15s,transform .15s;
   }
   .code-dot.filled { background: var(--red); border-color: var(--red); transform: scale(1.05); }
 
   .keypad {
     display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: min-content;
-    gap: 8px; width: 100%;
+    gap: 8px; width: 100%; flex-shrink: 0;
   }
   .key {
     border: 2px solid var(--gray-border); border-radius: 12px; background: var(--gray-bg);
@@ -134,217 +125,209 @@
   .key:active { background: var(--gray-border); }
   .key.ghost { visibility: hidden; }
 
-  #sklKeypad { gap: 5px; }
-  #sklKeypad .key { padding: 8px 0; font-size: 15px; }
-  #sklKeypad .key.add-key { font-size: 22px; }
-
-  #admSkladKeypad { gap: 5px; }
-  #admSkladKeypad .key { padding: 8px 0; font-size: 15px; }
-  #admSkladKeypad .key.add-key { font-size: 22px; }
+  #sklKeypad, #admSkladKeypad { gap: 5px; }
+  #sklKeypad .key, #admSkladKeypad .key { padding: 8px 0; font-size: 15px; }
+  #sklKeypad .key.add-key, #admSkladKeypad .key.add-key { font-size: 22px; }
 
   .swipe-viewport { flex: 1; min-height: 0; overflow: hidden; position: relative; }
   .swipe-track {
-    display: flex; height: 100%;
-    transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+    display: flex; height: 100%; transition: transform .28s cubic-bezier(.22,.61,.36,1);
     will-change: transform;
   }
   .swipe-screen {
     flex: 0 0 100%; height: 100%; min-height: 0; display: flex; flex-direction: column;
   }
-
-  .dots-indicator { display: flex; justify-content: center; gap: 6px; padding: 6px 0 4px; flex-shrink: 0; }
+  .dots-indicator {
+    display: flex; justify-content: center; gap: 6px; padding: 6px 0 4px; flex-shrink: 0;
+  }
   .dots-indicator .idot {
     width: 6px; height: 6px; border-radius: 50%; background: var(--gray-border);
-    transition: background 0.2s, transform 0.2s;
+    transition: background .2s,transform .2s;
   }
   .dots-indicator .idot.active { background: var(--red); transform: scale(1.3); }
 
   .placeholder-content {
-    flex: 1; display: flex; align-items: center; justify-content: center; flex-direction: column;
-    gap: 10px; color: var(--gray-text); font-size: 14px; font-weight: 600; padding: 24px; text-align: center;
+    flex:1; display:flex; align-items:center; justify-content:center; flex-direction:column;
+    gap:10px; color:var(--gray-text); font-size:14px; font-weight:600; padding:24px; text-align:center;
   }
-
-  .exit-screen { flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .exit-screen { flex:1; display:flex; align-items:center; justify-content:center; padding:24px; }
   .exit-btn {
-    padding: 20px 40px; border: 2px solid var(--red); border-radius: 16px;
-    background: var(--white); color: var(--red); font-size: 16px; font-weight: 800; letter-spacing: 0.3px;
+    padding:20px 40px; border:2px solid var(--red); border-radius:16px; background:var(--white);
+    color:var(--red); font-size:16px; font-weight:800; letter-spacing:.3px;
   }
-  .exit-btn:active { background: var(--gray-bg); }
+  .exit-btn:active { background:var(--gray-bg); }
 
   .field-display {
-    width: 100%; flex-shrink: 0; border: 2px solid var(--gray-border); border-radius: 12px;
-    padding: 5px; font-size: 16px; font-weight: 800; text-align: center; background: var(--gray-bg);
-    color: var(--gray-text); transition: border-color 0.15s, background 0.15s, color 0.15s;
+    width:100%; flex-shrink:0; border:2px solid var(--gray-border); border-radius:12px; padding:5px;
+    font-size:16px; font-weight:800; text-align:center; background:var(--gray-bg); color:var(--gray-text);
+    transition:border-color .15s,background .15s,color .15s;
   }
-  .field-display.filled { color: var(--black); background: var(--white); border-color: var(--black); }
-  .field-display.active { border-color: var(--red); background: var(--white); color: var(--red); }
-  .field-display.filled.active { color: var(--red); }
+  .field-display.filled { color:var(--black); background:var(--white); border-color:var(--black); }
+  .field-display.active { border-color:var(--red); background:var(--white); color:var(--red); }
+  .field-display.filled.active { color:var(--red); }
 
-  .skl-add-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 6px 10px 8px; gap: 5px; }
-  .skl-grid-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .skl-add-wrap { flex:1; min-height:0; display:flex; flex-direction:column; padding:6px 10px 8px; gap:5px; }
+  .skl-grid-wrap { flex:1; min-height:0; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
   .skl-table {
-    width: 100%; height: 100%; border-collapse: collapse; border: 2px solid var(--red);
-    border-radius: 6px; overflow: hidden; font-size: 17px; table-layout: fixed;
+    --skl-row-font:17px; --skl-cell-pad:2px; width:100%; border-collapse:collapse;
+    border:2px solid var(--red); border-radius:6px; overflow:hidden; font-size:var(--skl-row-font); table-layout:fixed;
   }
   .skl-table thead th {
-    background: var(--black); color: var(--white); padding: 6px 1px; font-size: 13px;
-    font-weight: 700; text-align: center; border-right: 1px solid rgba(255,255,255,0.25);
+    background:var(--black); color:var(--white);
+    padding:calc(var(--skl-cell-pad) * 3) 1px; font-size:calc(var(--skl-row-font) * .76); font-weight:700;
+    text-align:center; border-right:1px solid rgba(255,255,255,.25);
   }
-  .skl-table thead th:last-child { border-right: none; }
+  .skl-table thead th:last-child { border-right:none; }
   .skl-table tbody th {
-    background: var(--gray-bg); color: var(--black); padding: 6px 3px; font-size: 13px; font-weight: 800;
-    text-align: left; border-right: 1px solid var(--gray-border); border-bottom: 1px solid var(--gray-border);
+    background:var(--gray-bg); color:var(--black);
+    padding:calc(var(--skl-cell-pad) * 3) 3px; font-size:calc(var(--skl-row-font) * .76);
+    font-weight:800; text-align:left; border-right:1px solid var(--gray-border); border-bottom:1px solid var(--gray-border);
   }
   .skl-table tbody td {
-    padding: 2px; text-align: center; border-bottom: 1px solid var(--gray-border);
-    border-right: 1px solid var(--gray-border); color: var(--black); font-weight: 700;
+    padding:var(--skl-cell-pad); text-align:center; border-bottom:1px solid var(--gray-border);
+    border-right:1px solid var(--gray-border); color:var(--black); font-weight:700;
   }
-  .skl-table tbody td:last-child { border-right: none; }
-  .skl-table tbody td.selected { background: var(--red); color: var(--white); font-weight: 800; }
+  .skl-table tbody td:last-child { border-right:none; }
+  .skl-table tbody td.selected { background:var(--red); color:var(--white); font-weight:800; }
 
-  .key.add-key { background: var(--green); color: var(--white); border-color: var(--green); font-size: 22px; }
-  .key.add-key:disabled { background: var(--gray-border); color: var(--gray-text); border-color: var(--gray-border); }
+  .key.add-key { background:var(--green); color:var(--white); border-color:var(--green); font-size:22px; }
+  .key.add-key:disabled { background:var(--gray-border); color:var(--gray-text); border-color:var(--gray-border); }
 
-  .skl-btn-row { display: flex; gap: 8px; flex-shrink: 0; }
+  .skl-btn-row { display:flex; gap:8px; flex-shrink:0; min-height:0; }
   .skl-action-btn {
-    flex: 1; padding: 10px; border-radius: 12px; background: var(--white); color: var(--red);
-    border: 2px solid var(--red); font-size: 12px; font-weight: 800; letter-spacing: 0.3px;
+    flex:1; padding:10px; border-radius:12px; background:var(--white); color:var(--red);
+    border:2px solid var(--red); font-size:12px; font-weight:800; letter-spacing:.3px;
   }
-  .skl-action-btn:disabled { border-color: var(--gray-border); color: var(--gray-border); }
+  .skl-action-btn:disabled { border-color:var(--gray-border); color:var(--gray-border); }
 
-  .skl-report-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 4px; overflow: hidden; padding: 6px 10px 6px; }
-  .skl-report-block { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-  .skl-report-block-label { font-size: 9px; font-weight: 800; color: var(--red); margin: 0 0 1px 2px; flex-shrink: 0; }
+  .skl-report-wrap {
+    flex:1; min-height:0; display:grid; grid-template-rows:repeat(4,1fr); gap:3px; padding:4px 8px;
+  }
+  .skl-report-block { min-height:0; display:flex; flex-direction:column; overflow:hidden; }
   .skl-report-table {
-    width: 100%; flex: 1; min-height: 0; border-collapse: collapse; border: 1.5px solid var(--red);
-    border-radius: 4px; overflow: hidden; font-size: 13px; table-layout: fixed;
+    width:100%; height:100%; border-collapse:collapse; border:1.5px solid var(--red);
+    border-radius:4px; overflow:hidden; font-size:11px; table-layout:fixed;
   }
   .skl-report-table th {
-    background: var(--black); color: var(--white); padding: 1px; font-size: 10px; font-weight: 700;
-    text-align: center; border-right: 1px solid rgba(255,255,255,0.2);
+    background:var(--black); color:var(--white); padding:0 1px; font-size:9px; font-weight:700;
+    text-align:center; line-height:1.5; border-right:1px solid rgba(255,255,255,.2);
   }
-  .skl-report-table th:last-child { border-right: none; }
+  .skl-report-table th:last-child { border-right:none; }
+  .skl-report-table th.skl-report-corner { font-size:7px; letter-spacing:-.2px; padding:0; }
   .skl-report-table tbody th {
-    background: var(--gray-bg); color: var(--black); text-align: left; padding: 1px 2px;
-    border-right: 1px solid var(--gray-border); border-bottom: 1px solid var(--gray-border);
+    background:var(--gray-bg); color:var(--black); text-align:left; padding:0 2px; font-size:10px; line-height:1.4;
+    border-right:1px solid var(--gray-border); border-bottom:1px solid var(--gray-border);
   }
   .skl-report-table td {
-    text-align: center; color: var(--black); font-weight: 700;
-    border-bottom: 1px solid var(--gray-border); border-right: 1px solid var(--gray-border);
+    text-align:center; color:var(--black); font-weight:700; padding:0;
+    border-bottom:1px solid var(--gray-border); border-right:1px solid var(--gray-border);
   }
-  .skl-report-table td:last-child { border-right: none; }
+  .skl-report-table td:last-child { border-right:none; }
+  .loading-note { text-align:center; color:var(--gray-text); font-size:12px; padding:20px 0; }
 
-  .loading-note { text-align: center; color: var(--gray-text); font-size: 12px; padding: 20px 0; }
-
-  .syre-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 6px 10px 8px; gap: 8px; }
-  .syre-summary-table { height: auto; flex-shrink: 0; border-color: var(--black); font-size: 20px; }
-  .syre-summary-table thead th { padding: 8px 1px; font-size: 15px; }
-  .syre-summary-table tbody td {
-    padding: 10px 1px; font-size: 20px; font-weight: 800; color: var(--black); border-color: var(--gray-border);
-  }
-  .syre-fields { display: flex; flex-direction: column; gap: 8px; flex: 1; min-height: 0; }
-  .syre-field-row { display: flex; align-items: stretch; gap: 8px; flex: 1; }
+  .syre-wrap { flex:1; min-height:0; display:flex; flex-direction:column; padding:6px 10px 8px; gap:8px; }
+  .syre-summary-table { height:auto; flex-shrink:0; border-color:var(--black); font-size:20px; }
+  .syre-summary-table thead th { padding:8px 1px; font-size:15px; }
+  .syre-summary-table tbody td { padding:10px 1px; font-size:20px; font-weight:800; color:var(--black); border-color:var(--gray-border); }
+  .syre-fields { display:flex; flex-direction:column; gap:8px; flex:1; min-height:0; }
+  .syre-field-row { display:flex; align-items:stretch; gap:8px; flex:1; }
   .syre-field-label {
-    width: 46px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: var(--black); text-align: left;
-    display: flex; align-items: center;
+    width:46px; flex-shrink:0; font-size:13px; font-weight:800; color:var(--black); text-align:left;
+    display:flex; align-items:center;
   }
   .syre-field-row .field-display {
-    flex: 1; width: auto; display: flex; align-items: center; justify-content: center; padding: 5px; font-size: 20px;
+    flex:1; width:auto; display:flex; align-items:center; justify-content:center; padding:5px; font-size:20px;
   }
-  #syreKeypad { gap: 7px; flex-shrink: 0; }
-  #syreKeypad .key { padding: 12px 0; font-size: 17px; }
-  #syreKeypad .key.add-key { font-size: 22px; }
+  #syreKeypad { gap:7px; flex-shrink:0; }
+  #syreKeypad .key { padding:12px 0; font-size:17px; }
+  #syreKeypad .key.add-key { font-size:22px; }
 
-  #screenTsekhAdd { padding: 5px 16px 5px; gap: 3px; display: flex; flex-direction: column; flex: 1; min-height: 0; }
-
+  #screenTsekhAdd, #admTsekhEdit {
+    padding:5px 16px 5px; gap:3px; display:flex; flex-direction:column; flex:1; min-height:0;
+  }
   .section-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.8px; color: var(--gray-text);
-    text-transform: uppercase; margin: 0 0 4px 2px;
+    font-size:10px; font-weight:700; letter-spacing:.8px; color:var(--gray-text); text-transform:uppercase; margin:0 0 4px 2px;
   }
-  #tsekhMarkaDisplay, #tsekhQtyDisplay { font-size: 17px; }
-
-  .material-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  #tsekhMarkaDisplay,#tsekhQtyDisplay,#admTsekhMarkaDisplay,#admTsekhQtyDisplay { font-size:17px; }
+  .material-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
   .material-btn {
-    padding: 6px 4px; border: 2px solid var(--gray-border); border-radius: 10px; background: var(--gray-bg);
-    font-size: 12px; font-weight: 700; color: var(--black); text-align: center;
+    padding:6px 4px; border:2px solid var(--gray-border); border-radius:10px; background:var(--gray-bg);
+    font-size:12px; font-weight:700; color:var(--black); text-align:center;
   }
-  .material-btn.selected { background: var(--white); border-color: var(--red); color: var(--red); }
-
-  #tsekhKeypad { gap: 6px; }
-
+  .material-btn.selected { background:var(--white); border-color:var(--red); color:var(--red); }
+  #tsekhKeypad,#admTsekhKeypad { gap:6px; }
   .add-btn {
-    width: 100%; padding: 26px; border: none; border-radius: 14px; background: var(--black); color: var(--white);
-    font-size: 21px; font-weight: 800; letter-spacing: 0.5px; flex-shrink: 0; margin-top: 8px;
+    width:100%; padding:26px; border:none; border-radius:14px; background:var(--black); color:var(--white);
+    font-size:21px; font-weight:800; letter-spacing:.5px; flex-shrink:0; margin-top:8px;
   }
-  .add-btn:disabled { background: var(--gray-border); color: var(--gray-text); }
-
-  .secondary-btn-row { display: flex; gap: 8px; margin-top: 6px; }
+  .add-btn:disabled { background:var(--gray-border); color:var(--gray-text); }
+  .secondary-btn-row { display:flex; gap:8px; margin-top:6px; }
   .tsk-clear-btn {
-    background: var(--white); color: var(--red); border: 2px solid var(--red); padding: 10px; font-size: 12px;
-    margin-top: 0; flex: 1; border-radius: 14px; font-weight: 800; letter-spacing: 0.5px;
+    background:var(--white); color:var(--red); border:2px solid var(--red); padding:10px; font-size:12px;
+    margin-top:0; flex:1; border-radius:14px; font-weight:800; letter-spacing:.5px;
   }
-  .tsk-clear-btn:disabled { border-color: var(--gray-border); color: var(--gray-border); }
+  .tsk-clear-btn:disabled { border-color:var(--gray-border); color:var(--gray-border); }
   .tsk-remove-btn {
-    padding: 10px; font-size: 12px; margin-top: 0; flex: 1; border: none; border-radius: 14px;
-    background: var(--black); color: var(--white); font-weight: 800; letter-spacing: 0.5px;
+    padding:10px; font-size:12px; margin-top:0; flex:1; border:none; border-radius:14px;
+    background:var(--black); color:var(--white); font-weight:800; letter-spacing:.5px;
   }
-  .tsk-remove-btn:disabled { background: var(--gray-border); color: var(--gray-text); }
+  .tsk-remove-btn:disabled { background:var(--gray-border); color:var(--gray-text); }
 
-  #screenTsekhTable { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-  .stats-row { display: flex; gap: 6px; padding: 5px 10px 4px; flex-shrink: 0; }
-  .stat-box { flex: 1; border: 2px solid var(--red); border-radius: 8px; padding: 3px 4px; text-align: center; }
-  .stat-box .stat-value { font-size: 13px; font-weight: 800; color: var(--black); line-height: 1.1; }
-  .stat-box .stat-label {
-    font-size: 7px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; margin-top: 0; letter-spacing: 0.2px;
-  }
+  #screenTsekhTable { flex:1; min-height:0; display:flex; flex-direction:column; }
+  .stats-row { display:flex; gap:6px; padding:5px 10px 4px; flex-shrink:0; }
+  .stat-box { flex:1; border:2px solid var(--red); border-radius:8px; padding:3px 4px; text-align:center; }
+  .stat-box .stat-value { font-size:13px; font-weight:800; color:var(--black); line-height:1.1; }
+  .stat-box .stat-label { font-size:7px; font-weight:700; color:var(--gray-text); text-transform:uppercase; margin-top:0; letter-spacing:.2px; }
 
   .tsk-table-wrap {
-    flex: 1; min-height: 0; overflow: hidden; padding: 0 8px 8px; display: flex; flex-direction: column;
+    flex:1; min-height:0; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch;
+    padding:0 8px 8px; display:flex; flex-direction:column;
   }
-  .tsk-table {
-    width: 100%; height: 100%; border-collapse: collapse; border: 2px solid var(--red);
-    border-radius: 6px; overflow: hidden; font-size: 14px; table-layout: fixed;
-  }
+  .tsk-table { width:100%; height:100%; border-collapse:collapse; border:2px solid var(--red); border-radius:6px; overflow:hidden; font-size:14px; table-layout:fixed; }
   .tsk-table thead th {
-    background: var(--black); color: var(--white); padding: 2px 1px; font-size: 9px; font-weight: 700;
-    text-align: center; border-right: 1px solid rgba(255,255,255,0.25);
+    background:var(--black); color:var(--white); padding:2px 1px; font-size:9px; font-weight:700;
+    text-align:center; border-right:1px solid rgba(255,255,255,.25);
   }
-  .tsk-table thead th:last-child { border-right: none; }
+  .tsk-table thead th:last-child { border-right:none; }
   .tsk-table thead tr.tsk-syre-row th {
-    background: var(--white); color: var(--black); padding: 1px 1px; font-size: 16px; font-weight: 800;
-    line-height: 1.1; border-right: 1px solid var(--gray-border); border-bottom: 1px solid var(--gray-border);
+    background:var(--white); color:var(--black); padding:1px; font-size:16px; font-weight:800;
+    line-height:1.1; border-right:1px solid var(--gray-border); border-bottom:1px solid var(--gray-border);
   }
-  .tsk-table thead tr.tsk-syre-row th:last-child { border-right: none; }
-  .tsk-table thead tr.tsk-syre-row th.tsk-syre-updated { padding: 0; }
+  .tsk-table thead tr.tsk-syre-row th:last-child { border-right:none; }
+  .tsk-table thead tr.tsk-syre-row th.tsk-syre-updated { padding:0; }
   .tsk-syre-updated-pill {
-    display: inline-flex; align-items: baseline; gap: 4px; justify-content: center;
-    border: 2px solid var(--red); border-radius: 20px; padding: 2px 8px; margin: 0 auto;
+    display:inline-flex; align-items:baseline; gap:4px; justify-content:center; border:2px solid var(--red);
+    border-radius:20px; padding:2px 8px; margin:0 auto;
   }
-  .tsk-syre-updated-pill .stat-label {
-    font-size: 8px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.2px;
-  }
-  .tsk-syre-updated-pill .stat-value { font-size: 13px; font-weight: 800; color: var(--black); }
+  .tsk-syre-updated-pill .stat-label { font-size:8px; font-weight:700; color:var(--gray-text); text-transform:uppercase; letter-spacing:.2px; }
+  .tsk-syre-updated-pill .stat-value { font-size:13px; font-weight:800; color:var(--black); }
   .tsk-table tbody td {
-    padding: 0px 1px; text-align: center; border-bottom: 1px solid var(--gray-border);
-    border-right: 1px solid var(--gray-border); color: var(--black); font-weight: 800; line-height: 1.05;
+    padding:0 1px; text-align:center; border-bottom:1px solid var(--gray-border);
+    border-right:1px solid var(--gray-border); color:var(--black); font-weight:800; line-height:1.05;
   }
-  .tsk-table tbody td:last-child { border-right: none; }
-  .tsk-table tbody td.zero { color: var(--gray-border); font-weight: 400; }
-  .tsk-table tbody td.marka-col { font-weight: 800; background: var(--gray-bg); }
-  .tsk-table tbody td.volume-col { font-weight: 800; color: var(--red); }
+  .tsk-table tbody td:last-child { border-right:none; }
+  .tsk-table tbody td.zero { color:var(--gray-border); font-weight:400; }
+  .tsk-table tbody td.marka-col { font-weight:800; background:var(--gray-bg); }
+  .tsk-table tbody td.volume-col { font-weight:800; color:var(--red); }
 
   .toast {
-    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
-    background: var(--black); color: var(--white); padding: 10px 18px; border-radius: 10px; font-size: 13px;
-    font-weight: 600; opacity: 0; transition: all 0.25s ease; pointer-events: none; z-index: 20;
-    max-width: 85%; text-align: center;
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--black); color:var(--white); padding:10px 18px; border-radius:10px; font-size:13px;
+    font-weight:600; opacity:0; transition:all .25s ease; pointer-events:none; z-index:20; max-width:85%; text-align:center;
   }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+  .ptr-indicator {
+    flex-shrink:0; display:flex; align-items:center; justify-content:center; height:0; overflow:hidden;
+    color:var(--red); transition:height .15s ease;
+  }
+  .ptr-indicator svg { width:18px; height:18px; animation:ptr-spin .7s linear infinite; animation-play-state:paused; }
+  .ptr-indicator.ptr-spinning svg { animation-play-state:running; }
+  @keyframes ptr-spin { from { transform:rotate(0deg) } to { transform:rotate(360deg) } }
 </style>
 </head>
 <body>
 <div id="app">
-
   <div class="top-screen active" id="screenLogin">
     <div class="login-logo">
       <div class="login-logo-letters"><span class="big-a">А</span><span class="big-t">Т</span></div>
@@ -362,11 +345,9 @@
       <div class="header-title" id="codeRoleTitle">Код доступа</div>
       <div class="header-spacer"></div>
     </header>
-    <div style="flex:1; min-height:0; display:flex; flex-direction:column; justify-content:center; gap:22px; padding: 10px 24px 24px;">
+    <div style="flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:22px;padding:10px 24px 24px;">
       <div class="code-role-label">Введите 4-значный код</div>
-      <div class="code-dots" id="codeDots">
-        <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
-      </div>
+      <div class="code-dots" id="codeDots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
       <div class="keypad" id="codeKeypad"></div>
     </div>
   </div>
@@ -381,21 +362,18 @@
       <div class="swipe-track" id="skladTrack">
         <div class="swipe-screen">
           <div class="skl-add-wrap">
-            <div class="skl-grid-wrap" id="sklGridWrap"><div class="loading-note">Загрузка...</div></div>
+            <div class="ptr-indicator" id="sklGridPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="skl-grid-wrap" id="sklGridWrap"><div class="loading-note">Загрузка…</div></div>
             <div class="field-display" id="sklValDisplay">0</div>
             <div class="keypad" id="sklKeypad"></div>
-            <div class="skl-btn-row">
-              <button class="skl-action-btn" id="sklClearAllBtn">ОЧИСТИТЬ ВСЕ</button>
-              <button class="skl-action-btn" id="sklDeleteBtn" disabled>УДАЛИТЬ</button>
-            </div>
+            <div class="skl-btn-row"><button class="skl-action-btn" id="sklClearAllBtn">ОЧИСТИТЬ ВСЕ</button><button class="skl-action-btn" id="sklDeleteBtn" disabled>УДАЛИТЬ</button></div>
           </div>
         </div>
         <div class="swipe-screen">
-          <div class="skl-report-wrap" id="sklReportWrap"><div class="loading-note">Загрузка...</div></div>
+          <div class="ptr-indicator" id="sklReportPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="skl-report-wrap" id="sklReportWrap"><div class="loading-note">Загрузка…</div></div>
         </div>
-        <div class="swipe-screen">
-          <div class="exit-screen"><button class="exit-btn" data-exit="sklad">Выйти</button></div>
-        </div>
+        <div class="swipe-screen"><div class="exit-screen"><button class="exit-btn" data-exit="sklad">Выйти</button></div></div>
       </div>
     </div>
   </div>
@@ -409,26 +387,12 @@
       <div class="swipe-track" id="tsekhTrack">
         <div class="swipe-screen">
           <div id="screenTsekhAdd">
-            <div>
-              <div class="section-label">Марка</div>
-              <div class="field-display" id="tsekhMarkaDisplay" data-field="marka">7-40</div>
-            </div>
-            <div>
-              <div class="section-label">Сырьё</div>
-              <div class="material-grid" id="tsekhMaterialGrid"></div>
-            </div>
-            <div>
-              <div class="section-label">Количество</div>
-              <div class="field-display" id="tsekhQtyDisplay" data-field="qty">0</div>
-            </div>
-            <div style="margin-top: 4px;">
-              <div class="keypad" id="tsekhKeypad"></div>
-            </div>
+            <div><div class="section-label">Марка</div><div class="field-display" id="tsekhMarkaDisplay" data-field="marka">7-40</div></div>
+            <div><div class="section-label">Сырьё</div><div class="material-grid" id="tsekhMaterialGrid"></div></div>
+            <div><div class="section-label">Количество</div><div class="field-display" id="tsekhQtyDisplay" data-field="qty">0</div></div>
+            <div style="margin-top:4px"><div class="keypad" id="tsekhKeypad"></div></div>
             <button class="add-btn" id="tsekhAddBtn" disabled>ДОБАВИТЬ</button>
-            <div class="secondary-btn-row">
-              <button class="add-btn tsk-clear-btn" id="tsekhClearAllBtn">ОЧИСТИТЬ ТАБЛИЦУ</button>
-              <button class="add-btn tsk-remove-btn" id="tsekhRemoveBlockBtn" disabled>УДАЛИТЬ БЛОК</button>
-            </div>
+            <div class="secondary-btn-row"><button class="add-btn tsk-clear-btn" id="tsekhClearAllBtn">ОЧИСТИТЬ ТАБЛИЦУ</button><button class="add-btn tsk-remove-btn" id="tsekhRemoveBlockBtn" disabled>УДАЛИТЬ БЛОК</button></div>
           </div>
         </div>
         <div class="swipe-screen">
@@ -437,12 +401,11 @@
               <div class="stat-box"><div class="stat-value" id="tsekhBlocksInShopVal">—</div><div class="stat-label">Блоков в цеху</div></div>
               <div class="stat-box"><div class="stat-value" id="tsekhFreeSlotsVal">—</div><div class="stat-label">Свободных мест</div></div>
             </div>
-            <div class="tsk-table-wrap" id="tsekhTableWrap"><div class="loading-note">Загрузка...</div></div>
+            <div class="ptr-indicator" id="tsekhTablePtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="tsk-table-wrap" id="tsekhTableWrap"><div class="loading-note">Загрузка…</div></div>
           </div>
         </div>
-        <div class="swipe-screen">
-          <div class="exit-screen"><button class="exit-btn" data-exit="tsekh">Выйти</button></div>
-        </div>
+        <div class="swipe-screen"><div class="exit-screen"><button class="exit-btn" data-exit="tsekh">Выйти</button></div></div>
       </div>
     </div>
   </div>
@@ -457,21 +420,13 @@
       <div class="swipe-track" id="syreTrack">
         <div class="swipe-screen">
           <div class="syre-wrap">
-            <table class="skl-table syre-summary-table">
-              <thead><tr><th>201</th><th>301</th><th>401</th><th>МИКС</th></tr></thead>
-              <tbody><tr><td id="syreSum-201">0</td><td id="syreSum-301">0</td><td id="syreSum-401">0</td><td id="syreSum-МИКС">0</td></tr></tbody>
-            </table>
+            <table class="skl-table syre-summary-table"><thead><tr><th>201</th><th>301</th><th>401</th><th>МИКС</th></tr></thead><tbody><tr><td id="syreSum-201">0</td><td id="syreSum-301">0</td><td id="syreSum-401">0</td><td id="syreSum-МИКС">0</td></tr></tbody></table>
             <div class="syre-fields" id="syreFields"></div>
             <div class="keypad" id="syreKeypad"></div>
-            <div class="skl-btn-row">
-              <button class="skl-action-btn" id="syreClearAllBtn">ОЧИСТИТЬ ВСЕ</button>
-              <button class="skl-action-btn" id="syreDeleteBtn" disabled>УДАЛИТЬ</button>
-            </div>
+            <div class="skl-btn-row"><button class="skl-action-btn" id="syreClearAllBtn">ОЧИСТИТЬ ВСЕ</button><button class="skl-action-btn" id="syreDeleteBtn" disabled>УДАЛИТЬ</button></div>
           </div>
         </div>
-        <div class="swipe-screen">
-          <div class="exit-screen"><button class="exit-btn" data-exit="syre">Выйти</button></div>
-        </div>
+        <div class="swipe-screen"><div class="exit-screen"><button class="exit-btn" data-exit="syre">Выйти</button></div></div>
       </div>
     </div>
   </div>
@@ -481,9 +436,7 @@
       <div class="admin-header-default" id="adminHeaderDefault">
         <div class="brand">А<span>Т</span></div>
         <div class="header-title" id="adminScreenTitle">Отчёт · Цех</div>
-        <div class="admin-header-tsekh-pill" id="admSkladUpdatedPill" style="visibility:hidden;">
-          <span class="stat-label">Обновлено</span><span class="stat-value" id="admSkladUpdated">—</span>
-        </div>
+        <div class="admin-header-tsekh-pill" id="admSkladUpdatedPill" style="visibility:hidden;"><span class="stat-label">Обновлено</span><span class="stat-value" id="admSkladUpdated">—</span></div>
       </div>
       <div class="admin-header-tsekh" id="adminHeaderTsekh">
         <div class="brand">А<span>Т</span></div>
@@ -494,1757 +447,762 @@
         </div>
       </div>
     </header>
-
     <div class="swipe-viewport" id="adminViewport">
       <div class="swipe-track" id="adminTrack">
         <div class="swipe-screen">
-          <div style="flex:1; min-height:0; display:flex; flex-direction:column;">
-            <div class="tsk-table-wrap" id="admTsekhReportWrap"><div class="loading-note">Загрузка...</div></div>
+          <div style="flex:1;min-height:0;display:flex;flex-direction:column;">
+            <div class="ptr-indicator" id="admTsekhReportPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="tsk-table-wrap" id="admTsekhReportWrap"><div class="loading-note">Загрузка…</div></div>
           </div>
         </div>
-
         <div class="swipe-screen">
-          <div class="skl-report-wrap" id="admSkladReportWrap"><div class="loading-note">Загрузка...</div></div>
+          <div class="ptr-indicator" id="admSkladReportPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="skl-report-wrap" id="admSkladReportWrap"><div class="loading-note">Загрузка…</div></div>
         </div>
-
         <div class="swipe-screen">
-          <div id="admTsekhEdit" style="padding: 5px 16px 5px; gap: 3px; display: flex; flex-direction: column; flex: 1; min-height: 0;">
-            <div>
-              <div class="section-label">Марка</div>
-              <div class="field-display" id="admTsekhMarkaDisplay" style="font-size:17px;" data-field="marka">7-40</div>
-            </div>
-            <div>
-              <div class="section-label">Сырьё</div>
-              <div class="material-grid" id="admTsekhMaterialGrid"></div>
-            </div>
-            <div>
-              <div class="section-label">Количество</div>
-              <div class="field-display" id="admTsekhQtyDisplay" style="font-size:17px;" data-field="qty">0</div>
-            </div>
-            <div style="margin-top: 4px;">
-              <div class="keypad" id="admTsekhKeypad" style="gap:6px;"></div>
-            </div>
+          <div id="admTsekhEdit">
+            <div><div class="section-label">Марка</div><div class="field-display" id="admTsekhMarkaDisplay" data-field="marka">7-40</div></div>
+            <div><div class="section-label">Сырьё</div><div class="material-grid" id="admTsekhMaterialGrid"></div></div>
+            <div><div class="section-label">Количество</div><div class="field-display" id="admTsekhQtyDisplay" data-field="qty">0</div></div>
+            <div style="margin-top:4px"><div class="keypad" id="admTsekhKeypad"></div></div>
             <button class="add-btn" id="admTsekhAddBtn" disabled>ДОБАВИТЬ</button>
-            <div class="secondary-btn-row">
-              <button class="add-btn tsk-clear-btn" id="admTsekhClearAllBtn">ОЧИСТИТЬ ТАБЛИЦУ</button>
-              <button class="add-btn tsk-remove-btn" id="admTsekhRemoveBtn" disabled>УДАЛИТЬ БЛОК</button>
-            </div>
+            <div class="secondary-btn-row"><button class="add-btn tsk-clear-btn" id="admTsekhClearAllBtn">ОЧИСТИТЬ ТАБЛИЦУ</button><button class="add-btn tsk-remove-btn" id="admTsekhRemoveBtn" disabled>УДАЛИТЬ БЛОК</button></div>
           </div>
         </div>
-
         <div class="swipe-screen">
           <div class="skl-add-wrap">
-            <div class="skl-grid-wrap" id="admSkladGridWrap"><div class="loading-note">Загрузка...</div></div>
+            <div class="ptr-indicator" id="admSkladGridPtr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-3-6.7" stroke-linecap="round"/><path d="M21 3v6h-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="skl-grid-wrap" id="admSkladGridWrap"><div class="loading-note">Загрузка…</div></div>
             <div class="field-display" id="admSkladValDisplay">0</div>
             <div class="keypad" id="admSkladKeypad"></div>
-            <div class="skl-btn-row">
-              <button class="skl-action-btn" id="admSkladClearAllBtn">ОЧИСТИТЬ ВСЕ</button>
-              <button class="skl-action-btn" id="admSkladDeleteBtn" disabled>УДАЛИТЬ</button>
-            </div>
+            <div class="skl-btn-row"><button class="skl-action-btn" id="admSkladClearAllBtn">ОЧИСТИТЬ ВСЕ</button><button class="skl-action-btn" id="admSkladDeleteBtn" disabled>УДАЛИТЬ</button></div>
           </div>
         </div>
-
         <div class="swipe-screen">
           <div class="syre-wrap">
-            <table class="skl-table syre-summary-table">
-              <thead><tr><th>201</th><th>301</th><th>401</th><th>МИКС</th></tr></thead>
-              <tbody><tr><td id="admSyreSum-201">0</td><td id="admSyreSum-301">0</td><td id="admSyreSum-401">0</td><td id="admSyreSum-МИКС">0</td></tr></tbody>
-            </table>
+            <table class="skl-table syre-summary-table"><thead><tr><th>201</th><th>301</th><th>401</th><th>МИКС</th></tr></thead><tbody><tr><td id="admSyreSum-201">0</td><td id="admSyreSum-301">0</td><td id="admSyreSum-401">0</td><td id="admSyreSum-МИКС">0</td></tr></tbody></table>
             <div class="syre-fields" id="admSyreFields"></div>
             <div class="keypad" id="admSyreKeypad"></div>
-            <div class="skl-btn-row">
-              <button class="skl-action-btn" id="admSyreClearAllBtn">ОЧИСТИТЬ ВСЕ</button>
-              <button class="skl-action-btn" id="admSyreDeleteBtn" disabled>УДАЛИТЬ</button>
-            </div>
+            <div class="skl-btn-row"><button class="skl-action-btn" id="admSyreClearAllBtn">ОЧИСТИТЬ ВСЕ</button><button class="skl-action-btn" id="admSyreDeleteBtn" disabled>УДАЛИТЬ</button></div>
           </div>
         </div>
-
-        <div class="swipe-screen">
-          <div class="exit-screen"><button class="exit-btn" data-exit="admin">Выйти</button></div>
-        </div>
+        <div class="swipe-screen"><div class="exit-screen"><button class="exit-btn" data-exit="admin">Выйти</button></div></div>
       </div>
     </div>
-
-    <div class="dots-indicator" id="adminDots">
-      <div class="idot active"></div><div class="idot"></div><div class="idot"></div>
-      <div class="idot"></div><div class="idot"></div><div class="idot"></div>
-    </div>
+    <div class="dots-indicator" id="adminDots"><div class="idot active"></div><div class="idot"></div><div class="idot"></div><div class="idot"></div><div class="idot"></div><div class="idot"></div></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-  // ==================== UNIFIED BACKEND ====================
+  // ==================== ЕДИНЫЙ BACKEND ====================
+  // Вставьте сюда URL нового Google Apps Script Web App.
   const API_URL = "https://script.google.com/macros/s/AKfycbztYZE7iWRxrXpeOt16S1mxcHHcVCk0KTkRhqaCjeatdgfs9Y7H9BUcub1E5pzEnx7d/exec";
 
-  async function apiGet(module, action, params = {}) {
-    const query = new URLSearchParams({
-      module,
-      action,
-      ...params
-    });
-
-    const res = await fetch(`${API_URL}?${query.toString()}`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.json();
-  }
-
-  async function apiPost(module, body = {}) {
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ module, ...body })
-    });
-
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.json();
-  }
-
-  // ==================== ACCESS CODES ====================
   const ACCESS_CODES = {
     admin: "1111",
     sklad: "2222",
     tsekh: "3333",
     syre: "4444"
   };
-
-  const ROLE_TITLES = { admin: "Администратор", sklad: "Склад", tsekh: "Цех", syre: "Сырьё" };
-  const ADMIN_SCREEN_TITLES = ["Отчёт · Цех", "Склад", "Цех", "Склад", "Сырьё", "Выход"];
+  const ROLE_TITLES = { admin:"Администратор", sklad:"Склад", tsekh:"Цех", syre:"Сырьё" };
+  const ADMIN_SCREEN_TITLES = ["Отчёт · Цех","Склад","Цех","Склад","Сырьё","Выход"];
   const STORAGE_KEY = "at_role";
 
-  // ==================== GENERIC SWIPER ====================
-  function createSwiper(viewportEl, trackEl, count, opts = {}) {
+  function ensureApiUrl() {
+    if (!API_URL || API_URL.includes("PASTE_YOUR_NEW")) {
+      showToast("Укажите URL нового backend в API_URL");
+      throw new Error("API_URL is not configured");
+    }
+  }
+
+  function jsonHeaders() {
+    return { "Content-Type": "text/plain;charset=utf-8" };
+  }
+
+  async function apiGet(module, action, params = {}) {
+    ensureApiUrl();
+    const url = new URL(API_URL);
+    url.searchParams.set("module", module);
+    url.searchParams.set("action", action);
+    Object.entries(params).forEach(([k,v]) => {
+      if (v !== undefined && v !== null) url.searchParams.set(k, String(v));
+    });
+    const res = await fetch(url.toString(), { cache:"no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    if (!data || data.success === false) throw new Error(data?.error || "Backend error");
+    return data;
+  }
+
+  async function apiPost(module, body) {
+    ensureApiUrl();
+    const payload = { ...body, module };
+    const res = await fetch(API_URL, {
+      method:"POST",
+      headers:jsonHeaders(),
+      body:JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    if (!data || data.success === false) throw new Error(data?.error || "Backend error");
+    return data;
+  }
+
+  function esc(value) {
+    return String(value ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#39;");
+  }
+
+  function createSwiper(viewportEl, trackEl, count, opts={}) {
     let index = opts.startIndex || 0;
     const dotsEl = opts.dotsEl;
     const stepPercent = 100 / count;
 
     function applyTransform(withTransition) {
-      trackEl.style.transition = withTransition ? "transform 0.28s cubic-bezier(0.22,0.61,0.36,1)" : "none";
+      trackEl.style.transition = withTransition ? "transform .28s cubic-bezier(.22,.61,.36,1)" : "none";
       trackEl.style.transform = `translateX(-${index * stepPercent}%)`;
     }
-
     function updateDots() {
       if (!dotsEl) return;
-      [...dotsEl.children].forEach((d, i) => d.classList.toggle("active", i === index));
+      [...dotsEl.children].forEach((d,i)=>d.classList.toggle("active",i===index));
     }
-
-    function goTo(i, withTransition = true) {
-      index = Math.max(0, Math.min(count - 1, i));
+    function goTo(i, withTransition=true) {
+      const next = Math.max(0,Math.min(count-1,i));
+      const changed = next !== index;
+      index = next;
       applyTransform(withTransition);
       updateDots();
-      if (opts.onChange) opts.onChange(index);
+      if (changed && opts.onChange) opts.onChange(index);
     }
 
-    let dragging = false, startX = 0, startY = 0, deltaX = 0, axisLocked = null;
-
-    viewportEl.addEventListener("touchstart", (e) => {
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-      dragging = true;
-      deltaX = 0;
-      axisLocked = null;
-      trackEl.style.transition = "none";
-    }, { passive: true });
-
-    viewportEl.addEventListener("touchmove", (e) => {
-      if (!dragging) return;
-      const dx = e.touches[0].clientX - startX;
-      const dy = e.touches[0].clientY - startY;
-      if (axisLocked === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
-        axisLocked = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+    let dragging=false,startX=0,startY=0,deltaX=0,axisLocked=null;
+    viewportEl.addEventListener("touchstart",e=>{
+      startX=e.touches[0].clientX; startY=e.touches[0].clientY;
+      dragging=true; deltaX=0; axisLocked=null; trackEl.style.transition="none";
+    },{passive:true});
+    viewportEl.addEventListener("touchmove",e=>{
+      if(!dragging)return;
+      const dx=e.touches[0].clientX-startX, dy=e.touches[0].clientY-startY;
+      if(axisLocked===null&&(Math.abs(dx)>6||Math.abs(dy)>6)) axisLocked=Math.abs(dx)>Math.abs(dy)?"x":"y";
+      if(axisLocked!=="x")return;
+      deltaX=dx;
+      const base=-index*stepPercent, drag=(dx/viewportEl.clientWidth)*stepPercent;
+      trackEl.style.transform=`translateX(${base+drag}%)`;
+    },{passive:true});
+    function endDrag(){
+      if(!dragging)return;
+      dragging=false;
+      const prev=index;
+      if(axisLocked==="x"){
+        const threshold=viewportEl.clientWidth*.16;
+        if(deltaX<-threshold&&index<count-1)index++;
+        else if(deltaX>threshold&&index>0)index--;
       }
-      if (axisLocked !== "x") return;
-      deltaX = dx;
-      const basePercent = -index * stepPercent;
-      const dragPercent = (dx / viewportEl.clientWidth) * stepPercent;
-      trackEl.style.transform = `translateX(${basePercent + dragPercent}%)`;
-    }, { passive: true });
-
-    function endDrag() {
-      if (!dragging) return;
-      dragging = false;
-      const prevIndex = index;
-      if (axisLocked === "x") {
-        const threshold = viewportEl.clientWidth * 0.16;
-        if (deltaX < -threshold && index < count - 1) index++;
-        else if (deltaX > threshold && index > 0) index--;
-      }
-      applyTransform(true);
-      updateDots();
-      if (index !== prevIndex && opts.onChange) opts.onChange(index);
+      applyTransform(true); updateDots();
+      if(index!==prev&&opts.onChange)opts.onChange(index);
     }
-
-    viewportEl.addEventListener("touchend", endDrag, { passive: true });
-    viewportEl.addEventListener("touchcancel", endDrag, { passive: true });
-
-    applyTransform(false);
-    updateDots();
-    return { goTo, current: () => index };
+    viewportEl.addEventListener("touchend",endDrag,{passive:true});
+    viewportEl.addEventListener("touchcancel",endDrag,{passive:true});
+    applyTransform(false); updateDots();
+    return { goTo, current:()=>index };
   }
 
-  function fixTrackChildWidths(trackEl, count) {
-    trackEl.style.width = (count * 100) + "%";
-    [...trackEl.children].forEach(ch => {
-      ch.style.flex = `0 0 ${100 / count}%`;
-    });
+  function fixTrackChildWidths(trackEl,count) {
+    trackEl.style.width=(count*100)+"%";
+    [...trackEl.children].forEach(ch=>ch.style.flex=`0 0 ${100/count}%`);
   }
 
   function showToast(msg) {
-    const t = document.getElementById("toast");
-    t.textContent = msg;
-    t.classList.add("show");
+    const t=document.getElementById("toast");
+    t.textContent=msg; t.classList.add("show");
     clearTimeout(showToast._tm);
-    showToast._tm = setTimeout(() => t.classList.remove("show"), 1800);
+    showToast._tm=setTimeout(()=>t.classList.remove("show"),1800);
   }
 
   function showTopScreen(id) {
-    document.querySelectorAll(".top-screen").forEach(s => s.classList.toggle("active", s.id === id));
+    document.querySelectorAll(".top-screen").forEach(s=>s.classList.toggle("active",s.id===id));
+  }
+
+  const PULL_THRESHOLD=62, PULL_MAX=90;
+  function initPullToRefresh(indicatorEl,containerEl,onRefresh,opts={}) {
+    let startY=0,pulling=false,dragY=0,refreshing=false;
+    const setH=px=>indicatorEl.style.height=px+"px";
+    containerEl.addEventListener("touchstart",e=>{
+      if(refreshing)return;
+      if(opts.shouldStart&&!opts.shouldStart())return;
+      if(containerEl.scrollTop>0)return;
+      startY=e.touches[0].clientY; pulling=true; dragY=0;
+    },{passive:true});
+    containerEl.addEventListener("touchmove",e=>{
+      if(!pulling||refreshing)return;
+      const dy=e.touches[0].clientY-startY;
+      if(dy<=0){pulling=false;setH(0);return;}
+      dragY=Math.min(dy,PULL_MAX*1.6); setH(Math.min(dragY*.55,PULL_MAX));
+    },{passive:true});
+    const stop=()=>{refreshing=false;indicatorEl.classList.remove("ptr-spinning");setH(0);};
+    containerEl.addEventListener("touchend",()=>{
+      if(!pulling)return; pulling=false;
+      if(dragY*.55>=PULL_THRESHOLD*.9&&!refreshing){
+        refreshing=true; setH(PULL_THRESHOLD*.7); indicatorEl.classList.add("ptr-spinning");
+        const timeout=setTimeout(stop,8000);
+        Promise.resolve(onRefresh()).finally(()=>{clearTimeout(timeout);stop();});
+      }else setH(0);
+    },{passive:true});
+    containerEl.addEventListener("touchcancel",()=>{pulling=false;setH(0);},{passive:true});
+  }
+
+  function fitTableToContainer(wrapEl,tableEl,opts={}) {
+    if(!tableEl)return;
+    const maxFont=opts.maxFont||40,minFont=opts.minFont||9;
+    const availableH=wrapEl.clientHeight,availableW=wrapEl.clientWidth;
+    if(availableH<=0||availableW<=0)return;
+    function fitsAt(font){
+      tableEl.style.setProperty("--skl-row-font",font+"px");
+      tableEl.style.setProperty("--skl-cell-pad",Math.max(1,font*.12)+"px");
+      return tableEl.scrollHeight<=availableH&&tableEl.scrollWidth<=availableW+1;
+    }
+    let lo=minFont,hi=maxFont,best=minFont;
+    if(fitsAt(maxFont))best=maxFont;
+    else for(let i=0;i<9;i++){const mid=(lo+hi)/2;if(fitsAt(mid)){best=mid;lo=mid;}else hi=mid;}
+    fitsAt(best);
   }
 
   // ==================== SKLAD ====================
-  const Sklad = (function () {
-    const TABLES = [
-      { id: "пачки", label: "Пачки" },
-      { id: "2000", label: "2000" },
-      { id: "3000", label: "3000" },
-      { id: "4000", label: "4000" }
-    ];
+  const Sklad=(function(){
+    const TABLES=[{id:"пачки",label:"Пачки"},{id:"2000",label:"2000"},{id:"3000",label:"3000"},{id:"4000",label:"4000"}];
+    let ROWS=[],COLS=[],dataByTable={},currentTableIndex=0,selectedRow=null,selectedCol=null,valStr="";
+    let loaded=false,horizIndex=0,initialized=false,refreshingPull=false;
 
-    let ROWS = [], COLS = [], dataByTable = {};
-    let currentTableIndex = 0;
-    let selectedRow = null, selectedCol = null, valStr = "";
-    let loaded = false;
-    let horizIndex = 0;
+    const currentTable=()=>TABLES[currentTableIndex];
 
-    function currentTable() { return TABLES[currentTableIndex]; }
-
-    async function loadAllData() {
-      try {
-        const data = await apiGet("sklad", "getAllData");
-        ROWS = data.rows;
-        COLS = data.cols;
-        dataByTable = data.tables;
-        loaded = true;
-        renderGrid();
-        renderReport();
-      } catch (err) {
-        if (!loaded) {
-          document.getElementById("sklGridWrap").innerHTML = '<div class="loading-note">Не удалось загрузить таблицу</div>';
-          document.getElementById("sklReportWrap").innerHTML = '<div class="loading-note">Не удалось загрузить таблицу</div>';
+    async function loadAllData(){
+      try{
+        const data=await apiGet("sklad","getAllData");
+        ROWS=Array.isArray(data.rows)?data.rows:[];
+        COLS=Array.isArray(data.cols)?data.cols:[];
+        dataByTable=data.tables||{};
+        loaded=true; renderGrid(); renderReport();
+      }catch(err){
+        if(!loaded){
+          document.getElementById("sklGridWrap").innerHTML='<div class="loading-note">Не удалось загрузить таблицу</div>';
+          document.getElementById("sklReportWrap").innerHTML='<div class="loading-note">Не удалось загрузить таблицу</div>';
         }
       }
     }
 
-    function updateHeaderTitle() {
-      const t = currentTable();
-      document.getElementById("sklHeaderTitle").textContent =
-        horizIndex === 0 ? t.label : (horizIndex === 1 ? "Отчёт" : "Выход");
+    function updateHeaderTitle(){
+      const t=currentTable();
+      document.getElementById("sklHeaderTitle").textContent=horizIndex===0?t.label:(horizIndex===1?"Отчёт":"Выход");
     }
 
-    function renderGrid() {
-      if (!loaded) return;
+    function renderGrid(){
+      if(!loaded)return;
       updateHeaderTitle();
-      const t = currentTable();
-      const values = dataByTable[t.id] || {};
-      let html = '<table class="skl-table"><thead><tr><th></th>';
-      COLS.forEach(c => html += `<th>${c}</th>`);
-      html += '</tr></thead><tbody>';
-      ROWS.forEach(r => {
-        html += `<tr><th>${r.replace(" ", "<br>")}</th>`;
-        COLS.forEach(c => {
-          const v = (values[r] || {})[c];
-          const isSel = (r === selectedRow && c === selectedCol);
-          html += `<td class="${isSel ? "selected" : ""}" data-row="${r}" data-col="${c}">${v === "" || v === undefined ? "" : v}</td>`;
+      const values=dataByTable[currentTable().id]||{};
+      let html='<table class="skl-table"><thead><tr><th></th>';
+      COLS.forEach(c=>html+=`<th>${esc(c)}</th>`);
+      html+='</tr></thead><tbody>';
+      ROWS.forEach(r=>{
+        html+=`<tr><th>${esc(r).replace(" ","<br>")}</th>`;
+        COLS.forEach(c=>{
+          const v=(values[r]||{})[c],sel=r===selectedRow&&c===selectedCol;
+          html+=`<td class="${sel?"selected":""}" data-row="${esc(r)}" data-col="${esc(c)}">${v===""||v===undefined?"":esc(v)}</td>`;
         });
-        html += "</tr>";
+        html+='</tr>';
       });
-      html += "</tbody></table>";
-      document.getElementById("sklGridWrap").innerHTML = html;
-      document.querySelectorAll("#sklGridWrap .skl-table tbody td").forEach(td => {
-        td.onclick = () => selectCell(td.dataset.row, td.dataset.col);
+      html+='</tbody></table>';
+      const wrap=document.getElementById("sklGridWrap");
+      wrap.innerHTML=html;
+      wrap.querySelectorAll("tbody td").forEach(td=>td.onclick=()=>selectCell(td.dataset.row,td.dataset.col));
+      fitTableToContainer(wrap,wrap.querySelector(".skl-table"));
+    }
+
+    function selectCell(row,col){selectedRow=row;selectedCol=col;valStr="";renderVal();renderGrid();updateBtnState();}
+    function renderVal(){
+      const el=document.getElementById("sklValDisplay");
+      el.textContent=valStr===""?"0":valStr;
+      el.classList.toggle("filled",valStr!==""); el.classList.toggle("active",selectedRow!==null);
+    }
+    function updateBtnState(){
+      const chosen=selectedRow!==null&&selectedCol!==null;
+      const add=document.getElementById("sklAddBtn");
+      if(add)add.disabled=!(chosen&&valStr!=="");
+      document.getElementById("sklDeleteBtn").disabled=!chosen;
+    }
+    function buildKeypad(){
+      const keypad=document.getElementById("sklKeypad"); keypad.innerHTML="";
+      ["1","2","3","4","5","6","7","8","9"].forEach(k=>{
+        const b=document.createElement("button");b.className="key";b.textContent=k;b.onclick=()=>handleDigit(k);keypad.appendChild(b);
       });
+      const add=document.createElement("button");add.className="key add-key";add.id="sklAddBtn";add.textContent="✓";add.disabled=true;add.onclick=commitValue;keypad.appendChild(add);
+      const zero=document.createElement("button");zero.className="key";zero.textContent="0";zero.onclick=()=>handleDigit("0");keypad.appendChild(zero);
+      const back=document.createElement("button");back.className="key";back.textContent="⌫";back.onclick=()=>{if(selectedRow===null){showToast("Сначала выберите ячейку в таблице");return;}valStr=valStr.slice(0,-1);renderVal();updateBtnState();};keypad.appendChild(back);
     }
-
-    function selectCell(row, col) {
-      selectedRow = row; selectedCol = col; valStr = "";
-      renderVal(); renderGrid(); updateBtnState();
+    function handleDigit(k){
+      if(selectedRow===null){showToast("Сначала выберите ячейку в таблице");return;}
+      if(valStr.length<6)valStr+=k;renderVal();updateBtnState();
     }
-
-    function renderVal() {
-      const el = document.getElementById("sklValDisplay");
-      el.textContent = valStr === "" ? "0" : valStr;
-      el.classList.toggle("filled", valStr !== "");
-      el.classList.toggle("active", selectedRow !== null);
-    }
-
-    function updateBtnState() {
-      const cellChosen = selectedRow !== null && selectedCol !== null;
-      const addBtn = document.getElementById("sklAddBtn");
-      if (addBtn) addBtn.disabled = !(cellChosen && valStr !== "");
-      document.getElementById("sklDeleteBtn").disabled = !cellChosen;
-    }
-
-    function buildKeypad() {
-      const keypad = document.getElementById("sklKeypad");
-      keypad.innerHTML = "";
-      ["1","2","3","4","5","6","7","8","9"].forEach(k => {
-        const btn = document.createElement("button");
-        btn.className = "key";
-        btn.textContent = k;
-        btn.onclick = () => handleDigit(k);
-        keypad.appendChild(btn);
-      });
-
-      const addBtn = document.createElement("button");
-      addBtn.className = "key add-key";
-      addBtn.id = "sklAddBtn";
-      addBtn.textContent = "✓";
-      addBtn.disabled = true;
-      addBtn.onclick = commitValue;
-      keypad.appendChild(addBtn);
-
-      const zeroBtn = document.createElement("button");
-      zeroBtn.className = "key";
-      zeroBtn.textContent = "0";
-      zeroBtn.onclick = () => handleDigit("0");
-      keypad.appendChild(zeroBtn);
-
-      const backBtn = document.createElement("button");
-      backBtn.className = "key";
-      backBtn.textContent = "⌫";
-      backBtn.onclick = () => {
-        if (selectedRow === null) { showToast("Сначала выберите ячейку в таблице"); return; }
-        valStr = valStr.slice(0, -1);
-        renderVal(); updateBtnState();
-      };
-      keypad.appendChild(backBtn);
-    }
-
-    function handleDigit(k) {
-      if (selectedRow === null) { showToast("Сначала выберите ячейку в таблице"); return; }
-      if (valStr.length < 6) valStr += k;
-      renderVal(); updateBtnState();
-    }
-
-    async function commitValue() {
-      if (selectedRow === null || valStr === "") return;
-      const t = currentTable();
-      const r = selectedRow, c = selectedCol, v = valStr;
+    async function commitValue(){
+      if(selectedRow===null||valStr==="")return;
+      const t=currentTable(),r=selectedRow,c=selectedCol,v=valStr;
+      if(!dataByTable[t.id])dataByTable[t.id]={};
+      if(!dataByTable[t.id][r])dataByTable[t.id][r]={};
+      dataByTable[t.id][r][c]=Number(v);
       showToast(`${t.label} · ${r}, ${c}: ${v}`);
-      if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {};
-      dataByTable[t.id][r][c] = Number(v);
-      valStr = "";
-      renderVal(); renderGrid(); renderReport(); updateBtnState();
-
-      try {
-        const data = await apiPost("sklad", { action: "setCell", table: t.id, row: r, col: c, value: v });
-        if (!data.success) showToast("Не сохранилось на сервере — попробуйте снова");
-      } catch (err) {
-        showToast("Ошибка сети — не сохранено");
-      }
+      valStr="";renderVal();renderGrid();renderReport();updateBtnState();
+      try{await apiPost("sklad",{action:"setCell",table:t.id,row:r,col:c,value:v});}
+      catch(err){showToast("Не сохранилось на сервере — попробуйте снова");await loadAllData();}
     }
-
-    async function deleteValue() {
-      if (selectedRow === null) return;
-      const t = currentTable();
-      const r = selectedRow, c = selectedCol;
+    async function deleteValue(){
+      if(selectedRow===null)return;
+      const t=currentTable(),r=selectedRow,c=selectedCol;
+      if(!dataByTable[t.id])dataByTable[t.id]={}; if(!dataByTable[t.id][r])dataByTable[t.id][r]={};
+      dataByTable[t.id][r][c]="";valStr="";renderVal();renderGrid();renderReport();updateBtnState();
       showToast(`Очищено: ${t.label} · ${r}, ${c}`);
-      if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {};
-      dataByTable[t.id][r][c] = "";
-      valStr = "";
-      renderVal(); renderGrid(); renderReport(); updateBtnState();
-
-      try {
-        const data = await apiPost("sklad", { action: "deleteCell", table: t.id, row: r, col: c });
-        if (!data.success) showToast("Не удалось очистить на сервере");
-      } catch (err) {
-        showToast("Ошибка сети");
-      }
+      try{await apiPost("sklad",{action:"deleteCell",table:t.id,row:r,col:c});}
+      catch(err){showToast("Ошибка сети");await loadAllData();}
     }
-
-    async function clearAllCurrentTable() {
-      const t = currentTable();
-      const ok = confirm(`Точно очистить всю таблицу «${t.label}»? Это действие нельзя отменить.`);
-      if (!ok) return;
-      ROWS.forEach(r => {
-        COLS.forEach(c => {
-          if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {};
-          dataByTable[t.id][r][c] = "";
+    async function clearAllCurrentTable(){
+      const t=currentTable();if(!confirm(`Точно очистить всю таблицу «${t.label}»? Это действие нельзя отменить.`))return;
+      ROWS.forEach(r=>{if(!dataByTable[t.id][r])dataByTable[t.id][r]={};COLS.forEach(c=>dataByTable[t.id][r][c]="");});
+      selectedRow=null;selectedCol=null;valStr="";renderVal();renderGrid();renderReport();updateBtnState();
+      try{await apiPost("sklad",{action:"clearAll",table:t.id});showToast(`Таблица «${t.label}» очищена`);}
+      catch(err){showToast("Ошибка сети");await loadAllData();}
+    }
+    function renderReport(){
+      if(!loaded)return;
+      const wrap=document.getElementById("sklReportWrap");let html="";
+      TABLES.forEach(t=>{
+        const values=dataByTable[t.id]||{};
+        html+='<div class="skl-report-block"><table class="skl-report-table"><thead><tr>';
+        html+=`<th class="skl-report-corner">${esc(t.label)}</th>`;
+        COLS.forEach(c=>html+=`<th>${esc(c)}</th>`);
+        html+='</tr></thead><tbody>';
+        ROWS.forEach(r=>{
+          html+=`<tr><th>${esc(r)}</th>`;
+          COLS.forEach(c=>{const v=(values[r]||{})[c];html+=`<td>${v===""||v===undefined?"":esc(v)}</td>`;});
+          html+='</tr>';
         });
+        html+='</tbody></table></div>';
       });
-      selectedRow = null; selectedCol = null; valStr = "";
-      renderVal(); renderGrid(); renderReport(); updateBtnState();
-
-      try {
-        const data = await apiPost("sklad", { action: "clearAll", table: t.id });
-        if (data.success) showToast(`Таблица «${t.label}» очищена`);
-        else showToast("Не удалось очистить на сервере");
-      } catch (err) {
-        showToast("Ошибка сети");
-      }
+      wrap.innerHTML=html;
     }
-
-    function renderReport() {
-      if (!loaded) return;
-      const wrap = document.getElementById("sklReportWrap");
-      let html = "";
-      TABLES.forEach(t => {
-        const values = dataByTable[t.id] || {};
-        html += `<div class="skl-report-block"><div class="skl-report-block-label">${t.label}</div>`;
-        html += '<table class="skl-report-table"><thead><tr><th></th>';
-        COLS.forEach(c => html += `<th>${c}</th>`);
-        html += '</tr></thead><tbody>';
-        ROWS.forEach(r => {
-          html += `<tr><th>${r}</th>`;
-          COLS.forEach(c => {
-            const v = (values[r] || {})[c];
-            html += `<td>${v === "" || v === undefined ? "" : v}</td>`;
-          });
-          html += "</tr>";
-        });
-        html += "</tbody></table></div>";
-      });
-      wrap.innerHTML = html;
-    }
-
-    function setHorizIndex(i) {
-      horizIndex = i;
-      updateHeaderTitle();
-      if (i === 0) {
-        selectedRow = null; selectedCol = null; valStr = "";
-        renderVal(); updateBtnState();
-      }
+    function setHorizIndex(i){
+      horizIndex=i;updateHeaderTitle();
+      if(i===0){selectedRow=null;selectedCol=null;valStr="";renderVal();updateBtnState();}
       renderGrid();
     }
-
-    function cycleTable(dir) {
-      const next = currentTableIndex + dir;
-      if (next < 0 || next >= TABLES.length) return;
-      currentTableIndex = next;
-      selectedRow = null; selectedCol = null; valStr = "";
-      renderVal(); renderGrid(); updateBtnState();
+    function cycleTable(dir){
+      const next=currentTableIndex+dir;if(next<0||next>=TABLES.length)return;
+      currentTableIndex=next;selectedRow=null;selectedCol=null;valStr="";renderVal();renderGrid();updateBtnState();
     }
-
-    let initialized = false;
-    function init() {
-      if (initialized) return;
-      initialized = true;
-      buildKeypad();
-      document.getElementById("sklClearAllBtn").onclick = clearAllCurrentTable;
-      document.getElementById("sklDeleteBtn").onclick = deleteValue;
+    async function pullRefresh(){if(refreshingPull)return;refreshingPull=true;try{await loadAllData();}finally{refreshingPull=false;}}
+    function init(){
+      if(initialized)return;initialized=true;buildKeypad();
+      document.getElementById("sklClearAllBtn").onclick=clearAllCurrentTable;
+      document.getElementById("sklDeleteBtn").onclick=deleteValue;
       loadAllData();
-
-      const viewport = document.getElementById("skladViewport");
-      let vStartX = 0, vStartY = 0;
-      viewport.addEventListener("touchstart", (e) => {
-        vStartX = e.touches[0].clientX; vStartY = e.touches[0].clientY;
-      }, { passive: true });
-      viewport.addEventListener("touchend", (e) => {
-        if (horizIndex !== 0) return;
-        const dx = e.changedTouches[0].clientX - vStartX;
-        const dy = e.changedTouches[0].clientY - vStartY;
-        if (Math.abs(dy) < 55 || Math.abs(dy) < Math.abs(dx) * 1.3) return;
-        cycleTable(dy < 0 ? 1 : -1);
-      }, { passive: true });
+      initPullToRefresh(document.getElementById("sklReportPtr"),document.getElementById("sklReportWrap"),pullRefresh,{shouldStart:()=>horizIndex===1});
+      initPullToRefresh(document.getElementById("sklGridPtr"),document.getElementById("sklGridWrap"),pullRefresh,{shouldStart:()=>horizIndex===0&&currentTableIndex===0});
+      const viewport=document.getElementById("skladViewport");let vStartX=0,vStartY=0;
+      viewport.addEventListener("touchstart",e=>{vStartX=e.touches[0].clientX;vStartY=e.touches[0].clientY;},{passive:true});
+      viewport.addEventListener("touchend",e=>{
+        if(horizIndex!==0)return;
+        const dx=e.changedTouches[0].clientX-vStartX,dy=e.changedTouches[0].clientY-vStartY;
+        if(Math.abs(dy)<55||Math.abs(dy)<Math.abs(dx)*1.3)return;
+        cycleTable(dy<0?1:-1);
+      },{passive:true});
     }
-
-    return { init, setHorizIndex };
+    return {init,setHorizIndex};
   })();
 
   // ==================== TSEKH ====================
-  const Tsekh = (function () {
-    const MARKS_MIN = 7;
-    const MARKS_MAX = 40;
-    const MATERIALS = ["201", "301", "401", "Микс", "БД", "Рез"];
-    const MATERIAL_LABELS = { "201": "201", "301": "301", "401": "401", "БД": "Б/Д", "Микс": "Микс", "Рез": "Рез" };
+  const Tsekh=(function(){
+    const MATERIALS=["201","301","401","Микс","БД","Рез"];
+    const LABELS={"201":"201","301":"301","401":"401","БД":"Б/Д","Микс":"Микс","Рез":"Рез"};
+    const MIN=7,MAX=40;
+    let markaStr="",qtyStr="",selectedMaterial=null,activeField="marka",horizIndex=0,lastData=null,pollTimer=null,initialized=false;
 
-    let markaStr = "";
-    let qtyStr = "";
-    let selectedMaterial = null;
-    let activeField = "marka";
-    let horizIndex = 0;
-    let tablePollTimer = null;
-    let lastData = null;
+    const markaDisplay=()=>document.getElementById("tsekhMarkaDisplay");
+    const qtyDisplay=()=>document.getElementById("tsekhQtyDisplay");
 
-    const markaDisplay = () => document.getElementById("tsekhMarkaDisplay");
-    const qtyDisplay = () => document.getElementById("tsekhQtyDisplay");
-
-    function setActiveField(field) {
-      activeField = field;
-      markaDisplay().classList.toggle("active", field === "marka");
-      qtyDisplay().classList.toggle("active", field === "qty");
+    function setActiveField(f){activeField=f;markaDisplay().classList.toggle("active",f==="marka");qtyDisplay().classList.toggle("active",f==="qty");}
+    function renderFields(){
+      markaDisplay().textContent=markaStr===""?"7-40":markaStr;markaDisplay().classList.toggle("filled",markaStr!=="");
+      qtyDisplay().textContent=qtyStr===""?"0":qtyStr;qtyDisplay().classList.toggle("filled",qtyStr!=="");
     }
-
-    function renderFields() {
-      markaDisplay().textContent = markaStr === "" ? "7-40" : markaStr;
-      markaDisplay().classList.toggle("filled", markaStr !== "");
-      qtyDisplay().textContent = qtyStr === "" ? "0" : qtyStr;
-      qtyDisplay().classList.toggle("filled", qtyStr !== "");
+    function buildMaterialGrid(){
+      const g=document.getElementById("tsekhMaterialGrid");g.innerHTML="";
+      MATERIALS.forEach(mat=>{const b=document.createElement("button");b.className="material-btn";b.textContent=LABELS[mat];b.onclick=()=>{selectedMaterial=mat;g.querySelectorAll(".material-btn").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");setActiveField("qty");updateAddBtnState();};g.appendChild(b);});
     }
-
-    function buildMaterialGrid() {
-      const grid = document.getElementById("tsekhMaterialGrid");
-      grid.innerHTML = "";
-      MATERIALS.forEach(mat => {
-        const btn = document.createElement("button");
-        btn.className = "material-btn";
-        btn.textContent = MATERIAL_LABELS[mat];
-        btn.onclick = () => {
-          selectedMaterial = mat;
-          grid.querySelectorAll(".material-btn").forEach(b => b.classList.remove("selected"));
-          btn.classList.add("selected");
-          setActiveField("qty");
-          updateAddBtnState();
-        };
-        grid.appendChild(btn);
+    function buildKeypad(){
+      const k=document.getElementById("tsekhKeypad");k.innerHTML="";
+      ["1","2","3","4","5","6","7","8","9","C","0","⌫"].forEach(x=>{const b=document.createElement("button");b.className="key"+(x==="C"?" clear":"");b.textContent=x;b.onclick=()=>handleKey(x);k.appendChild(b);});
+    }
+    function handleKey(k){
+      const isMarka=activeField==="marka";let val=isMarka?markaStr:qtyStr;
+      if(k==="C")val="";else if(k==="⌫")val=val.slice(0,-1);else{const maxLen=isMarka?2:4;if(val.length<maxLen)val+=k;}
+      if(isMarka)markaStr=val;else qtyStr=val;renderFields();updateAddBtnState();
+    }
+    const markaValid=()=>markaStr!==""&&Number(markaStr)>=MIN&&Number(markaStr)<=MAX;
+    function updateAddBtnState(){
+      const ready=markaValid()&&selectedMaterial!==null&&qtyStr!==""&&Number(qtyStr)>0;
+      document.getElementById("tsekhAddBtn").disabled=!ready;document.getElementById("tsekhRemoveBlockBtn").disabled=!ready;
+    }
+    function resetForm(){markaStr="";qtyStr="";selectedMaterial=null;document.querySelectorAll("#tsekhMaterialGrid .material-btn").forEach(b=>b.classList.remove("selected"));renderFields();setActiveField("marka");updateAddBtnState();}
+    async function submitEntry(sign){
+      if(!markaValid()){showToast("Марка должна быть от 7 до 40");return;}
+      const payload={action:"add",marka:Number(markaStr),material:selectedMaterial,qty:sign*Number(qtyStr)};
+      showToast(`Марка ${markaStr}, ${LABELS[selectedMaterial]}: ${sign>0?"+":"−"}${qtyStr}`);resetForm();
+      try{await apiPost("tsekh",payload);await loadTableData();}catch(err){showToast(sign>0?"Ошибка сети — запись не сохранена":"Ошибка сети — блок не удалён");}
+    }
+    async function loadTableData(){
+      try{const data=await apiGet("tsekh","getData");lastData=data;renderTable(data);}
+      catch(err){if(!lastData)document.getElementById("tsekhTableWrap").innerHTML='<div class="loading-note">Не удалось загрузить данные</div>';}
+    }
+    function renderTable(data){
+      document.getElementById("tsekhBlocksInShopVal").textContent=data.blocksInShop??0;
+      document.getElementById("tsekhFreeSlotsVal").textContent=data.freeSlots??198;
+      let html='<table class="tsk-table"><thead><tr><th>Марка</th>';
+      MATERIALS.forEach(m=>html+=`<th>${LABELS[m]}</th>`);html+='<th>Объём</th></tr></thead><tbody>';
+      (data.rows||[]).forEach(row=>{
+        html+=`<tr><td class="marka-col">${esc(row.marka)}</td>`;
+        MATERIALS.forEach(m=>{const v=row.materials?.[m]||0;html+=`<td class="${v===0?"zero":""}">${v===0?"":esc(v)}</td>`;});
+        html+=`<td class="volume-col">${row.volume===0?"":esc(Math.round(row.volume*10)/10)}</td></tr>`;
       });
+      html+='</tbody></table>';document.getElementById("tsekhTableWrap").innerHTML=html;
     }
-
-    function buildKeypad() {
-      const keypad = document.getElementById("tsekhKeypad");
-      keypad.innerHTML = "";
-      ["1","2","3","4","5","6","7","8","9","C","0","⌫"].forEach(k => {
-        const btn = document.createElement("button");
-        btn.className = "key" + (k === "C" ? " clear" : "");
-        btn.textContent = k;
-        btn.onclick = () => handleKey(k);
-        keypad.appendChild(btn);
-      });
+    async function clearAllTable(){
+      if(!confirm("Точно очистить всю таблицу за сегодня? Это действие нельзя отменить."))return;
+      try{await apiPost("tsekh",{action:"clearAll"});lastData=null;await loadTableData();showToast("Таблица очищена");}catch(err){showToast("Ошибка сети");}
     }
-
-    function handleKey(k) {
-      const isMarka = activeField === "marka";
-      let val = isMarka ? markaStr : qtyStr;
-      if (k === "C") val = "";
-      else if (k === "⌫") val = val.slice(0, -1);
-      else {
-        const maxLen = isMarka ? 2 : 4;
-        if (val.length < maxLen) val += k;
-      }
-      if (isMarka) markaStr = val; else qtyStr = val;
-      renderFields(); updateAddBtnState();
+    function setHorizIndex(i){
+      horizIndex=i;
+      if(pollTimer){clearInterval(pollTimer);pollTimer=null;}
+      if(i===1){if(lastData)renderTable(lastData);loadTableData();pollTimer=setInterval(loadTableData,5000);}
     }
-
-    function markaValid() {
-      const n = Number(markaStr);
-      return markaStr !== "" && n >= MARKS_MIN && n <= MARKS_MAX;
+    function init(){
+      if(initialized)return;initialized=true;buildMaterialGrid();buildKeypad();setActiveField("marka");renderFields();updateAddBtnState();
+      markaDisplay().onclick=()=>setActiveField("marka");qtyDisplay().onclick=()=>setActiveField("qty");
+      document.getElementById("tsekhAddBtn").onclick=()=>submitEntry(1);document.getElementById("tsekhRemoveBlockBtn").onclick=()=>submitEntry(-1);
+      document.getElementById("tsekhClearAllBtn").onclick=clearAllTable;loadTableData();
+      let refreshing=false;
+      initPullToRefresh(document.getElementById("tsekhTablePtr"),document.getElementById("tsekhTableWrap"),async()=>{if(refreshing)return;refreshing=true;try{await loadTableData();}finally{refreshing=false;}},{shouldStart:()=>horizIndex===1});
     }
-
-    function updateAddBtnState() {
-      const ready = markaValid() && selectedMaterial !== null && qtyStr !== "" && Number(qtyStr) > 0;
-      document.getElementById("tsekhAddBtn").disabled = !ready;
-      document.getElementById("tsekhRemoveBlockBtn").disabled = !ready;
-    }
-
-    function resetForm() {
-      markaStr = ""; qtyStr = ""; selectedMaterial = null;
-      document.querySelectorAll("#tsekhMaterialGrid .material-btn").forEach(b => b.classList.remove("selected"));
-      renderFields(); setActiveField("marka"); updateAddBtnState();
-    }
-
-    async function submitEntry(qtySign) {
-      if (!markaValid()) { showToast("Марка должна быть от 7 до 40"); return; }
-      const markaVal = markaStr, qtyVal = qtyStr, materialVal = selectedMaterial;
-      showToast(`Марка ${markaVal}, ${MATERIAL_LABELS[materialVal]}: ${qtySign > 0 ? "+" : "−"}${qtyVal}`);
-      resetForm();
-
-      try {
-        const data = await apiPost("tsekh", {
-          action: "add",
-          marka: Number(markaVal),
-          material: materialVal,
-          qty: qtySign * Number(qtyVal)
-        });
-
-        if (!data.success) {
-          showToast(qtySign > 0 ? "Не сохранилось на сервере — попробуйте снова" : "Не удалось удалить блок — попробуйте снова");
-        } else {
-          await loadTableData();
-        }
-      } catch (err) {
-        showToast(qtySign > 0 ? "Ошибка сети — запись не сохранена" : "Ошибка сети — блок не удалён");
-      }
-    }
-
-    async function loadTableData() {
-      try {
-        const data = await apiGet("tsekh", "getData");
-        lastData = data;
-        renderTable(data);
-      } catch (err) {
-        if (!lastData) document.getElementById("tsekhTableWrap").innerHTML = '<div class="loading-note">Не удалось загрузить данные</div>';
-      }
-    }
-
-    function renderTable(data) {
-      document.getElementById("tsekhBlocksInShopVal").textContent = data.blocksInShop ?? 0;
-      document.getElementById("tsekhFreeSlotsVal").textContent = data.freeSlots ?? 198;
-
-      let html = '<table class="tsk-table"><thead><tr>';
-      html += '<th>Марка</th>';
-      MATERIALS.forEach(mat => html += `<th>${MATERIAL_LABELS[mat]}</th>`);
-      html += '<th>Объём</th></tr></thead><tbody>';
-
-      data.rows.forEach(row => {
-        html += "<tr>";
-        html += `<td class="marka-col">${row.marka}</td>`;
-        MATERIALS.forEach(mat => {
-          const v = row.materials[mat] || 0;
-          html += `<td class="${v === 0 ? "zero" : ""}">${v === 0 ? "" : v}</td>`;
-        });
-        html += `<td class="volume-col">${row.volume === 0 ? "" : Math.round(row.volume * 10) / 10}</td>`;
-        html += "</tr>";
-      });
-
-      html += "</tbody></table>";
-      document.getElementById("tsekhTableWrap").innerHTML = html;
-    }
-
-    async function clearAllTable() {
-      const ok = confirm("Точно очистить всю таблицу за сегодня? Это действие нельзя отменить.");
-      if (!ok) return;
-
-      try {
-        const data = await apiPost("tsekh", { action: "clearAll" });
-        if (data.success) {
-          showToast("Таблица очищена");
-          lastData = null;
-          loadTableData();
-        } else showToast("Не удалось очистить");
-      } catch (err) {
-        showToast("Ошибка сети");
-      }
-    }
-
-    function setHorizIndex(i) {
-      horizIndex = i;
-      if (tablePollTimer) { clearInterval(tablePollTimer); tablePollTimer = null; }
-      if (i === 1) {
-        if (lastData) renderTable(lastData);
-        loadTableData();
-        tablePollTimer = setInterval(loadTableData, 5000);
-      }
-    }
-
-    let initialized = false;
-    function init() {
-      if (initialized) return;
-      initialized = true;
-      buildMaterialGrid();
-      buildKeypad();
-      setActiveField("marka");
-      renderFields();
-      updateAddBtnState();
-
-      markaDisplay().onclick = () => setActiveField("marka");
-      qtyDisplay().onclick = () => setActiveField("qty");
-      document.getElementById("tsekhAddBtn").onclick = () => submitEntry(1);
-      document.getElementById("tsekhRemoveBlockBtn").onclick = () => submitEntry(-1);
-      document.getElementById("tsekhClearAllBtn").onclick = clearAllTable;
-
-      loadTableData();
-    }
-
-    return { init, setHorizIndex };
+    return {init,setHorizIndex};
   })();
 
   // ==================== SYRE ====================
-  const Syre = (function () {
-    const MATERIALS = ["201", "301", "401", "МИКС"];
-
-    let values = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
-    let activeIndex = 0;
-    let valStr = "";
-    let loaded = false;
-
-    let reqSeq = 0;
-    let appliedSeq = 0;
-    let appliedSeqByMaterial = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
-    let pendingSaves = 0;
-    let pollTimer = null;
-
-    function activeMaterial() { return MATERIALS[activeIndex]; }
-
-    async function loadValues() {
-      if (pendingSaves > 0) return;
-      const mySeq = ++reqSeq;
-      try {
-        const data = await apiGet("syre", "getData");
-
-        if (data.success && pendingSaves === 0) {
-          MATERIALS.forEach(m => {
-            if (mySeq > appliedSeqByMaterial[m]) {
-              appliedSeqByMaterial[m] = mySeq;
-              if (data.values && data.values[m] !== undefined) values[m] = data.values[m];
-            }
-          });
-          if (mySeq > appliedSeq) appliedSeq = mySeq;
-          loaded = true;
-          renderSummary();
+  const Syre=(function(){
+    const MATERIALS=["201","301","401","МИКС"];
+    let values={"201":0,"301":0,"401":0,"МИКС":0},activeIndex=0,valStr="",loaded=false,pollTimer=null,pendingSaves=0,initialized=false,reqSeq=0,appliedSeqByMaterial={"201":0,"301":0,"401":0,"МИКС":0};
+    const activeMaterial=()=>MATERIALS[activeIndex];
+    async function loadValues(){
+      if(pendingSaves>0)return;
+      const mySeq=++reqSeq;
+      try{
+        const data=await apiGet("syre","getData");
+        if(data.success&&pendingSaves===0){
+          MATERIALS.forEach(m=>{if(mySeq>appliedSeqByMaterial[m]){appliedSeqByMaterial[m]=mySeq;if(data.values?.[m]!==undefined)values[m]=data.values[m];}});
+          loaded=true;renderSummary();
         }
-      } catch (err) {}
+      }catch(err){}
     }
-
-    function startPolling() {
-      if (pollTimer) return;
-      pollTimer = setInterval(loadValues, 5000);
+    function startPolling(){if(!pollTimer)pollTimer=setInterval(loadValues,5000);}
+    function stopPolling(){if(pollTimer){clearInterval(pollTimer);pollTimer=null;}}
+    function renderSummary(){MATERIALS.forEach(m=>{const el=document.getElementById(`syreSum-${m}`);if(el)el.textContent=values[m]??0;});}
+    function renderFields(){
+      document.querySelectorAll("#syreFields .syre-field-row").forEach((row,i)=>{const d=row.querySelector(".field-display"),a=i===activeIndex;d.textContent=a&&valStr!==""?valStr:"0";d.classList.toggle("filled",a&&valStr!=="");d.classList.toggle("active",a);});
     }
-
-    function stopPolling() {
-      if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+    function buildFields(){
+      const w=document.getElementById("syreFields");w.innerHTML="";
+      MATERIALS.forEach((m,i)=>{const row=document.createElement("div");row.className="syre-field-row";row.innerHTML=`<div class="syre-field-label">${esc(m)}</div><div class="field-display">0</div>`;row.querySelector(".field-display").onclick=()=>{activeIndex=i;valStr="";renderFields();updateBtnState();};w.appendChild(row);});
     }
-
-    function renderSummary() {
-      MATERIALS.forEach(m => {
-        const el = document.getElementById(`syreSum-${m}`);
-        if (el) el.textContent = values[m] ?? 0;
-      });
+    function buildKeypad(){
+      const k=document.getElementById("syreKeypad");k.innerHTML="";
+      ["1","2","3","4","5","6","7","8","9"].forEach(x=>{const b=document.createElement("button");b.className="key";b.textContent=x;b.onclick=()=>handleDigit(x);k.appendChild(b);});
+      const a=document.createElement("button");a.className="key add-key";a.id="syreAddBtn";a.textContent="✓";a.disabled=true;a.onclick=()=>commitValue(1);k.appendChild(a);
+      const z=document.createElement("button");z.className="key";z.textContent="0";z.onclick=()=>handleDigit("0");k.appendChild(z);
+      const back=document.createElement("button");back.className="key";back.textContent="⌫";back.onclick=()=>{valStr=valStr.slice(0,-1);renderFields();updateBtnState();};k.appendChild(back);
     }
-
-    function renderFields() {
-      document.querySelectorAll("#syreFields .syre-field-row").forEach((row, i) => {
-        const display = row.querySelector(".field-display");
-        const isActive = i === activeIndex;
-        display.textContent = isActive && valStr !== "" ? valStr : "0";
-        display.classList.toggle("filled", isActive && valStr !== "");
-        display.classList.toggle("active", isActive);
-      });
+    function handleDigit(k){if(valStr.length<6)valStr+=k;renderFields();updateBtnState();}
+    function updateBtnState(){const has=valStr!==""&&Number(valStr)>0;document.getElementById("syreAddBtn").disabled=!has;document.getElementById("syreDeleteBtn").disabled=!has;}
+    function advanceField(){activeIndex=(activeIndex+1)%MATERIALS.length;valStr="";renderFields();updateBtnState();}
+    async function commitValue(sign){
+      if(valStr===""||Number(valStr)<=0)return;
+      const material=activeMaterial(),qty=sign*Number(valStr),requestSeq=++reqSeq;
+      values[material]=Math.max(0,(values[material]||0)+qty);renderSummary();advanceField();pendingSaves++;
+      showToast(`${material}: ${sign>0?"+":"−"}${Math.abs(qty)}`);
+      try{
+        const data=await apiPost("syre",{action:"add",material,qty});
+        if(requestSeq>appliedSeqByMaterial[material]){appliedSeqByMaterial[material]=requestSeq;const serverVal=data.values?.[material];if(serverVal!==undefined){values[material]=serverVal;renderSummary();}}
+      }catch(err){showToast("Не сохранилось на сервере — попробуйте снова");}
+      finally{pendingSaves--;}
     }
-
-    function buildFields() {
-      const wrap = document.getElementById("syreFields");
-      wrap.innerHTML = "";
-      MATERIALS.forEach((m, i) => {
-        const row = document.createElement("div");
-        row.className = "syre-field-row";
-        row.innerHTML = `<div class="syre-field-label">${m}</div><div class="field-display">0</div>`;
-        row.querySelector(".field-display").onclick = () => {
-          activeIndex = i; valStr = "";
-          renderFields(); updateBtnState();
-        };
-        wrap.appendChild(row);
-      });
+    async function clearAll(){
+      if(!confirm("Точно очистить все количества сырья? Это действие нельзя отменить."))return;
+      MATERIALS.forEach(m=>values[m]=0);renderSummary();activeIndex=0;valStr="";renderFields();updateBtnState();pendingSaves++;
+      try{const data=await apiPost("syre",{action:"clearAll"});MATERIALS.forEach(m=>{if(data.values?.[m]!==undefined)values[m]=data.values[m];});renderSummary();showToast("Очищено");}
+      catch(err){showToast("Ошибка сети");}
+      finally{pendingSaves--;}
     }
-
-    function buildKeypad() {
-      const keypad = document.getElementById("syreKeypad");
-      keypad.innerHTML = "";
-      ["1","2","3","4","5","6","7","8","9"].forEach(k => {
-        const btn = document.createElement("button");
-        btn.className = "key";
-        btn.textContent = k;
-        btn.onclick = () => handleDigit(k);
-        keypad.appendChild(btn);
-      });
-
-      const addBtn = document.createElement("button");
-      addBtn.className = "key add-key";
-      addBtn.id = "syreAddBtn";
-      addBtn.textContent = "✓";
-      addBtn.disabled = true;
-      addBtn.onclick = () => commitValue(1);
-      keypad.appendChild(addBtn);
-
-      const zeroBtn = document.createElement("button");
-      zeroBtn.className = "key";
-      zeroBtn.textContent = "0";
-      zeroBtn.onclick = () => handleDigit("0");
-      keypad.appendChild(zeroBtn);
-
-      const backBtn = document.createElement("button");
-      backBtn.className = "key";
-      backBtn.textContent = "⌫";
-      backBtn.onclick = () => {
-        valStr = valStr.slice(0, -1);
-        renderFields(); updateBtnState();
-      };
-      keypad.appendChild(backBtn);
+    function init(){
+      if(initialized)return;initialized=true;buildFields();buildKeypad();renderFields();updateBtnState();
+      document.getElementById("syreClearAllBtn").onclick=clearAll;document.getElementById("syreDeleteBtn").onclick=()=>commitValue(-1);loadValues();startPolling();
     }
-
-    function handleDigit(k) {
-      if (valStr.length < 6) valStr += k;
-      renderFields(); updateBtnState();
-    }
-
-    function updateBtnState() {
-      const hasVal = valStr !== "" && Number(valStr) > 0;
-      document.getElementById("syreAddBtn").disabled = !hasVal;
-      document.getElementById("syreDeleteBtn").disabled = !hasVal;
-    }
-
-    function advanceField() {
-      activeIndex = (activeIndex + 1) % MATERIALS.length;
-      valStr = "";
-      renderFields(); updateBtnState();
-    }
-
-    async function commitValue(sign) {
-      if (valStr === "" || Number(valStr) <= 0) return;
-      const material = activeMaterial();
-      const qty = sign * Number(valStr);
-      const label = sign > 0 ? "+" : "−";
-      showToast(`${material}: ${label}${valStr}`);
-
-      values[material] = Math.max(0, (values[material] || 0) + qty);
-      renderSummary();
-      advanceField();
-
-      pendingSaves++;
-      const mySeq = ++reqSeq;
-
-      try {
-        const data = await apiPost("syre", { action: "add", material, qty });
-
-        if (data.success) {
-          if (mySeq > appliedSeqByMaterial[material]) {
-            appliedSeqByMaterial[material] = mySeq;
-            const serverVal = data.values ? data.values[material] : undefined;
-            if (serverVal !== undefined) {
-              values[material] = serverVal;
-              renderSummary();
-            }
-          }
-        } else {
-          showToast("Не сохранилось на сервере — попробуйте снова");
-        }
-      } catch (err) {
-        showToast("Ошибка сети — не сохранено");
-      } finally {
-        pendingSaves--;
-      }
-    }
-
-    async function clearAll() {
-      const ok = confirm("Точно очистить все количества сырья? Это действие нельзя отменить.");
-      if (!ok) return;
-
-      MATERIALS.forEach(m => values[m] = 0);
-      renderSummary();
-      activeIndex = 0; valStr = "";
-      renderFields(); updateBtnState();
-
-      pendingSaves++;
-      const mySeq = ++reqSeq;
-
-      try {
-        const data = await apiPost("syre", { action: "clearAll" });
-
-        if (data.success) {
-          MATERIALS.forEach(m => {
-            if (mySeq > appliedSeqByMaterial[m]) {
-              appliedSeqByMaterial[m] = mySeq;
-              values[m] = (data.values && data.values[m] !== undefined) ? data.values[m] : 0;
-            }
-          });
-          if (mySeq > appliedSeq) appliedSeq = mySeq;
-          renderSummary();
-          showToast("Очищено");
-        } else {
-          showToast("Не удалось очистить на сервере");
-        }
-      } catch (err) {
-        showToast("Ошибка сети");
-      } finally {
-        pendingSaves--;
-      }
-    }
-
-    let initialized = false;
-    function init() {
-      if (initialized) return;
-      initialized = true;
-      buildFields();
-      buildKeypad();
-      renderFields();
-      updateBtnState();
-      document.getElementById("syreClearAllBtn").onclick = clearAll;
-      document.getElementById("syreDeleteBtn").onclick = () => commitValue(-1);
-      loadValues();
-      startPolling();
-    }
-
-    return { init, stopPolling };
+    return {init,stopPolling};
   })();
 
-  // ==================== ADMIN · SYRE ====================
-  const AdminSyre = (function () {
-    const MATERIALS = ["201", "301", "401", "МИКС"];
-
-    let values = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
-    let activeIndex = 0;
-    let valStr = "";
-    let loaded = false;
-    let reqSeq = 0;
-    let appliedSeq = 0;
-    let appliedSeqByMaterial = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
-    let pendingSaves = 0;
-    let pollTimer = null;
-
-    function activeMaterial() { return MATERIALS[activeIndex]; }
-
-    async function loadValues() {
-      if (pendingSaves > 0) return;
-      const mySeq = ++reqSeq;
-      try {
-        const data = await apiGet("syre", "getData");
-        if (data.success && pendingSaves === 0) {
-          MATERIALS.forEach(m => {
-            if (mySeq > appliedSeqByMaterial[m]) {
-              appliedSeqByMaterial[m] = mySeq;
-              if (data.values && data.values[m] !== undefined) values[m] = data.values[m];
-            }
-          });
-          if (mySeq > appliedSeq) appliedSeq = mySeq;
-          loaded = true;
-          renderSummary();
+  // ==================== ADMIN SYRE ====================
+  const AdminSyre=(function(){
+    const MATERIALS=["201","301","401","МИКС"];
+    let values={"201":0,"301":0,"401":0,"МИКС":0},activeIndex=0,valStr="",loaded=false,pollTimer=null,pendingSaves=0,initialized=false,reqSeq=0,appliedSeqByMaterial={"201":0,"301":0,"401":0,"МИКС":0};
+    const activeMaterial=()=>MATERIALS[activeIndex];
+    async function loadValues(){
+      if(pendingSaves>0)return;
+      const mySeq=++reqSeq;
+      try{
+        const data=await apiGet("syre","getData");
+        if(data.success&&pendingSaves===0){
+          MATERIALS.forEach(m=>{if(mySeq>appliedSeqByMaterial[m]){appliedSeqByMaterial[m]=mySeq;if(data.values?.[m]!==undefined)values[m]=data.values[m];}});
+          loaded=true;renderSummary();
         }
-      } catch (err) {}
+      }catch(err){}
     }
-
-    function setPolling(active) {
-      if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
-      if (active) {
-        if (loaded) renderSummary();
-        loadValues();
-        pollTimer = setInterval(loadValues, 5000);
-      }
+    function setPolling(active){if(pollTimer){clearInterval(pollTimer);pollTimer=null;}if(active){if(loaded)renderSummary();loadValues();pollTimer=setInterval(loadValues,5000);}}
+    function renderSummary(){MATERIALS.forEach(m=>{const el=document.getElementById(`admSyreSum-${m}`);if(el)el.textContent=values[m]??0;});}
+    function renderFields(){document.querySelectorAll("#admSyreFields .syre-field-row").forEach((row,i)=>{const d=row.querySelector(".field-display"),a=i===activeIndex;d.textContent=a&&valStr!==""?valStr:"0";d.classList.toggle("filled",a&&valStr!=="");d.classList.toggle("active",a);});}
+    function buildFields(){const w=document.getElementById("admSyreFields");w.innerHTML="";MATERIALS.forEach((m,i)=>{const row=document.createElement("div");row.className="syre-field-row";row.innerHTML=`<div class="syre-field-label">${esc(m)}</div><div class="field-display">0</div>`;row.querySelector(".field-display").onclick=()=>{activeIndex=i;valStr="";renderFields();updateBtnState();};w.appendChild(row);});}
+    function buildKeypad(){
+      const k=document.getElementById("admSyreKeypad");k.innerHTML="";
+      ["1","2","3","4","5","6","7","8","9"].forEach(x=>{const b=document.createElement("button");b.className="key";b.textContent=x;b.onclick=()=>handleDigit(x);k.appendChild(b);});
+      const a=document.createElement("button");a.className="key add-key";a.id="admSyreAddBtn";a.textContent="✓";a.disabled=true;a.onclick=()=>commitValue(1);k.appendChild(a);
+      const z=document.createElement("button");z.className="key";z.textContent="0";z.onclick=()=>handleDigit("0");k.appendChild(z);
+      const back=document.createElement("button");back.className="key";back.textContent="⌫";back.onclick=()=>{valStr=valStr.slice(0,-1);renderFields();updateBtnState();};k.appendChild(back);
     }
-
-    function renderSummary() {
-      MATERIALS.forEach(m => {
-        const el = document.getElementById(`admSyreSum-${m}`);
-        if (el) el.textContent = values[m] ?? 0;
-      });
+    function handleDigit(k){if(valStr.length<6)valStr+=k;renderFields();updateBtnState();}
+    function updateBtnState(){const has=valStr!==""&&Number(valStr)>0;document.getElementById("admSyreAddBtn").disabled=!has;document.getElementById("admSyreDeleteBtn").disabled=!has;}
+    function advanceField(){activeIndex=(activeIndex+1)%MATERIALS.length;valStr="";renderFields();updateBtnState();}
+    async function commitValue(sign){
+      if(valStr===""||Number(valStr)<=0)return;
+      const material=activeMaterial(),qty=sign*Number(valStr),requestSeq=++reqSeq;
+      values[material]=Math.max(0,(values[material]||0)+qty);renderSummary();advanceField();pendingSaves++;
+      showToast(`${material}: ${sign>0?"+":"−"}${Math.abs(qty)}`);
+      try{
+        const data=await apiPost("syre",{action:"add",material,qty});
+        if(requestSeq>appliedSeqByMaterial[material]){appliedSeqByMaterial[material]=requestSeq;const serverVal=data.values?.[material];if(serverVal!==undefined){values[material]=serverVal;renderSummary();}}
+      }catch(err){showToast("Не сохранилось на сервере — попробуйте снова");}
+      finally{pendingSaves--;}
     }
-
-    function renderFields() {
-      document.querySelectorAll("#admSyreFields .syre-field-row").forEach((row, i) => {
-        const display = row.querySelector(".field-display");
-        const isActive = i === activeIndex;
-        display.textContent = isActive && valStr !== "" ? valStr : "0";
-        display.classList.toggle("filled", isActive && valStr !== "");
-        display.classList.toggle("active", isActive);
-      });
+    async function clearAll(){
+      if(!confirm("Точно очистить все количества сырья? Это действие нельзя отменить."))return;
+      MATERIALS.forEach(m=>values[m]=0);renderSummary();activeIndex=0;valStr="";renderFields();updateBtnState();pendingSaves++;
+      try{const data=await apiPost("syre",{action:"clearAll"});MATERIALS.forEach(m=>{if(data.values?.[m]!==undefined)values[m]=data.values[m];});renderSummary();showToast("Очищено");}
+      catch(err){showToast("Ошибка сети");}
+      finally{pendingSaves--;}
     }
-
-    function buildFields() {
-      const wrap = document.getElementById("admSyreFields");
-      wrap.innerHTML = "";
-      MATERIALS.forEach((m, i) => {
-        const row = document.createElement("div");
-        row.className = "syre-field-row";
-        row.innerHTML = `<div class="syre-field-label">${m}</div><div class="field-display">0</div>`;
-        row.querySelector(".field-display").onclick = () => {
-          activeIndex = i; valStr = "";
-          renderFields(); updateBtnState();
-        };
-        wrap.appendChild(row);
-      });
-    }
-
-    function buildKeypad() {
-      const keypad = document.getElementById("admSyreKeypad");
-      keypad.innerHTML = "";
-      ["1","2","3","4","5","6","7","8","9"].forEach(k => {
-        const btn = document.createElement("button");
-        btn.className = "key";
-        btn.textContent = k;
-        btn.onclick = () => handleDigit(k);
-        keypad.appendChild(btn);
-      });
-
-      const addBtn = document.createElement("button");
-      addBtn.className = "key add-key";
-      addBtn.id = "admSyreAddBtn";
-      addBtn.textContent = "✓";
-      addBtn.disabled = true;
-      addBtn.onclick = () => commitValue(1);
-      keypad.appendChild(addBtn);
-
-      const zeroBtn = document.createElement("button");
-      zeroBtn.className = "key";
-      zeroBtn.textContent = "0";
-      zeroBtn.onclick = () => handleDigit("0");
-      keypad.appendChild(zeroBtn);
-
-      const backBtn = document.createElement("button");
-      backBtn.className = "key";
-      backBtn.textContent = "⌫";
-      backBtn.onclick = () => {
-        valStr = valStr.slice(0, -1);
-        renderFields(); updateBtnState();
-      };
-      keypad.appendChild(backBtn);
-    }
-
-    function handleDigit(k) {
-      if (valStr.length < 6) valStr += k;
-      renderFields(); updateBtnState();
-    }
-
-    function updateBtnState() {
-      const hasVal = valStr !== "" && Number(valStr) > 0;
-      document.getElementById("admSyreAddBtn").disabled = !hasVal;
-      document.getElementById("admSyreDeleteBtn").disabled = !hasVal;
-    }
-
-    function advanceField() {
-      activeIndex = (activeIndex + 1) % MATERIALS.length;
-      valStr = "";
-      renderFields(); updateBtnState();
-    }
-
-    async function commitValue(sign) {
-      if (valStr === "" || Number(valStr) <= 0) return;
-      const material = activeMaterial();
-      const qty = sign * Number(valStr);
-      const label = sign > 0 ? "+" : "−";
-      showToast(`${material}: ${label}${valStr}`);
-
-      values[material] = Math.max(0, (values[material] || 0) + qty);
-      renderSummary();
-      advanceField();
-
-      pendingSaves++;
-      const mySeq = ++reqSeq;
-
-      try {
-        const data = await apiPost("syre", { action: "add", material, qty });
-        if (data.success) {
-          if (mySeq > appliedSeqByMaterial[material]) {
-            appliedSeqByMaterial[material] = mySeq;
-            const serverVal = data.values ? data.values[material] : undefined;
-            if (serverVal !== undefined) {
-              values[material] = serverVal;
-              renderSummary();
-            }
-          }
-        } else {
-          showToast("Не сохранилось на сервере — попробуйте снова");
-        }
-      } catch (err) {
-        showToast("Ошибка сети — не сохранено");
-      } finally {
-        pendingSaves--;
-      }
-    }
-
-    async function clearAll() {
-      const ok = confirm("Точно очистить все количества сырья? Это действие нельзя отменить.");
-      if (!ok) return;
-
-      MATERIALS.forEach(m => values[m] = 0);
-      renderSummary();
-      activeIndex = 0; valStr = "";
-      renderFields(); updateBtnState();
-
-      pendingSaves++;
-      const mySeq = ++reqSeq;
-
-      try {
-        const data = await apiPost("syre", { action: "clearAll" });
-        if (data.success) {
-          MATERIALS.forEach(m => {
-            if (mySeq > appliedSeqByMaterial[m]) {
-              appliedSeqByMaterial[m] = mySeq;
-              values[m] = (data.values && data.values[m] !== undefined) ? data.values[m] : 0;
-            }
-          });
-          if (mySeq > appliedSeq) appliedSeq = mySeq;
-          renderSummary();
-          showToast("Очищено");
-        } else {
-          showToast("Не удалось очистить на сервере");
-        }
-      } catch (err) {
-        showToast("Ошибка сети");
-      } finally {
-        pendingSaves--;
-      }
-    }
-
-    let initialized = false;
-    function init() {
-      if (initialized) return;
-      initialized = true;
-      buildFields();
-      buildKeypad();
-      renderFields();
-      updateBtnState();
-      document.getElementById("admSyreClearAllBtn").onclick = clearAll;
-      document.getElementById("admSyreDeleteBtn").onclick = () => commitValue(-1);
-    }
-
-    return { init, setPolling };
+    function init(){if(initialized)return;initialized=true;buildFields();buildKeypad();renderFields();updateBtnState();document.getElementById("admSyreClearAllBtn").onclick=clearAll;document.getElementById("admSyreDeleteBtn").onclick=()=>commitValue(-1);}
+    return {init,setPolling};
   })();
 
-  // ==================== ADMIN · TSEKH ====================
-  const AdminTsekh = (function () {
-    const MARKS_MIN = 7, MARKS_MAX = 40;
-    const MATERIALS = ["201", "301", "401", "Микс", "БД", "Рез"];
-    const MATERIAL_LABELS = { "201": "201", "301": "301", "401": "401", "БД": "Б/Д", "Микс": "Микс", "Рез": "Рез" };
+  // ==================== ADMIN TSEKH ====================
+  const AdminTsekh=(function(){
+    const MATERIALS=["201","301","401","Микс","БД","Рез"];
+    const LABELS={"201":"201","301":"301","401":"401","БД":"Б/Д","Микс":"Микс","Рез":"Рез"};
+    const SYRE_KEY_FOR={"201":"201","301":"301","401":"401","Микс":"МИКС"};
+    const MIN=7,MAX=40;
+    let syreValues={"201":0,"301":0,"401":0,"МИКС":0},syreLastEdited=null;
+    let markaStr="",qtyStr="",selectedMaterial=null,activeField="marka",lastData=null,pollTimer=null,reportScreenActive=false,initialized=false,refreshingPull=false;
 
-    const SYRE_KEY_FOR = { "201": "201", "301": "301", "401": "401", "Микс": "МИКС" };
-    let syreValues = { "201": 0, "301": 0, "401": 0, "МИКС": 0 };
-    let syreLastEdited = null;
-
-    let markaStr = "", qtyStr = "", selectedMaterial = null, activeField = "marka";
-    let lastData = null;
-    let pollTimer = null;
-
-    const markaDisplay = () => document.getElementById("admTsekhMarkaDisplay");
-    const qtyDisplay = () => document.getElementById("admTsekhQtyDisplay");
-
-    function setActiveField(field) {
-      activeField = field;
-      markaDisplay().classList.toggle("active", field === "marka");
-      qtyDisplay().classList.toggle("active", field === "qty");
-    }
-
-    function renderFields() {
-      markaDisplay().textContent = markaStr === "" ? "7-40" : markaStr;
-      markaDisplay().classList.toggle("filled", markaStr !== "");
-      qtyDisplay().textContent = qtyStr === "" ? "0" : qtyStr;
-      qtyDisplay().classList.toggle("filled", qtyStr !== "");
-    }
-
-    function buildMaterialGrid() {
-      const grid = document.getElementById("admTsekhMaterialGrid");
-      grid.innerHTML = "";
-      MATERIALS.forEach(mat => {
-        const btn = document.createElement("button");
-        btn.className = "material-btn";
-        btn.textContent = MATERIAL_LABELS[mat];
-        btn.onclick = () => {
-          selectedMaterial = mat;
-          grid.querySelectorAll(".material-btn").forEach(b => b.classList.remove("selected"));
-          btn.classList.add("selected");
-          setActiveField("qty");
-          updateAddBtnState();
-        };
-        grid.appendChild(btn);
-      });
-    }
-
-    function buildKeypad() {
-      const keypad = document.getElementById("admTsekhKeypad");
-      keypad.innerHTML = "";
-      ["1","2","3","4","5","6","7","8","9","C","0","⌫"].forEach(k => {
-        const btn = document.createElement("button");
-        btn.className = "key" + (k === "C" ? " clear" : "");
-        btn.textContent = k;
-        btn.onclick = () => handleKey(k);
-        keypad.appendChild(btn);
-      });
-    }
-
-    function handleKey(k) {
-      const isMarka = activeField === "marka";
-      let val = isMarka ? markaStr : qtyStr;
-      if (k === "C") val = "";
-      else if (k === "⌫") val = val.slice(0, -1);
-      else {
-        const maxLen = isMarka ? 2 : 4;
-        if (val.length < maxLen) val += k;
-      }
-      if (isMarka) markaStr = val; else qtyStr = val;
-      renderFields(); updateAddBtnState();
-    }
-
-    function markaValid() {
-      const n = Number(markaStr);
-      return markaStr !== "" && n >= MARKS_MIN && n <= MARKS_MAX;
-    }
-
-    function updateAddBtnState() {
-      const ready = markaValid() && selectedMaterial !== null && qtyStr !== "" && Number(qtyStr) > 0;
-      document.getElementById("admTsekhAddBtn").disabled = !ready;
-      document.getElementById("admTsekhRemoveBtn").disabled = !ready;
-    }
-
-    function resetForm() {
-      markaStr = ""; qtyStr = ""; selectedMaterial = null;
-      document.querySelectorAll("#admTsekhMaterialGrid .material-btn").forEach(b => b.classList.remove("selected"));
-      renderFields(); setActiveField("marka"); updateAddBtnState();
-    }
-
-    async function submitEntry(qtySign) {
-      if (!markaValid()) { showToast("Марка должна быть от 7 до 40"); return; }
-      const markaVal = markaStr, qtyVal = qtyStr, materialVal = selectedMaterial;
-      showToast(`Марка ${markaVal}, ${MATERIAL_LABELS[materialVal]}: ${qtySign > 0 ? "+" : "−"}${qtyVal}`);
-      resetForm();
-
-      try {
-        const data = await apiPost("tsekh", {
-          action: "add",
-          marka: Number(markaVal),
-          material: materialVal,
-          qty: qtySign * Number(qtyVal)
-        });
-        if (!data.success) showToast("Не сохранилось на сервере — попробуйте снова");
-        else loadData();
-      } catch (err) {
-        showToast("Ошибка сети — не сохранено");
-      }
-    }
-
-    async function loadData() {
-      const [tsekhResult, syreResult] = await Promise.allSettled([
-        apiGet("tsekh", "getData"),
-        apiGet("syre", "getData")
-      ]);
-
-      if (tsekhResult.status === "fulfilled") {
-        lastData = tsekhResult.value;
-      } else if (!lastData) {
-        document.getElementById("admTsekhReportWrap").innerHTML = '<div class="loading-note">Не удалось загрузить данные</div>';
-        return;
-      }
-
-      if (syreResult.status === "fulfilled" && syreResult.value.success) {
-        syreValues = syreResult.value.values;
-        syreLastEdited = syreResult.value.lastEdited;
-      }
-
+    const markaDisplay=()=>document.getElementById("admTsekhMarkaDisplay");
+    const qtyDisplay=()=>document.getElementById("admTsekhQtyDisplay");
+    function setActiveField(f){activeField=f;markaDisplay().classList.toggle("active",f==="marka");qtyDisplay().classList.toggle("active",f==="qty");}
+    function renderFields(){markaDisplay().textContent=markaStr===""?"7-40":markaStr;markaDisplay().classList.toggle("filled",markaStr!=="");qtyDisplay().textContent=qtyStr===""?"0":qtyStr;qtyDisplay().classList.toggle("filled",qtyStr!=="");}
+    function buildMaterialGrid(){const g=document.getElementById("admTsekhMaterialGrid");g.innerHTML="";MATERIALS.forEach(mat=>{const b=document.createElement("button");b.className="material-btn";b.textContent=LABELS[mat];b.onclick=()=>{selectedMaterial=mat;g.querySelectorAll(".material-btn").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");setActiveField("qty");updateAddBtnState();};g.appendChild(b);});}
+    function buildKeypad(){const k=document.getElementById("admTsekhKeypad");k.innerHTML="";["1","2","3","4","5","6","7","8","9","C","0","⌫"].forEach(x=>{const b=document.createElement("button");b.className="key"+(x==="C"?" clear":"");b.textContent=x;b.onclick=()=>handleKey(x);k.appendChild(b);});}
+    function handleKey(k){const isMarka=activeField==="marka";let val=isMarka?markaStr:qtyStr;if(k==="C")val="";else if(k==="⌫")val=val.slice(0,-1);else{const maxLen=isMarka?2:4;if(val.length<maxLen)val+=k;}if(isMarka)markaStr=val;else qtyStr=val;renderFields();updateAddBtnState();}
+    const markaValid=()=>markaStr!==""&&Number(markaStr)>=MIN&&Number(markaStr)<=MAX;
+    function updateAddBtnState(){const ready=markaValid()&&selectedMaterial!==null&&qtyStr!==""&&Number(qtyStr)>0;document.getElementById("admTsekhAddBtn").disabled=!ready;document.getElementById("admTsekhRemoveBtn").disabled=!ready;}
+    function resetForm(){markaStr="";qtyStr="";selectedMaterial=null;document.querySelectorAll("#admTsekhMaterialGrid .material-btn").forEach(b=>b.classList.remove("selected"));renderFields();setActiveField("marka");updateAddBtnState();}
+    async function submitEntry(sign){if(!markaValid()){showToast("Марка должна быть от 7 до 40");return;}const payload={action:"add",marka:Number(markaStr),material:selectedMaterial,qty:sign*Number(qtyStr)};showToast(`Марка ${markaStr}, ${LABELS[selectedMaterial]}: ${sign>0?"+":"−"}${qtyStr}`);resetForm();try{await apiPost("tsekh",payload);await loadData();}catch(err){showToast("Ошибка сети — не сохранено");}}
+    function formatLastEdited(iso){if(!iso)return "—";const d=new Date(iso);if(Number.isNaN(d.getTime()))return "—";return `${d.toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"})} · ${d.toLocaleDateString("ru-RU",{day:"2-digit",month:"2-digit"})}`;}
+    async function loadData(){
+      const results=await Promise.allSettled([apiGet("tsekh","getData"),apiGet("syre","getData")]);
+      if(results[0].status==="fulfilled"){lastData=results[0].value;}else if(!lastData){document.getElementById("admTsekhReportWrap").innerHTML='<div class="loading-note">Не удалось загрузить данные</div>';return;}
+      if(results[1].status==="fulfilled"){syreValues=results[1].value.values||syreValues;syreLastEdited=results[1].value.lastEdited||null;}
       renderReport();
     }
-
-    function formatLastEdited(iso) {
-      if (!iso) return "—";
-      const d = new Date(iso);
-      if (isNaN(d)) return "—";
-      const time = d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
-      const date = d.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" });
-      return `${time} · ${date}`;
+    function renderReport(){
+      if(!lastData)return;
+      document.getElementById("admTsekhBlocksVal").textContent=lastData.blocksInShop??0;
+      document.getElementById("admTsekhFreeVal").textContent=lastData.freeSlots??198;
+      document.getElementById("admTsekhUpdated").textContent=formatLastEdited(lastData.lastEdited);
+      let html='<table class="tsk-table"><thead><tr class="tsk-syre-row"><th></th>';
+      let unmapped=0;
+      MATERIALS.forEach(m=>{const key=SYRE_KEY_FOR[m];if(key)html+=`<th>${esc(syreValues[key]??0)}</th>`;else unmapped++;});
+      html+=`<th class="tsk-syre-updated" colspan="${unmapped+1}"><div class="tsk-syre-updated-pill"><span class="stat-label">Сырьё</span><span class="stat-value">${esc(formatLastEdited(syreLastEdited))}</span></div></th></tr>`;
+      html+='<tr><th>Марка</th>';MATERIALS.forEach(m=>html+=`<th>${LABELS[m]}</th>`);html+='<th>Объём</th></tr></thead><tbody>';
+      (lastData.rows||[]).forEach(row=>{html+=`<tr><td class="marka-col">${esc(row.marka)}</td>`;MATERIALS.forEach(m=>{const v=row.materials?.[m]||0;html+=`<td class="${v===0?"zero":""}">${v===0?"":esc(v)}</td>`;});html+=`<td class="volume-col">${row.volume===0?"":esc(Math.round(row.volume*10)/10)}</td></tr>`;});
+      html+='</tbody></table>';document.getElementById("admTsekhReportWrap").innerHTML=html;
     }
-
-    function renderReport() {
-      if (!lastData) return;
-
-      document.getElementById("admTsekhBlocksVal").textContent = lastData.blocksInShop ?? 0;
-      document.getElementById("admTsekhFreeVal").textContent = lastData.freeSlots ?? 198;
-      document.getElementById("admTsekhUpdated").textContent = formatLastEdited(lastData.lastEdited);
-
-      let html = '<table class="tsk-table"><thead>';
-      html += '<tr class="tsk-syre-row"><th></th>';
-      let unmappedCount = 0;
-
-      MATERIALS.forEach(mat => {
-        const syreKey = SYRE_KEY_FOR[mat];
-        if (syreKey !== undefined) html += `<th>${syreValues[syreKey] ?? 0}</th>`;
-        else unmappedCount++;
-      });
-
-      html += `<th class="tsk-syre-updated" colspan="${unmappedCount + 1}"><div class="tsk-syre-updated-pill"><span class="stat-label">Сырьё</span><span class="stat-value">${formatLastEdited(syreLastEdited)}</span></div></th></tr>`;
-      html += '<tr><th>Марка</th>';
-      MATERIALS.forEach(mat => html += `<th>${MATERIAL_LABELS[mat]}</th>`);
-      html += '<th>Объём</th></tr></thead><tbody>';
-
-      lastData.rows.forEach(row => {
-        html += `<tr><td class="marka-col">${row.marka}</td>`;
-        MATERIALS.forEach(mat => {
-          const v = row.materials[mat] || 0;
-          html += `<td class="${v === 0 ? "zero" : ""}">${v === 0 ? "" : v}</td>`;
-        });
-        html += `<td class="volume-col">${row.volume === 0 ? "" : Math.round(row.volume * 10) / 10}</td></tr>`;
-      });
-
-      html += "</tbody></table>";
-      document.getElementById("admTsekhReportWrap").innerHTML = html;
-    }
-
-    async function clearAllTable() {
-      const ok = confirm("Точно очистить всю таблицу за сегодня? Это действие нельзя отменить.");
-      if (!ok) return;
-
-      try {
-        const data = await apiPost("tsekh", { action: "clearAll" });
-        if (data.success) { showToast("Таблица очищена"); lastData = null; loadData(); }
-        else showToast("Не удалось очистить");
-      } catch (err) {
-        showToast("Ошибка сети");
-      }
-    }
-
-    function setPolling(active) {
-      if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
-      if (active) {
-        if (lastData) renderReport();
-        loadData();
-        pollTimer = setInterval(loadData, 5000);
-      }
-    }
-
-    let initialized = false;
-    function init() {
-      if (initialized) return;
-      initialized = true;
-      buildMaterialGrid();
-      buildKeypad();
-      setActiveField("marka");
-      renderFields();
-      updateAddBtnState();
-      markaDisplay().onclick = () => setActiveField("marka");
-      qtyDisplay().onclick = () => setActiveField("qty");
-      document.getElementById("admTsekhAddBtn").onclick = () => submitEntry(1);
-      document.getElementById("admTsekhRemoveBtn").onclick = () => submitEntry(-1);
-      document.getElementById("admTsekhClearAllBtn").onclick = clearAllTable;
-      loadData();
-    }
-
-    return { init, setPolling };
+    async function clearAllTable(){if(!confirm("Точно очистить всю таблицу за сегодня? Это действие нельзя отменить."))return;try{await apiPost("tsekh",{action:"clearAll"});lastData=null;await loadData();showToast("Таблица очищена");}catch(err){showToast("Ошибка сети");}}
+    function setPolling(active){reportScreenActive=active;if(pollTimer){clearInterval(pollTimer);pollTimer=null;}if(active){if(lastData)renderReport();loadData();pollTimer=setInterval(loadData,5000);}}
+    async function pullRefresh(){if(refreshingPull)return;refreshingPull=true;try{await loadData();}finally{refreshingPull=false;}}
+    function init(){if(initialized)return;initialized=true;buildMaterialGrid();buildKeypad();setActiveField("marka");renderFields();updateAddBtnState();markaDisplay().onclick=()=>setActiveField("marka");qtyDisplay().onclick=()=>setActiveField("qty");document.getElementById("admTsekhAddBtn").onclick=()=>submitEntry(1);document.getElementById("admTsekhRemoveBtn").onclick=()=>submitEntry(-1);document.getElementById("admTsekhClearAllBtn").onclick=clearAllTable;loadData();initPullToRefresh(document.getElementById("admTsekhReportPtr"),document.getElementById("admTsekhReportWrap"),pullRefresh,{shouldStart:()=>reportScreenActive});}
+    return {init,setPolling};
   })();
 
-  // ==================== ADMIN · SKLAD ====================
-  const AdminSklad = (function () {
-    const TABLES = [
-      { id: "пачки", label: "Пачки" }, { id: "2000", label: "2000" },
-      { id: "3000", label: "3000" }, { id: "4000", label: "4000" }
-    ];
-
-    let ROWS = [], COLS = [], dataByTable = {};
-    let currentTableIndex = 0, selectedRow = null, selectedCol = null, valStr = "";
-    let loaded = false;
-    let editActive = false;
-    let lastEdited = null;
-    let reportScreenActive = false;
-
-    function currentTable() { return TABLES[currentTableIndex]; }
-
-    function formatLastEdited(iso) {
-      if (!iso) return "—";
-      const d = new Date(iso);
-      if (isNaN(d)) return "—";
-      const time = d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
-      const date = d.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" });
-      return `${time} · ${date}`;
+  // ==================== ADMIN SKLAD ====================
+  const AdminSklad=(function(){
+    const TABLES=[{id:"пачки",label:"Пачки"},{id:"2000",label:"2000"},{id:"3000",label:"3000"},{id:"4000",label:"4000"}];
+    let ROWS=[],COLS=[],dataByTable={},currentTableIndex=0,selectedRow=null,selectedCol=null,valStr="",loaded=false,editActive=false,lastEdited=null,reportScreenActive=false,initialized=false,refreshingPull=false;
+    const currentTable=()=>TABLES[currentTableIndex];
+    function formatLastEdited(iso){if(!iso)return "—";const d=new Date(iso);if(Number.isNaN(d.getTime()))return "—";return `${d.toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"})} · ${d.toLocaleDateString("ru-RU",{day:"2-digit",month:"2-digit"})}`;}
+    function renderHeaderTimestamp(){document.getElementById("admSkladUpdatedPill").style.visibility=reportScreenActive?"visible":"hidden";document.getElementById("admSkladUpdated").textContent=formatLastEdited(lastEdited);}
+    function setReportActive(a){reportScreenActive=a;renderHeaderTimestamp();}
+    async function loadAllData(){
+      try{const data=await apiGet("sklad","getAllData");ROWS=data.rows||[];COLS=data.cols||[];dataByTable=data.tables||{};lastEdited=data.lastEdited||null;loaded=true;renderGrid();renderReport();renderHeaderTimestamp();}
+      catch(err){if(!loaded){document.getElementById("admSkladGridWrap").innerHTML='<div class="loading-note">Не удалось загрузить таблицу</div>';document.getElementById("admSkladReportWrap").innerHTML='<div class="loading-note">Не удалось загрузить таблицу</div>';}}
     }
-
-    function renderHeaderTimestamp() {
-      document.getElementById("admSkladUpdatedPill").style.visibility = reportScreenActive ? "visible" : "hidden";
-      document.getElementById("admSkladUpdated").textContent = formatLastEdited(lastEdited);
+    function updateHeaderForEdit(){if(editActive)document.getElementById("adminScreenTitle").textContent="Склад · "+currentTable().label;}
+    function renderGrid(){
+      if(!loaded)return;updateHeaderForEdit();const t=currentTable(),values=dataByTable[t.id]||{};
+      let html='<table class="skl-table"><thead><tr><th></th>';COLS.forEach(c=>html+=`<th>${esc(c)}</th>`);html+='</tr></thead><tbody>';
+      ROWS.forEach(r=>{html+=`<tr><th>${esc(r).replace(" ","<br>")}</th>`;COLS.forEach(c=>{const v=(values[r]||{})[c],sel=r===selectedRow&&c===selectedCol;html+=`<td class="${sel?"selected":""}" data-row="${esc(r)}" data-col="${esc(c)}">${v===""||v===undefined?"":esc(v)}</td>`;});html+='</tr>';});
+      html+='</tbody></table>';const wrap=document.getElementById("admSkladGridWrap");wrap.innerHTML=html;wrap.querySelectorAll("tbody td").forEach(td=>td.onclick=()=>selectCell(td.dataset.row,td.dataset.col));fitTableToContainer(wrap,wrap.querySelector(".skl-table"));
     }
-
-    function setReportActive(active) {
-      reportScreenActive = active;
-      renderHeaderTimestamp();
+    function selectCell(r,c){selectedRow=r;selectedCol=c;valStr="";renderVal();renderGrid();updateBtnState();}
+    function renderVal(){const el=document.getElementById("admSkladValDisplay");el.textContent=valStr===""?"0":valStr;el.classList.toggle("filled",valStr!=="");el.classList.toggle("active",selectedRow!==null);}
+    function updateBtnState(){const chosen=selectedRow!==null&&selectedCol!==null;const a=document.getElementById("admSkladAddBtn");if(a)a.disabled=!(chosen&&valStr!=="");document.getElementById("admSkladDeleteBtn").disabled=!chosen;}
+    function buildKeypad(){
+      const k=document.getElementById("admSkladKeypad");k.innerHTML="";
+      ["1","2","3","4","5","6","7","8","9"].forEach(x=>{const b=document.createElement("button");b.className="key";b.textContent=x;b.onclick=()=>handleDigit(x);k.appendChild(b);});
+      const a=document.createElement("button");a.className="key add-key";a.id="admSkladAddBtn";a.textContent="✓";a.disabled=true;a.onclick=commitValue;k.appendChild(a);
+      const z=document.createElement("button");z.className="key";z.textContent="0";z.onclick=()=>handleDigit("0");k.appendChild(z);
+      const back=document.createElement("button");back.className="key";back.textContent="⌫";back.onclick=()=>{if(selectedRow===null){showToast("Сначала выберите ячейку в таблице");return;}valStr=valStr.slice(0,-1);renderVal();updateBtnState();};k.appendChild(back);
     }
-
-    async function loadAllData() {
-      try {
-        const data = await apiGet("sklad", "getAllData");
-        ROWS = data.rows;
-        COLS = data.cols;
-        dataByTable = data.tables;
-        lastEdited = data.lastEdited;
-        loaded = true;
-        renderGrid(); renderReport(); renderHeaderTimestamp();
-      } catch (err) {
-        if (!loaded) {
-          document.getElementById("admSkladGridWrap").innerHTML = '<div class="loading-note">Не удалось загрузить таблицу</div>';
-          document.getElementById("admSkladReportWrap").innerHTML = '<div class="loading-note">Не удалось загрузить таблицу</div>';
-        }
-      }
+    function handleDigit(k){if(selectedRow===null){showToast("Сначала выберите ячейку в таблице");return;}if(valStr.length<6)valStr+=k;renderVal();updateBtnState();}
+    async function commitValue(){
+      if(selectedRow===null||valStr==="")return;const t=currentTable(),r=selectedRow,c=selectedCol,v=valStr;
+      if(!dataByTable[t.id])dataByTable[t.id]={};if(!dataByTable[t.id][r])dataByTable[t.id][r]={};dataByTable[t.id][r][c]=Number(v);lastEdited=new Date().toISOString();
+      valStr="";renderVal();renderGrid();renderReport();renderHeaderTimestamp();updateBtnState();showToast(`${t.label} · ${r}, ${c}: ${v}`);
+      try{await apiPost("sklad",{action:"setCell",table:t.id,row:r,col:c,value:v});}catch(err){showToast("Не сохранилось на сервере — попробуйте снова");await loadAllData();}
     }
-
-    function updateHeaderForEdit() {
-      if (editActive) document.getElementById("adminScreenTitle").textContent = "Склад · " + currentTable().label;
+    async function deleteValue(){
+      if(selectedRow===null)return;const t=currentTable(),r=selectedRow,c=selectedCol;
+      if(!dataByTable[t.id])dataByTable[t.id]={};if(!dataByTable[t.id][r])dataByTable[t.id][r]={};dataByTable[t.id][r][c]="";lastEdited=new Date().toISOString();valStr="";
+      renderVal();renderGrid();renderReport();renderHeaderTimestamp();updateBtnState();showToast(`Очищено: ${t.label} · ${r}, ${c}`);
+      try{await apiPost("sklad",{action:"deleteCell",table:t.id,row:r,col:c});}catch(err){showToast("Ошибка сети");await loadAllData();}
     }
-
-    function renderGrid() {
-      if (!loaded) return;
-      updateHeaderForEdit();
-      const t = currentTable();
-      const values = dataByTable[t.id] || {};
-      let html = '<table class="skl-table"><thead><tr><th></th>';
-      COLS.forEach(c => html += `<th>${c}</th>`);
-      html += '</tr></thead><tbody>';
-
-      ROWS.forEach(r => {
-        html += `<tr><th>${r.replace(" ", "<br>")}</th>`;
-        COLS.forEach(c => {
-          const v = (values[r] || {})[c];
-          const isSel = (r === selectedRow && c === selectedCol);
-          html += `<td class="${isSel ? "selected" : ""}" data-row="${r}" data-col="${c}">${v === "" || v === undefined ? "" : v}</td>`;
-        });
-        html += "</tr>";
-      });
-
-      html += "</tbody></table>";
-      document.getElementById("admSkladGridWrap").innerHTML = html;
-      document.querySelectorAll("#admSkladGridWrap .skl-table tbody td").forEach(td => {
-        td.onclick = () => selectCell(td.dataset.row, td.dataset.col);
-      });
+    async function clearAllCurrentTable(){
+      const t=currentTable();if(!confirm(`Точно очистить всю таблицу «${t.label}»? Это действие нельзя отменить.`))return;
+      ROWS.forEach(r=>{if(!dataByTable[t.id][r])dataByTable[t.id][r]={};COLS.forEach(c=>dataByTable[t.id][r][c]="");});
+      selectedRow=null;selectedCol=null;valStr="";lastEdited=new Date().toISOString();renderVal();renderGrid();renderReport();renderHeaderTimestamp();updateBtnState();
+      try{await apiPost("sklad",{action:"clearAll",table:t.id});showToast(`Таблица «${t.label}» очищена`);}catch(err){showToast("Ошибка сети");await loadAllData();}
     }
-
-    function selectCell(row, col) {
-      selectedRow = row; selectedCol = col; valStr = "";
-      renderVal(); renderGrid(); updateBtnState();
+    function renderReport(){
+      if(!loaded)return;const wrap=document.getElementById("admSkladReportWrap");let html="";
+      TABLES.forEach(t=>{const values=dataByTable[t.id]||{};html+=`<div class="skl-report-block"><table class="skl-report-table"><thead><tr><th class="skl-report-corner">${esc(t.label)}</th>`;COLS.forEach(c=>html+=`<th>${esc(c)}</th>`);html+='</tr></thead><tbody>';ROWS.forEach(r=>{html+=`<tr><th>${esc(r)}</th>`;COLS.forEach(c=>{const v=(values[r]||{})[c];html+=`<td>${v===""||v===undefined?"":esc(v)}</td>`;});html+='</tr>';});html+='</tbody></table></div>';});
+      wrap.innerHTML=html;
     }
-
-    function renderVal() {
-      const el = document.getElementById("admSkladValDisplay");
-      el.textContent = valStr === "" ? "0" : valStr;
-      el.classList.toggle("filled", valStr !== "");
-      el.classList.toggle("active", selectedRow !== null);
+    function setEditActive(active){editActive=active;if(active){selectedRow=null;selectedCol=null;valStr="";renderVal();updateBtnState();updateHeaderForEdit();}}
+    function cycleTable(dir){const next=currentTableIndex+dir;if(next<0||next>=TABLES.length)return;currentTableIndex=next;selectedRow=null;selectedCol=null;valStr="";renderVal();renderGrid();updateBtnState();}
+    async function pullRefresh(){if(refreshingPull)return;refreshingPull=true;try{await loadAllData();}finally{refreshingPull=false;}}
+    function init(){
+      if(initialized)return;initialized=true;buildKeypad();document.getElementById("admSkladClearAllBtn").onclick=clearAllCurrentTable;document.getElementById("admSkladDeleteBtn").onclick=deleteValue;loadAllData();
+      initPullToRefresh(document.getElementById("admSkladReportPtr"),document.getElementById("admSkladReportWrap"),pullRefresh,{shouldStart:()=>reportScreenActive});
+      initPullToRefresh(document.getElementById("admSkladGridPtr"),document.getElementById("admSkladGridWrap"),pullRefresh,{shouldStart:()=>editActive&&currentTableIndex===0});
+      const viewport=document.getElementById("adminViewport");let x=0,y=0;
+      viewport.addEventListener("touchstart",e=>{x=e.touches[0].clientX;y=e.touches[0].clientY;},{passive:true});
+      viewport.addEventListener("touchend",e=>{if(!editActive)return;const dx=e.changedTouches[0].clientX-x,dy=e.changedTouches[0].clientY-y;if(Math.abs(dy)<55||Math.abs(dy)<Math.abs(dx)*1.3)return;cycleTable(dy<0?1:-1);},{passive:true});
     }
-
-    function updateBtnState() {
-      const cellChosen = selectedRow !== null && selectedCol !== null;
-      const addBtn = document.getElementById("admSkladAddBtn");
-      if (addBtn) addBtn.disabled = !(cellChosen && valStr !== "");
-      document.getElementById("admSkladDeleteBtn").disabled = !cellChosen;
-    }
-
-    function buildKeypad() {
-      const keypad = document.getElementById("admSkladKeypad");
-      keypad.innerHTML = "";
-      ["1","2","3","4","5","6","7","8","9"].forEach(k => {
-        const btn = document.createElement("button");
-        btn.className = "key"; btn.textContent = k; btn.onclick = () => handleDigit(k);
-        keypad.appendChild(btn);
-      });
-
-      const addBtn = document.createElement("button");
-      addBtn.className = "key add-key"; addBtn.id = "admSkladAddBtn"; addBtn.textContent = "✓"; addBtn.disabled = true;
-      addBtn.onclick = commitValue;
-      keypad.appendChild(addBtn);
-
-      const zeroBtn = document.createElement("button");
-      zeroBtn.className = "key"; zeroBtn.textContent = "0"; zeroBtn.onclick = () => handleDigit("0");
-      keypad.appendChild(zeroBtn);
-
-      const backBtn = document.createElement("button");
-      backBtn.className = "key"; backBtn.textContent = "⌫";
-      backBtn.onclick = () => {
-        if (selectedRow === null) { showToast("Сначала выберите ячейку в таблице"); return; }
-        valStr = valStr.slice(0, -1); renderVal(); updateBtnState();
-      };
-      keypad.appendChild(backBtn);
-    }
-
-    function handleDigit(k) {
-      if (selectedRow === null) { showToast("Сначала выберите ячейку в таблице"); return; }
-      if (valStr.length < 6) valStr += k;
-      renderVal(); updateBtnState();
-    }
-
-    async function commitValue() {
-      if (selectedRow === null || valStr === "") return;
-      const t = currentTable(); const r = selectedRow, c = selectedCol, v = valStr;
-      showToast(`${t.label} · ${r}, ${c}: ${v}`);
-      if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {};
-      dataByTable[t.id][r][c] = Number(v);
-      lastEdited = new Date().toISOString();
-      valStr = ""; renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
-
-      try {
-        const data = await apiPost("sklad", { action: "setCell", table: t.id, row: r, col: c, value: v });
-        if (!data.success) showToast("Не сохранилось на сервере — попробуйте снова");
-      } catch (err) {
-        showToast("Ошибка сети — не сохранено");
-      }
-    }
-
-    async function deleteValue() {
-      if (selectedRow === null) return;
-      const t = currentTable(); const r = selectedRow, c = selectedCol;
-      showToast(`Очищено: ${t.label} · ${r}, ${c}`);
-      if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {};
-      dataByTable[t.id][r][c] = "";
-      lastEdited = new Date().toISOString();
-      valStr = ""; renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
-
-      try {
-        const data = await apiPost("sklad", { action: "deleteCell", table: t.id, row: r, col: c });
-        if (!data.success) showToast("Не удалось очистить на сервере");
-      } catch (err) {
-        showToast("Ошибка сети");
-      }
-    }
-
-    async function clearAllCurrentTable() {
-      const t = currentTable();
-      const ok = confirm(`Точно очистить всю таблицу «${t.label}»? Это действие нельзя отменить.`);
-      if (!ok) return;
-
-      ROWS.forEach(r => {
-        COLS.forEach(c => {
-          if (!dataByTable[t.id][r]) dataByTable[t.id][r] = {};
-          dataByTable[t.id][r][c] = "";
-        });
-      });
-
-      selectedRow = null; selectedCol = null; valStr = "";
-      lastEdited = new Date().toISOString();
-      renderVal(); renderGrid(); renderReport(); renderHeaderTimestamp(); updateBtnState();
-
-      try {
-        const data = await apiPost("sklad", { action: "clearAll", table: t.id });
-        if (data.success) showToast(`Таблица «${t.label}» очищена`);
-        else showToast("Не удалось очистить на сервере");
-      } catch (err) {
-        showToast("Ошибка сети");
-      }
-    }
-
-    function renderReport() {
-      if (!loaded) return;
-      const wrap = document.getElementById("admSkladReportWrap");
-      let html = "";
-      TABLES.forEach(t => {
-        const values = dataByTable[t.id] || {};
-        html += `<div class="skl-report-block"><div class="skl-report-block-label">${t.label}</div>`;
-        html += '<table class="skl-report-table"><thead><tr><th></th>';
-        COLS.forEach(c => html += `<th>${c}</th>`);
-        html += '</tr></thead><tbody>';
-
-        ROWS.forEach(r => {
-          html += `<tr><th>${r}</th>`;
-          COLS.forEach(c => {
-            const v = (values[r] || {})[c];
-            html += `<td>${v === "" || v === undefined ? "" : v}</td>`;
-          });
-          html += "</tr>";
-        });
-
-        html += "</tbody></table></div>";
-      });
-      wrap.innerHTML = html;
-    }
-
-    function setEditActive(active) {
-      editActive = active;
-      if (active) { updateHeaderForEdit(); }
-      if (active) {
-        selectedRow = null; selectedCol = null; valStr = "";
-        renderVal(); updateBtnState();
-      }
-    }
-
-    function cycleTable(dir) {
-      const next = currentTableIndex + dir;
-      if (next < 0 || next >= TABLES.length) return;
-      currentTableIndex = next;
-      selectedRow = null; selectedCol = null; valStr = "";
-      renderVal(); renderGrid(); updateBtnState();
-    }
-
-    let initialized = false;
-    function init() {
-      if (initialized) return;
-      initialized = true;
-      buildKeypad();
-      document.getElementById("admSkladClearAllBtn").onclick = clearAllCurrentTable;
-      document.getElementById("admSkladDeleteBtn").onclick = deleteValue;
-      loadAllData();
-
-      const viewport = document.getElementById("adminViewport");
-      let vStartX = 0, vStartY = 0;
-      viewport.addEventListener("touchstart", (e) => {
-        vStartX = e.touches[0].clientX; vStartY = e.touches[0].clientY;
-      }, { passive: true });
-      viewport.addEventListener("touchend", (e) => {
-        if (!editActive) return;
-        const dx = e.changedTouches[0].clientX - vStartX;
-        const dy = e.changedTouches[0].clientY - vStartY;
-        if (Math.abs(dy) < 55 || Math.abs(dy) < Math.abs(dx) * 1.3) return;
-        cycleTable(dy < 0 ? 1 : -1);
-      }, { passive: true });
-    }
-
-    return { init, setEditActive, setReportActive };
+    return {init,setEditActive,setReportActive};
   })();
 
-  // ==================== ADMIN HEADER TOGGLE ====================
-  function setAdminHeaderTsekhActive(active) {
-    document.getElementById("adminHeaderDefault").style.display = active ? "none" : "flex";
-    document.getElementById("adminHeaderTsekh").style.display = active ? "flex" : "none";
-  }
+  function setAdminHeaderTsekhActive(active){document.getElementById("adminHeaderDefault").style.display=active?"none":"flex";document.getElementById("adminHeaderTsekh").style.display=active?"flex":"none";}
 
-  // ==================== ROLE SWIPERS ====================
-  const swipers = {};
-
-  function ensureSwiper(role) {
-    if (swipers[role]) return swipers[role];
-
-    if (role === "sklad") {
-      fixTrackChildWidths(document.getElementById("skladTrack"), 3);
-      swipers.sklad = createSwiper(
-        document.getElementById("skladViewport"),
-        document.getElementById("skladTrack"),
-        3,
-        { onChange: (i) => Sklad.setHorizIndex(i) }
-      );
-      Sklad.init();
-
-    } else if (role === "tsekh") {
-      fixTrackChildWidths(document.getElementById("tsekhTrack"), 3);
-      swipers.tsekh = createSwiper(
-        document.getElementById("tsekhViewport"),
-        document.getElementById("tsekhTrack"),
-        3,
-        { onChange: (i) => Tsekh.setHorizIndex(i) }
-      );
-      Tsekh.init();
-
-    } else if (role === "syre") {
-      fixTrackChildWidths(document.getElementById("syreTrack"), 2);
-      swipers.syre = createSwiper(document.getElementById("syreViewport"), document.getElementById("syreTrack"), 2);
-      Syre.init();
-
-    } else if (role === "admin") {
-      fixTrackChildWidths(document.getElementById("adminTrack"), 6);
-      swipers.admin = createSwiper(
-        document.getElementById("adminViewport"),
-        document.getElementById("adminTrack"),
-        6,
-        {
-          dotsEl: document.getElementById("adminDots"),
-          onChange: (i) => {
-            document.getElementById("adminScreenTitle").textContent = ADMIN_SCREEN_TITLES[i];
-            AdminTsekh.setPolling(i === 0);
-            setAdminHeaderTsekhActive(i === 0);
-            AdminSklad.setEditActive(i === 3);
-            AdminSklad.setReportActive(i === 1);
-            AdminSyre.setPolling(i === 4);
-          }
+  const swipers={};
+  function ensureSwiper(role){
+    if(swipers[role])return swipers[role];
+    if(role==="sklad"){
+      fixTrackChildWidths(document.getElementById("skladTrack"),3);
+      swipers.sklad=createSwiper(document.getElementById("skladViewport"),document.getElementById("skladTrack"),3,{onChange:i=>Sklad.setHorizIndex(i)});Sklad.init();
+    }else if(role==="tsekh"){
+      fixTrackChildWidths(document.getElementById("tsekhTrack"),3);
+      swipers.tsekh=createSwiper(document.getElementById("tsekhViewport"),document.getElementById("tsekhTrack"),3,{onChange:i=>Tsekh.setHorizIndex(i)});Tsekh.init();
+    }else if(role==="syre"){
+      fixTrackChildWidths(document.getElementById("syreTrack"),2);
+      swipers.syre=createSwiper(document.getElementById("syreViewport"),document.getElementById("syreTrack"),2);Syre.init();
+    }else if(role==="admin"){
+      fixTrackChildWidths(document.getElementById("adminTrack"),6);
+      swipers.admin=createSwiper(document.getElementById("adminViewport"),document.getElementById("adminTrack"),6,{
+        dotsEl:document.getElementById("adminDots"),
+        onChange:i=>{
+          document.getElementById("adminScreenTitle").textContent=ADMIN_SCREEN_TITLES[i];
+          AdminTsekh.setPolling(i===0);setAdminHeaderTsekhActive(i===0);AdminSklad.setEditActive(i===3);AdminSklad.setReportActive(i===1);AdminSyre.setPolling(i===4);
+          if(i!==0&&i!==3)document.getElementById("adminScreenTitle").textContent=ADMIN_SCREEN_TITLES[i];
         }
-      );
-
-      AdminTsekh.init();
-      AdminSklad.init();
-      AdminSyre.init();
+      });
+      AdminTsekh.init();AdminSklad.init();AdminSyre.init();
     }
-
     return swipers[role];
   }
 
-  function enterRole(role) {
-    const screenId =
-      role === "admin" ? "appAdmin" :
-      role === "sklad" ? "appSklad" :
-      role === "syre" ? "appSyre" : "appTsekh";
-
-    showTopScreen(screenId);
-    const sw = ensureSwiper(role);
-    sw.goTo(0, false);
+  function enterRole(role){
+    const screenId=role==="admin"?"appAdmin":role==="sklad"?"appSklad":role==="syre"?"appSyre":"appTsekh";
+    showTopScreen(screenId);const sw=ensureSwiper(role);sw.goTo(0,false);
+    if(role==="admin"){AdminTsekh.setPolling(true);setAdminHeaderTsekhActive(true);AdminSklad.setEditActive(false);AdminSklad.setReportActive(false);AdminSyre.setPolling(false);}
+    if(role==="sklad")Sklad.setHorizIndex(0);
+    if(role==="tsekh")Tsekh.setHorizIndex(0);
   }
 
-  // ==================== LOGOUT ====================
-  document.querySelectorAll("[data-exit]").forEach(btn => {
-    btn.onclick = () => {
-      const ok = confirm("Выйти из аккаунта? При следующем входе понадобится код доступа.");
-      if (!ok) return;
-      if (btn.dataset.exit === "syre") Syre.stopPolling();
-      localStorage.removeItem(STORAGE_KEY);
-      showTopScreen("screenLogin");
+  document.querySelectorAll("[data-exit]").forEach(btn=>{
+    btn.onclick=()=>{
+      if(!confirm("Выйти из аккаунта? При следующем входе понадобится код доступа."))return;
+      const role=btn.dataset.exit;
+      if(role==="syre")Syre.stopPolling();
+      if(role==="admin"){AdminTsekh.setPolling(false);AdminSyre.setPolling(false);}
+      localStorage.removeItem(STORAGE_KEY);showTopScreen("screenLogin");
     };
   });
 
-  // ==================== ROLE SELECT -> CODE ENTRY ====================
-  let pendingRole = null;
-  let codeStr = "";
-
-  document.querySelectorAll(".role-btn").forEach(btn => {
-    btn.onclick = () => {
-      pendingRole = btn.dataset.role;
-      codeStr = "";
-      renderCodeDots();
-      document.getElementById("codeRoleTitle").textContent = ROLE_TITLES[pendingRole];
-      showTopScreen("screenCode");
-    };
-  });
-
-  document.getElementById("codeBackBtn").onclick = () => {
-    pendingRole = null;
-    codeStr = "";
-    showTopScreen("screenLogin");
-  };
-
-  function renderCodeDots() {
-    const dots = document.querySelectorAll("#codeDots .code-dot");
-    dots.forEach((d, i) => d.classList.toggle("filled", i < codeStr.length));
+  let pendingRole=null,codeStr="";
+  document.querySelectorAll(".role-btn").forEach(btn=>{btn.onclick=()=>{pendingRole=btn.dataset.role;codeStr="";renderCodeDots();document.getElementById("codeRoleTitle").textContent=ROLE_TITLES[pendingRole];showTopScreen("screenCode");};});
+  document.getElementById("codeBackBtn").onclick=()=>{pendingRole=null;codeStr="";showTopScreen("screenLogin");};
+  function renderCodeDots(){document.querySelectorAll("#codeDots .code-dot").forEach((d,i)=>d.classList.toggle("filled",i<codeStr.length));}
+  function wrongCodeShake(){const w=document.getElementById("codeDots");w.classList.remove("shake");void w.offsetWidth;w.classList.add("shake");showToast("Неверный код");}
+  function submitCodeIfReady(){
+    if(codeStr.length!==4)return;
+    if(codeStr===ACCESS_CODES[pendingRole]){
+      localStorage.setItem(STORAGE_KEY,pendingRole);const role=pendingRole;pendingRole=null;codeStr="";renderCodeDots();enterRole(role);
+    }else{wrongCodeShake();setTimeout(()=>{codeStr="";renderCodeDots();},250);}
   }
 
-  function wrongCodeShake() {
-    const wrap = document.getElementById("codeDots");
-    wrap.classList.remove("shake");
-    void wrap.offsetWidth;
-    wrap.classList.add("shake");
-    showToast("Неверный код");
-  }
-
-  function submitCodeIfReady() {
-    if (codeStr.length !== 4) return;
-    if (codeStr === ACCESS_CODES[pendingRole]) {
-      localStorage.setItem(STORAGE_KEY, pendingRole);
-      const role = pendingRole;
-      pendingRole = null;
-      codeStr = "";
-      renderCodeDots();
-      enterRole(role);
-    } else {
-      wrongCodeShake();
-      setTimeout(() => { codeStr = ""; renderCodeDots(); }, 250);
-    }
-  }
-
-  const codeKeypad = document.getElementById("codeKeypad");
-  const codeKeys = ["1","2","3","4","5","6","7","8","9","","0","⌫"];
-  codeKeys.forEach(k => {
-    const btn = document.createElement("button");
-    if (k === "") {
-      btn.className = "key ghost";
-      btn.disabled = true;
-    } else {
-      btn.className = "key" + (k === "⌫" ? " clear" : "");
-      btn.textContent = k;
-      btn.onclick = () => {
-        if (k === "⌫") codeStr = codeStr.slice(0, -1);
-        else if (codeStr.length < 4) codeStr += k;
-        renderCodeDots();
-        submitCodeIfReady();
-      };
-    }
+  const codeKeypad=document.getElementById("codeKeypad");
+  ["1","2","3","4","5","6","7","8","9","","0","⌫"].forEach(k=>{
+    const btn=document.createElement("button");
+    if(k===""){btn.className="key ghost";btn.disabled=true;}
+    else{btn.className="key"+(k==="⌫"?" clear":"");btn.textContent=k;btn.onclick=()=>{if(k==="⌫")codeStr=codeStr.slice(0,-1);else if(codeStr.length<4)codeStr+=k;renderCodeDots();submitCodeIfReady();};}
     codeKeypad.appendChild(btn);
   });
 
-  // ==================== DATE ====================
-  function formatDate(d) {
-    const dd = String(d.getDate()).padStart(2, "0");
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const yyyy = d.getFullYear();
-    return `${dd}.${mm}.${yyyy}`;
-  }
+  function formatDate(d){return `${String(d.getDate()).padStart(2,"0")}.${String(d.getMonth()+1).padStart(2,"0")}.${d.getFullYear()}`;}
+  document.querySelectorAll(".date-pill").forEach(el=>el.textContent=formatDate(new Date()));
 
-  document.querySelectorAll(".date-pill").forEach(el => el.textContent = formatDate(new Date()));
+  (function init(){const savedRole=localStorage.getItem(STORAGE_KEY);if(savedRole&&ACCESS_CODES[savedRole])enterRole(savedRole);else showTopScreen("screenLogin");})();
 
-  // ==================== INIT ====================
-  (function init() {
-    const savedRole = localStorage.getItem(STORAGE_KEY);
-    if (savedRole && ACCESS_CODES[savedRole]) enterRole(savedRole);
-    else showTopScreen("screenLogin");
-  })();
+  document.addEventListener("gesturestart",e=>e.preventDefault());
+  document.addEventListener("gesturechange",e=>e.preventDefault());
+  document.addEventListener("gestureend",e=>e.preventDefault());
+  let lastTouchEnd=0;document.addEventListener("touchend",e=>{const now=Date.now();if(now-lastTouchEnd<=300)e.preventDefault();lastTouchEnd=now;},{passive:false});
 
-  // ==================== DISABLE PINCH / DOUBLE-TAP ZOOM ====================
-  document.addEventListener("gesturestart", e => e.preventDefault());
-  document.addEventListener("gesturechange", e => e.preventDefault());
-  document.addEventListener("gestureend", e => e.preventDefault());
-  let lastTouchEnd = 0;
-  document.addEventListener("touchend", e => {
-    const now = Date.now();
-    if (now - lastTouchEnd <= 300) e.preventDefault();
-    lastTouchEnd = now;
-  }, { passive: false });
-
-  // ==================== SERVICE WORKER ====================
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("service-worker.js").catch(() => {});
-    });
-  }
+  if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("service-worker.js").catch(()=>{}));
 </script>
 </body>
 </html>
