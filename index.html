@@ -286,35 +286,37 @@
   .skl-add-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 6px 10px 8px; gap: 5px; }
   /* skl-grid-wrap holds the grid table. It gets first claim on the flex-shared
      vertical space (flex:1) while the value display, keypad, and button row below
-     it are flex-shrink:0 (fixed-height controls, see further down) — that way, on a
-     short screen it's the TABLE that compresses/scrolls, never the controls, and the
-     table never grows or shifts position from typing (typing only updates the value
-     display text, not this wrap). overflow-y:auto is the safety net: if the table's
-     natural row height still doesn't fit, it scrolls internally instead of pushing
-     the keypad off-screen or underneath it. */
-  .skl-grid-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+     it are flex-shrink:0 (fixed-height controls, see further down) — that way the
+     keypad/buttons never move or get pushed off-screen, and the table never shifts
+     from typing (typing only updates the value display text, not this wrap).
+     No scrolling here: JS measures the rendered table after each render and shrinks
+     --skl-row-font (and the matching cell padding) via fitTableToContainer() until
+     the whole table fits the available height exactly — see near renderGrid(). */
+  .skl-grid-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
   .skl-table {
-    width: 100%; height: 100%;
+    --skl-row-font: 17px;
+    --skl-cell-pad: 2px;
+    width: 100%;
     border-collapse: collapse;
     border: 2px solid var(--red);
     border-radius: 6px;
     overflow: hidden;
-    font-size: 17px;
+    font-size: var(--skl-row-font);
     table-layout: fixed;
   }
   .skl-table thead th {
     background: var(--black); color: var(--white);
-    padding: 6px 1px; font-size: 13px; font-weight: 700; text-align: center;
+    padding: calc(var(--skl-cell-pad) * 3) 1px; font-size: calc(var(--skl-row-font) * 0.76); font-weight: 700; text-align: center;
     border-right: 1px solid rgba(255,255,255,0.25);
   }
   .skl-table thead th:last-child { border-right: none; }
   .skl-table tbody th {
     background: var(--gray-bg); color: var(--black);
-    padding: 6px 3px; font-size: 13px; font-weight: 800; text-align: left;
+    padding: calc(var(--skl-cell-pad) * 3) 3px; font-size: calc(var(--skl-row-font) * 0.76); font-weight: 800; text-align: left;
     border-right: 1px solid var(--gray-border); border-bottom: 1px solid var(--gray-border);
   }
   .skl-table tbody td {
-    padding: 2px; text-align: center;
+    padding: var(--skl-cell-pad); text-align: center;
     border-bottom: 1px solid var(--gray-border); border-right: 1px solid var(--gray-border);
     color: var(--black); font-weight: 700;
   }
@@ -331,25 +333,30 @@
   }
   .skl-action-btn:disabled { border-color: var(--gray-border); color: var(--gray-border); }
 
-  /* ===== SKLAD: report screen ===== */
-  .skl-report-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 4px; overflow: hidden; padding: 6px 10px 6px; }
-  .skl-report-block { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
-  .skl-report-table { width: 100%; flex: 1; min-height: 0; border-collapse: collapse; border: 1.5px solid var(--red); border-radius: 4px; overflow: hidden; font-size: 13px; table-layout: fixed; }
+  /* ===== SKLAD: report screen =====
+     4 tables stacked = 4 equal quarters of the available height, via CSS grid rows
+     (not flex) so every block gets EXACTLY 1/4 — flex could round unevenly and let
+     the browser silently clip whichever block came up short (that's what was cutting
+     off the first table). Nothing here scrolls; sizes are tightened (smaller fonts/
+     padding) so all 4 fit without needing to. */
+  .skl-report-wrap { flex: 1; min-height: 0; display: grid; grid-template-rows: repeat(4, 1fr); gap: 3px; padding: 4px 8px 4px; }
+  .skl-report-block { min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+  .skl-report-table { width: 100%; height: 100%; border-collapse: collapse; border: 1.5px solid var(--red); border-radius: 4px; overflow: hidden; font-size: 11px; table-layout: fixed; }
   .skl-report-table th {
-    background: var(--black); color: var(--white); padding: 1px; font-size: 10px; font-weight: 700; text-align: center;
+    background: var(--black); color: var(--white); padding: 0 1px; font-size: 9px; font-weight: 700; text-align: center; line-height: 1.5;
     border-right: 1px solid rgba(255,255,255,0.2);
   }
   .skl-report-table th:last-child { border-right: none; }
   /* Corner cell of each report table now carries the table's own name (Пачки/2000/3000/4000)
      instead of a separate label line above the table — saves vertical space. Same black
      background as the rest of the header row, just a bit smaller to fit the word. */
-  .skl-report-table th.skl-report-corner { font-size: 8px; letter-spacing: -0.2px; padding: 1px 0; }
+  .skl-report-table th.skl-report-corner { font-size: 7px; letter-spacing: -0.2px; padding: 0; }
   .skl-report-table tbody th {
-    background: var(--gray-bg); color: var(--black); text-align: left; padding: 1px 2px;
+    background: var(--gray-bg); color: var(--black); text-align: left; padding: 0 2px; font-size: 10px; line-height: 1.4;
     border-right: 1px solid var(--gray-border); border-bottom: 1px solid var(--gray-border);
   }
   .skl-report-table td {
-    text-align: center; color: var(--black); font-weight: 700;
+    text-align: center; color: var(--black); font-weight: 700; padding: 0;
     border-bottom: 1px solid var(--gray-border); border-right: 1px solid var(--gray-border);
   }
   .skl-report-table td:last-child { border-right: none; }
@@ -1040,17 +1047,55 @@
         refreshing = true;
         setHeight(PULL_THRESHOLD * 0.7);
         indicatorEl.classList.add("ptr-spinning");
-        Promise.resolve(onRefresh()).finally(() => {
+        // Safety timeout: if the backend hangs, don't leave the spinner running forever —
+        // stop showing it after 8s even though the underlying request may still resolve
+        // later and silently update the data when it does.
+        let settled = false;
+        const stop = () => {
+          if (settled) return;
+          settled = true;
           refreshing = false;
           indicatorEl.classList.remove("ptr-spinning");
           setHeight(0);
-        });
+        };
+        const timeoutId = setTimeout(stop, 8000);
+        Promise.resolve(onRefresh()).finally(() => { clearTimeout(timeoutId); stop(); });
       } else {
         setHeight(0);
       }
     }
     containerEl.addEventListener("touchend", endPull, { passive: true });
     containerEl.addEventListener("touchcancel", () => { pulling = false; setHeight(0); }, { passive: true });
+  }
+
+  // ==================== AUTO-FIT TABLE (no scroll, shrinks to the available space) ====================
+  // Used by the Sklad editing grid (skl-table): the row count comes from the backend and
+  // varies, so a fixed font size can either leave empty space or overflow depending on how
+  // many rows there are. This measures the table's natural height right after it's rendered
+  // and steps --skl-row-font down (via binary search) until it fits wrapEl's height exactly —
+  // no scrolling, no clipping. Cheap: runs once per render, not on every keystroke, and each
+  // step is a single reflow read, so a handful of steps is a sub-millisecond cost.
+  function fitTableToContainer(wrapEl, tableEl, opts = {}) {
+    if (!tableEl) return;
+    const maxFont = opts.maxFont || 17;
+    const minFont = opts.minFont || 9;
+    const available = wrapEl.clientHeight;
+    if (available <= 0) return; // not laid out yet (e.g. screen not visible) — skip, next render will retry
+
+    // Fast path: try the max size first, since most of the time (few rows) it already fits.
+    tableEl.style.setProperty("--skl-row-font", maxFont + "px");
+    tableEl.style.setProperty("--skl-cell-pad", "2px");
+    if (tableEl.scrollHeight <= available) return;
+
+    let lo = minFont, hi = maxFont, best = minFont;
+    for (let i = 0; i < 6; i++) { // 6 steps is enough precision for a 9–17px range
+      const mid = (lo + hi) / 2;
+      tableEl.style.setProperty("--skl-row-font", mid + "px");
+      tableEl.style.setProperty("--skl-cell-pad", Math.max(1, mid * 0.12) + "px");
+      if (tableEl.scrollHeight <= available) { best = mid; lo = mid; } else { hi = mid; }
+    }
+    tableEl.style.setProperty("--skl-row-font", best + "px");
+    tableEl.style.setProperty("--skl-cell-pad", Math.max(1, best * 0.12) + "px");
   }
 
   // ==================== SKLAD MODULE ====================
@@ -1111,10 +1156,12 @@
         html += "</tr>";
       });
       html += "</tbody></table>";
-      document.getElementById("sklGridWrap").innerHTML = html;
+      const wrap = document.getElementById("sklGridWrap");
+      wrap.innerHTML = html;
       document.querySelectorAll("#sklGridWrap .skl-table tbody td").forEach(td => {
         td.onclick = () => selectCell(td.dataset.row, td.dataset.col);
       });
+      fitTableToContainer(wrap, wrap.querySelector(".skl-table"));
     }
 
     function selectCell(row, col) {
@@ -2271,10 +2318,12 @@
         html += "</tr>";
       });
       html += "</tbody></table>";
-      document.getElementById("admSkladGridWrap").innerHTML = html;
+      const wrap = document.getElementById("admSkladGridWrap");
+      wrap.innerHTML = html;
       document.querySelectorAll("#admSkladGridWrap .skl-table tbody td").forEach(td => {
         td.onclick = () => selectCell(td.dataset.row, td.dataset.col);
       });
+      fitTableToContainer(wrap, wrap.querySelector(".skl-table"));
     }
     function selectCell(row, col) {
       selectedRow = row; selectedCol = col; valStr = "";
